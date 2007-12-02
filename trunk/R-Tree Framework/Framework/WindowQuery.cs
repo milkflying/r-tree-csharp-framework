@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    public struct WindowQuery : RegionQuery
+    public class WindowQuery : RegionQuery
     {
         private Double minX, minY, maxX, maxY;
 

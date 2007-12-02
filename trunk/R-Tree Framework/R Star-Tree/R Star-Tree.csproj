@@ -37,6 +37,10 @@
     <Compile Include="R_Star_Tree.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{DCC40259-AE91-4A83-926F-E70B53ABE762}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\R-Tree\R-Tree.csproj">
       <Project>{A4C6C32A-ACF2-46E9-8416-1C31F61FF581}</Project>
       <Name>R-Tree</Name>
