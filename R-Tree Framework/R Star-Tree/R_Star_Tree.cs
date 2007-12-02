@@ -7,5 +7,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 {
     public class R_Star_Tree : R_Tree
     {
+
     }
 }

@@ -7,9 +7,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 {
     public class R_Tree : Index
     {
+        #region Instance Variables
+
         private Int32 minimumNodeOccupancy, maximumNodeOccupancy;
         private Node root;
         private CacheManager cache;
+
+        #endregion
+        #region Properties
 
         public Int32 MinimumNodeOccupancy
         {
@@ -32,12 +37,19 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             private set { cache = value; }
         }
 
+        #endregion
+        #region Constructors
+
         public R_Tree(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)
         {
             MinimumNodeOccupancy = minimumNodeOccupancy;
             MaximumNodeOccupancy = maximumNodeOccupancy;
             Cache = cache;
         }
+
+        #endregion
+        #region Public Methods
+
         public void Insert(Record record)
         {
             Leaf leafToInsertInto = ChooseLeaf(record);
@@ -45,12 +57,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             if (leafToInsertInto.NodeEntries.Count >= MaximumNodeOccupancy)
             {
                 List<Node> splitNodes = Split(leafToInsertInto);
-                Node parent = Cache.LookupNode(leafToInsertInto.Parent);
-                NodeEntry entryToRemove = null;
-                foreach(NodeEntry entry in parent.NodeEntries)
-                    if(entry.Child.Equals(leafToInsertInto.Address))
-                        entryToRemove = entry;
-                parent.RemoveNodeEntry(entryToRemove);
+                RemoveFromParent(leafToInsertInto);
                 AdjustTree(splitNodes[0] as Leaf, splitNodes[1] as Leaf);
             }
             else
@@ -88,6 +95,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             else
                 return null;
         }
+
+        #endregion
+        #region Private Methods
+
         private List<Record> Search(RegionQuery window, Node node)
         {
             List<Record> records = new List<Record>();
@@ -325,20 +336,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     List<Node> splitNodes = Split(parent);
                     if (parent == Root)
                         Root = null;
-                    Cache.LookupNode(parent.Parent);
-                    Node grandParent = Cache.LookupNode(parent.Parent);
-                    NodeEntry entryToRemove = null;
-                    foreach (NodeEntry entry in grandParent.NodeEntries)
-                        if (entry.Child.Equals(parent.Address))
-                            entryToRemove = entry;
-                    grandParent.RemoveNodeEntry(entryToRemove);
+                    RemoveFromParent(parent);
                     AdjustTree(splitNodes[0], splitNodes[1]);
                     return;
                 }
             }
             AdjustTree(leaf1, null);
         }
-        public Leaf FindLeaf(Record record, Node node)
+        private Leaf FindLeaf(Record record, Node node)
         {
             if (node is Leaf)
             {
@@ -356,7 +361,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
             return null;
         }
-        public void CondenseTree(Node node)
+        private void CondenseTree(Node node)
         {
             List<Node> eliminatedNodes = new List<Node>();
             while(node != root)
@@ -386,5 +391,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                         eliminatedNodes.Add(Cache.LookupNode(entry.Child));
             }
         }
+        private void RemoveFromParent(Node node)
+        {
+            Node parent = Cache.LookupNode(node.Parent);
+            NodeEntry entryToRemove = null;
+            foreach (NodeEntry entry in parent.NodeEntries)
+                if (entry.Child.Equals(node.Address))
+                    entryToRemove = entry;
+            parent.RemoveNodeEntry(entryToRemove);
+        }
+
+        #endregion
     }
 }
