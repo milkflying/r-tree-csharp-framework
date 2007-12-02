@@ -7,7 +7,7 @@
     <ProjectGuid>{A4C6C32A-ACF2-46E9-8416-1C31F61FF581}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Tree</RootNamespace>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes</RootNamespace>
     <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Tree</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

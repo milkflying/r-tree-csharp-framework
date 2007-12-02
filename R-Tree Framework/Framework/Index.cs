@@ -7,8 +7,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
     public interface Index
     {
         void Insert(Record record);
-        void Delete();
-        void Update();
+        void Delete(Record record);
+        void Update(Record originalRecord, Record newRecord);
         List<Record> Search(Query query); 
     }
 }
