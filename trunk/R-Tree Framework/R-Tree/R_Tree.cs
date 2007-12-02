@@ -90,8 +90,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             if (query is RegionQuery)
                 return Search(query as RegionQuery, Root);
-            //else if (query is KNearestNeighborQuery)
-              //  return Search(query as KNearestNeighborQuery, root);
+            else if (query is KNearestNeighborQuery)
+                return Search(query as KNearestNeighborQuery, root);
             else
                 return null;
         }
@@ -106,20 +106,15 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             {
                 if (window is RangeQuery && Overlaps((RangeQuery)window, nodeEntry.MinimumBoundingBox) ||
                     window is WindowQuery && Overlaps((WindowQuery)window, nodeEntry.MinimumBoundingBox))
-                    records.AddRange(Search(window, Cache.LookupNode(nodeEntry.Child)));
+                    if (nodeEntry is LeafEntry)
+                        records.Add(Cache.LookupRecord(leafEntry.Child));
+                    else
+                        records.AddRange(Search(window, Cache.LookupNode(nodeEntry.Child)));
             }
             return records;
         }
-        private List<Record> Search(RegionQuery window, Leaf leaf)
+        private List<Record> Search(KNearestNeighborQuery kNearestNeighbor, Node node)
         {
-            List<Record> records = new List<Record>();
-            foreach (LeafEntry leafEntry in leaf.NodeEntries)
-            {
-                if (window is RangeQuery && Overlaps((RangeQuery)window, leafEntry.MinimumBoundingBox) ||
-                    window is WindowQuery && Overlaps((WindowQuery)window, leafEntry.MinimumBoundingBox))
-                    records.Add(Cache.LookupRecord(leafEntry.Child));
-            }
-            return records;
         }
         private Boolean Overlaps(WindowQuery window, MinimumBoundingBox area)
         {
