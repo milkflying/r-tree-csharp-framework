@@ -7,8 +7,8 @@
     <ProjectGuid>{0F450F25-636B-4FCE-B333-B90698E0FF33}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>R_Sharp_Tree</RootNamespace>
-    <AssemblyName>R Sharp-Tree</AssemblyName>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Sharp_Tree</RootNamespace>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Sharp_Tree</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

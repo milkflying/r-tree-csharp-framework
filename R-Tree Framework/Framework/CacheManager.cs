@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Framework
+namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    interface CacheManager
+    public interface CacheManager
     {
+        Node LookupNode(Guid address);
+        Record LookupRecord(Guid address);
     }
 }

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LRU Cache Manager")]
+[assembly: AssemblyTitle("Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LRU Cache Manager")]
-[assembly: AssemblyCopyright("Copyright ©  2007")]
+[assembly: AssemblyProduct("Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache")]
+[assembly: AssemblyCopyright("Copyright ©  2007 Michael Kozeniauskas")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

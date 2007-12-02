@@ -7,8 +7,8 @@
     <ProjectGuid>{0E238662-2FB6-4989-B287-C2706BCED5A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>R_Star_Tree</RootNamespace>
-    <AssemblyName>R Star-Tree</AssemblyName>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Star_Tree</RootNamespace>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Star_Tree</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

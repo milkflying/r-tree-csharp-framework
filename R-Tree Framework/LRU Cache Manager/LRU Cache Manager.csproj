@@ -7,8 +7,8 @@
     <ProjectGuid>{A3B647C1-12C5-425B-95AF-CAC042DD39A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LRU_Cache_Manager</RootNamespace>
-    <AssemblyName>LRU Cache Manager</AssemblyName>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache</RootNamespace>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
