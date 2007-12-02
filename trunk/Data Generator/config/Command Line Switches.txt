@@ -1,10 +1,8 @@
-#!/bin/sh
-
 # Generate uniform datasets
-bin/datagen -p -d 2 -n 10000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t u > output/uniform_small.dat
-bin/datagen -p -d 2 -n 100000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t u > output/uniform_large.dat
+-p -d 2 -n 10000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t u > uniform_small.dat
+-p -d 2 -n 100000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t u > uniform_large.dat
 
 # Generate Gaussian datasets
-bin/datagen -p -d 2 -n 10000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t g > output/gaussian_small.dat
-bin/datagen -p -d 2 -n 100000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t g > output/gaussian_large.dat
+-p -d 2 -n 10000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t g > gaussian_small.dat
+-p -d 2 -n 100000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t g > gaussian_large.dat
 

@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Data Generator", "Data Generator\Data Generator.vcproj", "{B7C5D16E-DD9C-4ADD-B6C7-A5D131354C58}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Workload Generator", "Workload Generator\Workload Generator.vcproj", "{53F08F0A-F294-44DE-827C-97429E24DE86}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Input Generator", "Input Generator\Input Generator.vcproj", "{15901F82-A41A-4391-A6D3-046CA8DD5DFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7C5D16E-DD9C-4ADD-B6C7-A5D131354C58}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B7C5D16E-DD9C-4ADD-B6C7-A5D131354C58}.Debug|Win32.Build.0 = Debug|Win32
-		{B7C5D16E-DD9C-4ADD-B6C7-A5D131354C58}.Release|Win32.ActiveCfg = Release|Win32
-		{B7C5D16E-DD9C-4ADD-B6C7-A5D131354C58}.Release|Win32.Build.0 = Release|Win32
+		{53F08F0A-F294-44DE-827C-97429E24DE86}.Debug|Win32.ActiveCfg = Debug|Win32
+		{53F08F0A-F294-44DE-827C-97429E24DE86}.Debug|Win32.Build.0 = Debug|Win32
+		{53F08F0A-F294-44DE-827C-97429E24DE86}.Release|Win32.ActiveCfg = Release|Win32
+		{53F08F0A-F294-44DE-827C-97429E24DE86}.Release|Win32.Build.0 = Release|Win32
+		{15901F82-A41A-4391-A6D3-046CA8DD5DFB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15901F82-A41A-4391-A6D3-046CA8DD5DFB}.Debug|Win32.Build.0 = Debug|Win32
+		{15901F82-A41A-4391-A6D3-046CA8DD5DFB}.Release|Win32.ActiveCfg = Release|Win32
+		{15901F82-A41A-4391-A6D3-046CA8DD5DFB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

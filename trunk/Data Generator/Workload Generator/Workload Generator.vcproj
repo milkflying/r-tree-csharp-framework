@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Data Generator"
-	ProjectGUID="{B7C5D16E-DD9C-4ADD-B6C7-A5D131354C58}"
-	RootNamespace="DataGenerator"
+	Name="Workload Generator"
+	ProjectGUID="{53F08F0A-F294-44DE-827C-97429E24DE86}"
+	RootNamespace="WorkloadGenerator"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -175,7 +175,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\gen.cpp"
+				RelativePath=".\gen_workload.cpp"
 				>
 			</File>
 		</Filter>
