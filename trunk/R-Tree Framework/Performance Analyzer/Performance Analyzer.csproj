@@ -7,8 +7,8 @@
     <ProjectGuid>{C4FFBD16-B8AE-4794-B116-21B2617FF658}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Performance_Analyzer</RootNamespace>
-    <AssemblyName>Performance Analyzer</AssemblyName>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics.Performance_Analyzer</RootNamespace>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics.Performance_Analyzer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

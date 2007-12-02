@@ -7,8 +7,8 @@
     <ProjectGuid>{CA6177E4-919B-4C69-AC57-24ABF74127B2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Flash_R_Tree</RootNamespace>
-    <AssemblyName>Flash R-Tree</AssemblyName>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree</RootNamespace>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +34,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{DCC40259-AE91-4A83-926F-E70B53ABE762}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
