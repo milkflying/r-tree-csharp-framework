@@ -107,15 +107,25 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 if (window is RangeQuery && Overlaps((RangeQuery)window, nodeEntry.MinimumBoundingBox) ||
                     window is WindowQuery && Overlaps((WindowQuery)window, nodeEntry.MinimumBoundingBox))
                     if (nodeEntry is LeafEntry)
-                        records.Add(Cache.LookupRecord(leafEntry.Child));
+                        records.Add(Cache.LookupRecord(nodeEntry.Child));
                     else
                         records.AddRange(Search(window, Cache.LookupNode(nodeEntry.Child)));
             }
             return records;
         }
-        private List<Record> Search(KNearestNeighborQuery kNearestNeighbor, Node node)
+        private List<Record> Search(KNearestNeighborQuery kNN, Node node)
         {
+            PriorityQueue<NodeEntry, Double> proximityQueue = new PriorityQueue<NodeEntry, Double>();
+            List<Record> results = new List<Record>(kNN.K);
+            EnqueNodeEntries(kNN, node, proximityQueue);
+            while (results.Count < kNN.K && proximityQueue.Count > 0)
+                if (proximityQueue.Peek().Value is LeafEntry)
+                    results.Add(Cache.LookupRecord(proximityQueue.Dequeue().Value.Child));
+                else
+                    EnqueNodeEntries(kNN, Cache.LookupNode(proximityQueue.Dequeue().Value.Child), proximityQueue);
+            return results;
         }
+
         private Boolean Overlaps(WindowQuery window, MinimumBoundingBox area)
         {
             //checks the only conditions in which they don't overlap
@@ -394,6 +404,36 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 if (entry.Child.Equals(node.Address))
                     entryToRemove = entry;
             parent.RemoveNodeEntry(entryToRemove);
+        }
+        private Double GetDistance(Double x, Double y, MinimumBoundingBox area)
+        {
+            if (area.MaxX < x && area.MinY > y)
+                return GetDistance(x, y, area.MaxX, area.MinY);
+            else if (area.MinX > x && area.MinY > y)
+                return GetDistance(x, y, area.MinX, area.MinY);
+            else if (area.MaxX < x && area.MaxY < y)
+                return GetDistance(x, y, area.MaxX, area.MaxY);
+            else if (area.MinX > x && area.MaxY < y)
+                return GetDistance(x, y, area.MinX, area.MaxY);
+            else if (area.MaxX < x)
+                return GetDistance(x, y, area.MaxX, y);
+            else if (area.MinX > x)
+                return GetDistance(x, y, area.MinX, y);
+            else if (area.MaxY < y)
+                return GetDistance(x, y, x, area.MaxY);
+            else if (area.MinY > y)
+                return GetDistance(x, y, x, area.MinY);
+            else
+                return 0;
+        }
+        private Double GetDistance(Double x1, Double y1, Double x2, Double y2)
+        {
+            return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+        }
+        private void EnqueNodeEntries(KNearestNeighborQuery kNN, Node node, PriorityQueue<NodeEntry, Double> proximityQueue)
+        {
+            foreach (NodeEntry entry in node.NodeEntries)
+                proximityQueue.Enqueue(entry, GetDistance(kNN.X, kNN.Y, entry.MinimumBoundingBox));
         }
 
         #endregion

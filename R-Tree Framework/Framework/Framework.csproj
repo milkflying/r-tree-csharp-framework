@@ -40,6 +40,7 @@
     <Compile Include="MinimumBoundingBox.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeEntry.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="RegionQuery.cs" />
     <Compile Include="Record.cs" />

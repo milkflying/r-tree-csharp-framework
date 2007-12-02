@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    public interface Query
+    public abstract class Query
     {
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    public struct RangeQuery : RegionQuery
+    public class RangeQuery : RegionQuery
     {
         private Double centerX, centerY, radius;
 

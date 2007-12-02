@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    public interface RegionQuery : Query
+    public abstract class RegionQuery : Query
     {
     }
 }
