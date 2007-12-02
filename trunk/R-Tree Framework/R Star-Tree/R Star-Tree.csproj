@@ -7,7 +7,7 @@
     <ProjectGuid>{0E238662-2FB6-4989-B287-C2706BCED5A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Star_Tree</RootNamespace>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes</RootNamespace>
     <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.R_Star_Tree</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,6 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="R_Star_Tree.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\R-Tree\R-Tree.csproj">
+      <Project>{A4C6C32A-ACF2-46E9-8416-1C31F61FF581}</Project>
+      <Name>R-Tree</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
