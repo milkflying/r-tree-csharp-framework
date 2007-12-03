@@ -6,8 +6,15 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class Node
     {
-        private List<NodeEntry> nodeEntries;
-        private Guid address, parent;
+        protected List<NodeEntry> nodeEntries;
+        protected Guid address, parent;
+        protected Type childType;
+
+        public Type ChildType
+        {
+            get { return childType; }
+            protected set { childType = value; }
+        }
 
         public Guid Parent
         {
@@ -18,19 +25,20 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         public Guid Address
         {
             get { return address; }
-            private set { address = value; }
+            protected set { address = value; }
         }
 
         public List<NodeEntry> NodeEntries
         {
             get { return nodeEntries; }
-            private set { nodeEntries = value; }
+            protected set { nodeEntries = value; }
         }
 
-        public Node(int maxNodeEntries, Guid parent)
+        public Node(int maxNodeEntries, Guid parent, Type childType)
         {
             Address = Guid.NewGuid();
             Parent = parent;
+            ChildType = childType;
             nodeEntries = new List<NodeEntry>(maxNodeEntries);
         }
         public Node(Byte[] pageData)

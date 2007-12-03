@@ -73,13 +73,13 @@ namespace System.Collections.Generic
     public class PriorityQueue<TValue, TPriority> : ICollection,
         IEnumerable<PriorityQueueItem<TValue, TPriority>>
     {
-        private PriorityQueueItem<TValue, TPriority>[] items;
+        protected PriorityQueueItem<TValue, TPriority>[] items;
 
-        private const Int32 DefaultCapacity = 16;
-        private Int32 capacity;
-        private Int32 numItems;
+        protected const Int32 DefaultCapacity = 16;
+        protected Int32 capacity;
+        protected Int32 numItems;
 
-        private Comparison<TPriority> compareFunc;
+        protected Comparison<TPriority> compareFunc;
 
         /// <summary>
         /// Initializes a new instance of the PriorityQueue class that is empty,
@@ -147,7 +147,7 @@ namespace System.Collections.Generic
         }
 
         // Initializes the queue
-        private void Init(int initialCapacity, Comparison<TPriority> comparison)
+        protected void Init(int initialCapacity, Comparison<TPriority> comparison)
         {
             numItems = 0;
             compareFunc = comparison;
@@ -172,7 +172,7 @@ namespace System.Collections.Generic
         }
 
         // Set the queue's capacity.
-        private void SetCapacity(int newCapacity)
+        protected void SetCapacity(int newCapacity)
         {
             int newCap = newCapacity;
             if (newCap < DefaultCapacity)
@@ -224,7 +224,7 @@ namespace System.Collections.Generic
         }
 
         // Remove a node at a particular position in the queue.
-        private PriorityQueueItem<TValue, TPriority> RemoveAt(Int32 index)
+        protected PriorityQueueItem<TValue, TPriority> RemoveAt(Int32 index)
         {
             // remove an item from the heap
             PriorityQueueItem<TValue, TPriority> o = items[index];
