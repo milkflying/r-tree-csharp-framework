@@ -14,6 +14,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 
         public override void Insert(Record record)
         {
+            LeafEntry newEntry = new LeafEntry(record.MinimumBoundingBox, record.Address);
+
             Leaf leafToInsertInto = ChooseLeaf(record);
             Insert(record, leafToInsertInto);
             if (leafToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
@@ -23,9 +25,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 AdjustTree(splitNodes[0] as Leaf, splitNodes[1] as Leaf);
             }
             else
-                AdjustTree(leafToInsertInto);
+                AdjustTree(leafToInsertInto)
         }
-
         protected override Leaf ChooseLeaf(Record record)
         {
             return ChooseSubtree(record).Value1;
@@ -244,6 +245,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 IntersectMinimumBoundingBoxes(node1.CalculateMinimumBoundingBox(), node2.CalculateMinimumBoundingBox());
             return (overlapArea.MaxX - overlapArea.MinX) *
                 (overlapArea.MaxY - overlapArea.MinY);
+        }
+        protected virtual void OverflowTreatment()
+        {
+        }
+        protected virtual void ReInsert()
+        {
         }
     }
 }
