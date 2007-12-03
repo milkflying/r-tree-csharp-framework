@@ -28,7 +28,7 @@ int main (int argc, char** argv)
 	
 
 	int item_count = DEF_ITEM_COUNT;
-	int dimen = DEF_DIMEN;
+	int dimen = DEF_DIMEN;				//currently ignored
 	int seed = DEF_SEED;
 	float extent = DEF_EXTENT;
 	float min_bound = DEF_LOWER;
@@ -113,13 +113,13 @@ int main (int argc, char** argv)
 
 	srand(seed);
 	
-	int next_id = cutoff++;
+	int next_id = cutoff+1;
 	//list<int> removed;
 	//list<int>::iterator iter;
 	//iter = removed.begin();
 	
 
-	for (int i=0; i<item_count; i++)
+	for (int i=1; i<=item_count; i++)
 	{
 		float op_choice = getRandFloat(0.0,1.0);
 		if (op_choice < query_ratio)

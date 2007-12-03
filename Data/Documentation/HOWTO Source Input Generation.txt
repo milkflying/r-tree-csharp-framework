@@ -1,0 +1,35 @@
+Dataset Generation
+
+# Parameters to generate uniform datasets
+[APP] -p -d 2 -n 10000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t u > uniform_small.dat
+[APP] -p -d 2 -n 100000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t u > uniform_large.dat
+
+# Parameters to generate Gaussian datasets
+[APP] -p -d 2 -n 10000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t g > gaussian_small.dat
+[APP] -p -d 2 -n 100000 -l 0 -u 1000 -e 0 -m 500 -v 100 -s 20071125 -t g > gaussian_large.dat
+
+
+
+Query Workload Generation
+
+DEFAULT CONFIGURATION
+-n 1000		1000 instruction workload
+-d 2		2 dimensional dataset
+-l 0		lower dataset constraint (in each dimension)
+-u 1000		upper dataset constraint (in each dimension)
+-e 0		extent of new inserted objects (0 implies point data)
+-s 1000		random number generator seed
+-q x		percentage of operations that are queries (vs. modifications)
+-k 64		maximum k for kNN query
+-a 10		minimum radius/side for region query
+-b 100		maximum radius/side for region query
+-c 10000	assumed number of existing data objects
+-h 500		history of previous query results
+
+
+[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.3 -k 64 -a 10 -b 100 -c 10000 > small_q30.dat
+[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.6 -k 64 -a 10 -b 100 -c 10000 > small_q60.dat
+[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.9 -k 64 -a 10 -b 100 -c 10000 > small_q90.dat
+[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.3 -k 64 -a 10 -b 100 -c 100000 > large_q30.dat
+[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.6 -k 64 -a 10 -b 100 -c 100000 > large_q60.dat
+[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.9 -k 64 -a 10 -b 100 -c 100000 > large_q90.dat
