@@ -15,7 +15,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public override void Insert(Record record)
         {
             LeafEntry newEntry = new LeafEntry(record.MinimumBoundingBox, record.Address);
-
+            Insert(newEntry, TreeHeight);
+        }
+        protected virtual void Insert(NodeEntry entry, Int32 level)
+        {
             Leaf leafToInsertInto = ChooseLeaf(record);
             Insert(record, leafToInsertInto);
             if (leafToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
@@ -248,6 +251,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual void OverflowTreatment()
         {
+
         }
         protected virtual void ReInsert()
         {
