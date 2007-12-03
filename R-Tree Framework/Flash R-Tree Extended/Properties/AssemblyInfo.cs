@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Star_Tree_Extended")]
+[assembly: AssemblyTitle("Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree_Extended")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Star_Tree_Extended")]
+[assembly: AssemblyProduct("Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree_Extended")]
 [assembly: AssemblyCopyright("Copyright ©  2007 Michael Kozeniauskas")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
