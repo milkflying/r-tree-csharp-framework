@@ -126,7 +126,7 @@ int main (int argc, char** argv)
 		{
 			//Execute query
 			int q_choice = getRandInt(0,2);
-			float loc[2] = {getRandFloat(min_bound, max_bound), getRandFloat(min_bound, max_bound)};
+			float loc[2] = {getRandFloat(min_bound+qregion_max, max_bound-qregion_max), getRandFloat(min_bound+qregion_max, max_bound-qregion_max)};
 			switch (q_choice)
 			{
 			case 0:
@@ -168,7 +168,7 @@ int main (int argc, char** argv)
 			case 0:
 			{
 				//Execute insert			
-				float loc[2] = {getRandFloat(min_bound, max_bound), getRandFloat(min_bound, max_bound)};
+				float loc[2] = {getRandFloat(min_bound+extent, max_bound-extent), getRandFloat(min_bound+extent, max_bound-extent)};
 				cout << i << ",I," << next_id++ << "," << loc[0] << "," << loc[1] << "," << extent << endl;
 
 				break;
@@ -176,7 +176,7 @@ int main (int argc, char** argv)
 			case 1:
 			{
 				//Execute update
-				float loc[2] = {getRandFloat(min_bound, max_bound), getRandFloat(min_bound, max_bound)};
+				float loc[2] = {getRandFloat(min_bound+extent, max_bound-extent), getRandFloat(min_bound+extent, max_bound-extent)};
 				int cur_id = getRandInt(1,hist);
 				cout << i << ",U," << cur_id << "," << loc[0] << "," << loc[1] << "," << extent << endl;
 				break;
