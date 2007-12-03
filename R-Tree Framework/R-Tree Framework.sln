@@ -13,10 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R Sharp-Tree", "R Sharp-Tre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flash R-Tree", "Flash R-Tree\Flash R-Tree.csproj", "{CA6177E4-919B-4C69-AC57-24ABF74127B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flash R Star-Tree", "Flash R Star-Tree\Flash R Star-Tree.csproj", "{2C44980F-A2C9-4227-8828-7BAB514C1BE6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flash R Star-Tree Extended", "Flash R Star-Tree Extended\Flash R Star-Tree Extended.csproj", "{872BF86F-E660-4A49-A212-21A5E7D81A32}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performance Analyzer", "Performance Analyzer\Performance Analyzer.csproj", "{C4FFBD16-B8AE-4794-B116-21B2617FF658}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Highest Tree Level Cache Manager", "Highest Tree Level Cache\Highest Tree Level Cache Manager.csproj", "{2F37A0D6-7A76-4459-8F50-4FAFA9522419}"
@@ -24,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level Proportional Cache Manager", "Level Proportional Cache\Level Proportional Cache Manager.csproj", "{68917546-315D-42E1-8FD3-403E7C1232EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBench", "TestBench\TestBench.csproj", "{5D689461-9808-45E9-A3EA-BC88C7D2FA91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flash R-Tree Extended", "Flash R-Tree Extended\Flash R-Tree Extended.csproj", "{872BF86F-E660-4A49-A212-21A5E7D81A32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,14 +53,6 @@ Global
 		{CA6177E4-919B-4C69-AC57-24ABF74127B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA6177E4-919B-4C69-AC57-24ABF74127B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA6177E4-919B-4C69-AC57-24ABF74127B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C44980F-A2C9-4227-8828-7BAB514C1BE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C44980F-A2C9-4227-8828-7BAB514C1BE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C44980F-A2C9-4227-8828-7BAB514C1BE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C44980F-A2C9-4227-8828-7BAB514C1BE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4FFBD16-B8AE-4794-B116-21B2617FF658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4FFBD16-B8AE-4794-B116-21B2617FF658}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4FFBD16-B8AE-4794-B116-21B2617FF658}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,6 +69,10 @@ Global
 		{5D689461-9808-45E9-A3EA-BC88C7D2FA91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D689461-9808-45E9-A3EA-BC88C7D2FA91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D689461-9808-45E9-A3EA-BC88C7D2FA91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872BF86F-E660-4A49-A212-21A5E7D81A32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
