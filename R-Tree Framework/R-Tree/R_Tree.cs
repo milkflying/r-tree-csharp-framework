@@ -9,9 +9,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
     {
         #region Instance Variables
 
-        private Int32 minimumNodeOccupancy, maximumNodeOccupancy;
-        private Node root;
-        private CacheManager cache;
+        protected Int32 minimumNodeOccupancy, maximumNodeOccupancy;
+        protected Node root;
+        protected CacheManager cache;
 
         #endregion
         #region Properties
@@ -19,22 +19,22 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public Int32 MinimumNodeOccupancy
         {
             get { return minimumNodeOccupancy; }
-            private set { minimumNodeOccupancy = value; }
+            protected set { minimumNodeOccupancy = value; }
         }
         public Int32 MaximumNodeOccupancy
         {
             get { return maximumNodeOccupancy; }
-            private set { maximumNodeOccupancy = value; }
+            protected set { maximumNodeOccupancy = value; }
         }
         public Node Root
         {
             get { return root; }
-            private set { root = value; }
+            protected set { root = value; }
         }
         public CacheManager Cache
         {
             get { return cache; }
-            private set { cache = value; }
+            protected set { cache = value; }
         }
 
         #endregion
@@ -45,12 +45,13 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             MinimumNodeOccupancy = minimumNodeOccupancy;
             MaximumNodeOccupancy = maximumNodeOccupancy;
             Cache = cache;
+            Root = new Leaf(MaximumNodeOccupancy, Guid.Empty);
         }
 
         #endregion
         #region Public Methods
 
-        public void Insert(Record record)
+        public virtual void Insert(Record record)
         {
             Leaf leafToInsertInto = ChooseLeaf(record);
             Insert(record, leafToInsertInto);
@@ -63,7 +64,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             else
                 AdjustTree(leafToInsertInto);
         }
-        public void Delete(Record record)
+        public virtual void Delete(Record record)
         {
             Leaf leafWithRecord = FindLeaf(record, Root);
             if (leafWithRecord == null)
@@ -81,12 +82,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 Root = newRoot;
             }
         }
-        public void Update(Record originalRecord, Record newRecord)
+        public virtual void Update(Record originalRecord, Record newRecord)
         {
             Delete(originalRecord);
             Insert(newRecord);
         }
-        public List<Record> Search(Query query)
+        public virtual List<Record> Search(Query query)
         {
             if (query is RegionQuery)
                 return Search(query as RegionQuery, Root);
@@ -97,9 +98,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
 
         #endregion
-        #region Private Methods
+        #region Protected Methods
 
-        private List<Record> Search(RegionQuery window, Node node)
+        protected virtual List<Record> Search(RegionQuery window, Node node)
         {
             List<Record> records = new List<Record>();
             foreach (NodeEntry nodeEntry in node.NodeEntries)
@@ -113,7 +114,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             return records;
         }
-        private List<Record> Search(KNearestNeighborQuery kNN, Node node)
+        protected virtual List<Record> Search(KNearestNeighborQuery kNN, Node node)
         {
             PriorityQueue<NodeEntry, Double> proximityQueue = new PriorityQueue<NodeEntry, Double>();
             List<Record> results = new List<Record>(kNN.K);
@@ -125,8 +126,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     EnqueNodeEntries(kNN, Cache.LookupNode(proximityQueue.Dequeue().Value.Child), proximityQueue);
             return results;
         }
-
-        private Boolean Overlaps(WindowQuery window, MinimumBoundingBox area)
+        protected virtual Boolean Overlaps(WindowQuery window, MinimumBoundingBox area)
         {
             //checks the only conditions in which they don't overlap
             return !(
@@ -135,7 +135,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 window.MinY > area.MaxY ||
                 window.MaxY < area.MinY);
         }
-        private Boolean Overlaps(MinimumBoundingBox area1, MinimumBoundingBox area2)
+        protected virtual Boolean Overlaps(MinimumBoundingBox area1, MinimumBoundingBox area2)
         {
             //checks the only conditions in which they don't overlap
             return !(
@@ -144,7 +144,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 area1.MinY > area2.MaxY ||
                 area1.MaxY < area2.MinY);
         }
-        private Boolean Overlaps(RangeQuery range, MinimumBoundingBox area)
+        protected virtual Boolean Overlaps(RangeQuery range, MinimumBoundingBox area)
         {
             return
                 //does not overlap the center point
@@ -171,7 +171,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     (range.CenterY > area.MinY && range.CenterY < area.MaxY && range.CenterX > area.MaxX && range.CenterX - area.MaxX < range.Radius)
                 );
         }
-        private Leaf ChooseLeaf(Record record)
+        protected virtual Leaf ChooseLeaf(Record record)
         {
             Node node = Root;
             while (!(node is Leaf))
@@ -191,11 +191,19 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             return node as Leaf;
         }
-        private Double GetFutureSize(Record record, MinimumBoundingBox area)
+        protected virtual Double GetFutureSize(Record record, MinimumBoundingBox area)
         {
             return GetFutureSize(record.MinimumBoundingBox, area);
         }
-        private Double GetFutureSize(MinimumBoundingBox area1, MinimumBoundingBox area2)
+        protected virtual Double GetFutureSize(MinimumBoundingBox area1, MinimumBoundingBox area2)
+        {
+            MinimumBoundingBox futureMinimumBoundingBox = CombineMinimumBoundingBoxes(area1, area2);
+            return (futureMinimumBoundingBox.MaxX - futureMinimumBoundingBox.MinX) *
+                (futureMinimumBoundingBox.MaxX - futureMinimumBoundingBox.MinX) +
+                (futureMinimumBoundingBox.MaxY - futureMinimumBoundingBox.MinY) *
+                (futureMinimumBoundingBox.MaxY - futureMinimumBoundingBox.MinY);
+        }
+        protected virtual MinimumBoundingBox CombineMinimumBoundingBoxes(MinimumBoundingBox area1, MinimumBoundingBox area2)
         {
             Double newMinX, newMaxX, newMinY, newMaxY;
             if (area1.MinX < area2.MinX)
@@ -214,19 +222,20 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 newMaxY = area1.MaxY;
             else
                 newMaxY = area2.MaxY;
-            return (newMaxX - newMinX) * (newMaxY - newMinY);
+            return new MinimumBoundingBox(newMinX, newMinY, newMaxX, newMaxY);
         }
-        private void Insert(Record record, Leaf leaf)
+        protected virtual void Insert(Record record, Leaf leaf)
         {
             leaf.AddNodeEntry(new LeafEntry(record.MinimumBoundingBox, record.Address));
         }
-        private List<Node> Split(Node nodeToBeSplit)
+        protected virtual List<Node> Split(Node nodeToBeSplit)
         {
             List<NodeEntry> entries = new List<NodeEntry>(nodeToBeSplit.NodeEntries);
             List<NodeEntry> seeds = PickSeeds(entries);
             entries.Remove(seeds[0]);
             entries.Remove(seeds[1]);
-            Node node1 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent), node2 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent);
+            Node node1 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType),
+                node2 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
             node1.AddNodeEntry(seeds[0]);
             node2.AddNodeEntry(seeds[1]);
             while (entries.Count > 0)
@@ -270,7 +279,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             newNodes.Add(node2);
             return newNodes;
         }
-        private List<NodeEntry> PickSeeds(List<NodeEntry> seedPool)
+        protected virtual List<NodeEntry> PickSeeds(List<NodeEntry> seedPool)
         {
             NodeEntry worstPairEntry1, worstPairEntry2;
             worstPairEntry1 = seedPool[0];
@@ -294,7 +303,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             worstPair.Add(worstPairEntry2);
             return worstPair;
         }
-        private NodeEntry PickNext(List<NodeEntry> entryPool, MinimumBoundingBox minimumBoundingBox1, MinimumBoundingBox minimumBoundingBox2)
+        protected virtual NodeEntry PickNext(List<NodeEntry> entryPool, MinimumBoundingBox minimumBoundingBox1, MinimumBoundingBox minimumBoundingBox2)
         {
             NodeEntry nextEntry = entryPool[0];
             
@@ -314,17 +323,17 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             return nextEntry;
         }
-        private void AdjustTree(Node leaf)
+        protected virtual void AdjustTree(Node leaf)
         {
             AdjustTree(leaf, null);
         }
-        private void AdjustTree(Node leaf1, Node leaf2)
+        protected virtual void AdjustTree(Node leaf1, Node leaf2)
         {
             if (leaf1 == Root)
                 return;
             if (Root == null)
             {
-                Root = new Node(MaximumNodeOccupancy, Guid.Empty);
+                Root = new Node(MaximumNodeOccupancy, Guid.Empty, typeof(Node));
                 Root.AddNodeEntry(new NodeEntry(leaf1.CalculateMinimumBoundingBox(), leaf1.Address));
                 Root.AddNodeEntry(new NodeEntry(leaf2.CalculateMinimumBoundingBox(), leaf2.Address));
                 leaf1.Parent = Root.Address;
@@ -348,7 +357,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             AdjustTree(leaf1, null);
         }
-        private Leaf FindLeaf(Record record, Node node)
+        protected virtual Leaf FindLeaf(Record record, Node node)
         {
             if (node is Leaf)
             {
@@ -366,7 +375,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
             return null;
         }
-        private void CondenseTree(Node node)
+        protected virtual void CondenseTree(Node node)
         {
             List<Node> eliminatedNodes = new List<Node>();
             while(node != root)
@@ -396,8 +405,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                         eliminatedNodes.Add(Cache.LookupNode(entry.Child));
             }
         }
-        private void RemoveFromParent(Node node)
+        protected virtual void RemoveFromParent(Node node)
         {
+            if (node.Parent.Equals(Guid.Empty))
+                return;
             Node parent = Cache.LookupNode(node.Parent);
             NodeEntry entryToRemove = null;
             foreach (NodeEntry entry in parent.NodeEntries)
@@ -405,7 +416,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     entryToRemove = entry;
             parent.RemoveNodeEntry(entryToRemove);
         }
-        private Double GetDistance(Double x, Double y, MinimumBoundingBox area)
+        protected virtual Double GetDistance(Double x, Double y, MinimumBoundingBox area)
         {
             if (area.MaxX < x && area.MinY > y)
                 return GetDistance(x, y, area.MaxX, area.MinY);
@@ -426,11 +437,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             else
                 return 0;
         }
-        private Double GetDistance(Double x1, Double y1, Double x2, Double y2)
+        protected virtual Double GetDistance(Double x1, Double y1, Double x2, Double y2)
         {
             return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
         }
-        private void EnqueNodeEntries(KNearestNeighborQuery kNN, Node node, PriorityQueue<NodeEntry, Double> proximityQueue)
+        protected virtual void EnqueNodeEntries(KNearestNeighborQuery kNN, Node node, PriorityQueue<NodeEntry, Double> proximityQueue)
         {
             foreach (NodeEntry entry in node.NodeEntries)
                 proximityQueue.Enqueue(entry, GetDistance(kNN.X, kNN.Y, entry.MinimumBoundingBox));

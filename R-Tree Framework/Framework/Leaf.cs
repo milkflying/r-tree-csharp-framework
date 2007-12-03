@@ -7,7 +7,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
     public class Leaf : Node
     {
         public Leaf(int maxRecordEntries, Guid parent)
-            : base(maxRecordEntries, parent)
+            : base(maxRecordEntries, parent, typeof(Record))
         {
         }
         public Leaf(Byte[] pageData)

@@ -6,8 +6,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class NodeEntry
     {
-        private MinimumBoundingBox minimumBoundingBox;
-        private Guid child;
+        protected MinimumBoundingBox minimumBoundingBox;
+        protected Guid child;
 
         public MinimumBoundingBox MinimumBoundingBox
         {
@@ -17,7 +17,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         public Guid Child
         {
             get { return child; }
-            private set { child = value; }
+            protected set { child = value; }
         }
 
         public NodeEntry(MinimumBoundingBox minimumBoundingBox, Guid child)
