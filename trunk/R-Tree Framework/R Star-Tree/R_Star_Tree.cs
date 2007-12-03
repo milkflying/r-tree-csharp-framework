@@ -12,9 +12,32 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
         }
 
+        public override void Insert(Record record)
+        {
+            Leaf leafToInsertInto = ChooseLeaf(record);
+            Insert(record, leafToInsertInto);
+            if (leafToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
+            {
+                List<Node> splitNodes = Split(leafToInsertInto);
+                RemoveFromParent(leafToInsertInto);
+                AdjustTree(splitNodes[0] as Leaf, splitNodes[1] as Leaf);
+            }
+            else
+                AdjustTree(leafToInsertInto);
+        }
+
         protected override Leaf ChooseLeaf(Record record)
         {
+            return ChooseSubtree(record).Value1;
+        }
+        protected override Node ChooseNode(Node node)
+        {
+            return (ChooseSubtree(node) as Pair<Node, Int32>).Value1;
+        }
+        protected virtual Pair<Leaf, Int32> ChooseSubtree(Record record)
+        {
             Node node = Root;
+            Int32 level = 1;
             while (!(node is Leaf))
             {
                 if (node.ChildType.Equals(typeof(Leaf)))
@@ -64,8 +87,34 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
                     node = Cache.LookupNode(minEnlargment.Child);
                 }
+                level++;
             }
-            return node as Leaf;
+            return new Pair<Leaf, Int32>(node as Leaf, level);
+        }
+        protected virtual Pair<Node, Int32> ChooseSubtree(Node node)
+        {
+            Int32 level = 1;
+            Node insertionNode = Root;
+            MinimumBoundingBox nodeBoundingBox = node.CalculateMinimumBoundingBox();
+            Int32 nodeHeight = CalculateHeight(node), currentDepth = 1;
+            while (currentDepth + nodeHeight < TreeHeight)//not at right depth
+            {
+                NodeEntry minEnlargment = insertionNode.NodeEntries[0];
+                Double minEnlargedArea = GetFutureSize(nodeBoundingBox, minEnlargment.MinimumBoundingBox) - minEnlargment.MinimumBoundingBox.GetArea();
+                foreach (NodeEntry nodeEntry in insertionNode.NodeEntries)
+                {
+                    Double enlargment = GetFutureSize(nodeBoundingBox, nodeEntry.MinimumBoundingBox) - nodeEntry.MinimumBoundingBox.GetArea();
+                    if ((enlargment == minEnlargedArea && nodeEntry.MinimumBoundingBox.GetArea() < minEnlargment.MinimumBoundingBox.GetArea()) ||
+                        enlargment < minEnlargedArea)
+                    {
+                        minEnlargedArea = enlargment;
+                        minEnlargment = nodeEntry;
+                    }
+                }
+                currentDepth++;
+                level++;
+            }
+            return new Pair<Node, Int32>(insertionNode, level);
         }
         protected override List<Node> Split(Node nodeToBeSplit)
         {
