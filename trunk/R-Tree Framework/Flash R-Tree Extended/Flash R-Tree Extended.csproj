@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Indexes</RootNamespace>
-    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Star_Tree_Extended</AssemblyName>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree_Extended</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
