@@ -1,6 +1,6 @@
 *** Flash R-Tree ***
 
-Point to Ponder:  Are updates to *data objects* handled by an insertion/deletion?  (I'm thinking yes.)
+Point to Ponder:  Are updates to *data objects* handled by an insertion/deletion?  (I'm thinking yes and have written the below code as such.)
 If so, maybe we should immediately convert to the relevant insert/delete instruction.
 If not, how do we explain the terrible clustering that we will eventually have in the R-tree?
 Note that internal nodes still need an update operation.
@@ -15,10 +15,17 @@ Major Additions
 - Buffer Object
   * Record Entry ID
   * Record Entry Spatial Location
+  * Record Entry Data Pointer
+  * Operation (Insert, Delete)
+
+- Index Unit
+  * Record Entry ID
+  * Record Entry Spatial Location
   * Record Entry Child Pointer (internal node) OR Record Entry Data Pointer (leaf node)
   * Operation (Insert, Update, Delete)
   * Containing Node ID
   * Parent Node Pointer
+
 
 - Node Translation Table (NTT) Object
   * Array of Node Traversal Lists (NTL) with variable maximum array length
@@ -29,6 +36,15 @@ Major Additions
   * Linked list of disk page ID's that contain entries for node with given ID
     - Configurable maximum length of linked list
 
+
+- Modified Spatial Query Algorithm
+  Perform query on index using traditional algorithm
+  (* be sure to use modified node load algorithm described below *)
+  For each buffer object in the reservation buffer
+    Check to see if the operation affects the query results
+  Return result to user
+  
+
 - Modified Node Load Algorithm
   (Use whenever a node needs to be retrieved from cache/disk)
   LoadNode (Node N)
@@ -37,36 +53,45 @@ Major Additions
     For each index unit in the page
       If the index unit refers to N
         Modify the in-memory construction of N by performing the specified operation
-  For each buffer object in the reservation table
-    If the buffer object refers to N
+  For each in-memory index unit that exists during a reservation buffer flush
+    If the index refers to N
       Modify the in-memory construction of N by performing the specified operation
   Return final modified in-memory node 
   
 
 - Modified Insertion Algorithm
-   Identify tree location for insert as usual (store traversal path for recursive update)
-   B = { Record Entry information provided by insert call
+   B = { Record Entry ID provided by insert call
+         Record Entry Spatial Location provided by insert call
+         Record Entry Data Pointer provided by insert call (or made up)
          Operation = Insert
-         Containing Node, Parent Node determined by tree traversal
        }
    Call AddToBuffer with object B
 
 
 - Modified Deletion Algorithm
-   Identify tree location for deletion as usual (store traversal path for recursive update)
-   B = { Record Entry information provided by deletion call
-         Operation = Deletion
-         Containing Node, Parent Node determined by tree traversal
+   B = { Record Entry ID provided by delete call
+         Record Entry Spatial Location provided by delete call
+         Record Entry Data Pointer not required
+         Operation = Delete
        }
    Call AddToBuffer with object B
      
      
 - Modified Update Algorithm
-(* see comment above; maybe translate into insert and delete for data nodes.  Internal nodes still need update option! *)
-   Identify tree location for update as usual (store traversal path for recursive update)
-   B = { Record Entry information provided by update call
-         Operation = Update
-         Containing Node, Parent Node determined by tree traversal
+(* see comment above; translate into insert and delete for data nodes. *)
+
+   B = { Record Entry ID provided by update call
+         Record Entry Spatial Location provided by update call (orig value)
+         Record Entry Data Pointer not required
+         Operation = Delete
+       }
+   Call AddToBuffer with object B
+
+
+   B = { Record Entry ID provided by update call
+         Record Entry Spatial Location provided by update call
+         Record Entry Data Pointer should match orig value (fill in during buffer flush)
+         Operation = Insert
        }
    Call AddToBuffer with object B
 
@@ -74,59 +99,135 @@ Major Additions
 - AddToBuffer (BufferObject B)
    If reservation buffer full
      Remove any complementary operations (insert/remove same object)
-     For each Node N referenced in reservation buffer
-       If changes will cause node to overflow
-         (*need to insert new internal node N' using BufferObject C*)
-         C = {  Record Entry information provided by inspecting N
+     Initialize empty array A of index units
+     For each BufferObject B in the reservation buffer
+       If B is an insertion
+         Traverse the tree to located what node N should contain B
+         
+         I = {  Record Entry ID provided by B
+                Record Entry Spatial Location provided by B
+                Record Entry Data Pointer provided by B
 	        Operation = Insert
-	        Containing Node is Parent of N
+	        Containing Node is N or N' (based on grouping)
 	        Parent Node determined by stored tree traversal
-	     }
-         Add C to items to be processed
-         For each record moved from N
-           B' = { Record Entry information provided by inspecting N
-                  Operation = Delete
-                  Containing Node is N
-                  Parent Node determined by stored tree traversal
-                }
-           Add B' to items to be processed
+	     }    
+         Add I to A
+         
+         While (Insertion into previous N causes overflow/split)
+         
+           (* need to insert new internal node N' using index unit I *)
+           (* If root was split, insert N and N' into new root node *)
+           I = {  Record Entry ID generated by system (unique)
+                  Record Entry Spatial Location provided by grouping subset of items in N
+                  Record Entry Child Pointer points to new node N'
+	          Operation = Insert
+	          Containing Node is Parent of N
+	          Parent Node determined by stored tree traversal
+	       }    
+           Add I to A
            
-           B'' = { Record Entry information provided by inspecting N
-	   	   Operation = Insert
-	   	   Containing Node is N'
-	   	   Parent Node same as N
-	         }
-           Add B'' to items to be processed
-           (*results will funnel back to reservation table so check any new nodes for overflow/underflow as well*)
-       If changes will cause node to underflow
-         (*need to delete internal node N using BufferObject C*)
-         C = {  Record Entry information provided by inspecting N
+           
+           For each record moved from N
+             I = {  Record Entry ID provided by corresponding entry in N
+	            Record Entry Spatial Location provided by corresponding entry in N
+	            Record Entry Data Pointer provided by corresponding entry in N
+	     	    Operation = Insert
+	     	    Containing Node is N'
+	     	    Parent Node determined by stored tree traversal
+	         }  
+             Add I to A
+             
+             
+             I = {  Record Entry ID provided by entry in N
+	            Record Entry Spatial Location provided by entry in N
+	            Record Entry Data Pointer provided by entry in N
+	     	    Operation = Delete
+	     	    Containing Node is N
+	     	    Parent Node determined by stored tree traversal
+	         }  
+             Add I to A
+             
+           (* update bounding box for N in parent node)
+           I = {  Record Entry ID provided by N
+                  Record Entry Spatial Location provided provided by modified N
+                  Record Entry Child Pointer provided by N
+	          Operation = Update
+	          Containing Node is Parent of N
+	          Parent Node determined by stored tree traversal
+	       }    
+           Add I to A
+             
+           
+           N = Parent of N
+         
+         (* For all nodes that don't split, update bounding box *)
+         While N != NULL
+           
+           I = {  Record Entry ID provided by N
+                  Record Entry Spatial Location provided provided by modified N
+                  Record Entry Child Pointer provided by N
+	          Operation = Update
+	          Containing Node is Parent of N
+	          Parent Node determined by stored tree traversal
+	       }    
+           Add I to A
+           
+           N = Parent of N
+             
+       Else (* B is an deletion *)
+         Traverse the tree to located what node N contains record deleted by B
+         
+         I = {  Record Entry ID provided by B
+                Record Entry Spatial Location provided by B
+                Record Entry Data Pointer provided by N
 	        Operation = Delete
-	        Containing Node is Parent of N
+	        Containing Node is N
 	        Parent Node determined by stored tree traversal
-	     }
-         Add C to items to be processed
-         For each record in N         
-           B' = { Record Entry information provided by inspecting N
-	   	   Operation = Insert
-	   	   Containing Node is found using tree traversal
-	   	   Parent Node is found using tree traversal
-	         }
-           Add B' to items to be processed
-           (*results will funnel back to reservation table so check any new nodes for overflow/underflow as well*)
-       Else
-         While Parent Node of N != NULL
-           B' = { Record Entry information provided by buffer objects
-                  Operation = Update
-                  Containing Node is Parent Node of N
-                  Parent Node determined by stored tree traversal
-                }
-           Add B' to items to be processed
-           (*results will funnel back to reservation table so check any new nodes for overflow/underflow as well*)
-         B = B'
+	     }    
+         Add I to A
+         
+         While (Deletion of previous N causes undeflow/deletion)
+         
+           (* need to delete internal node N using index unit I *)
+           (* If root was removed (only one entry remains), then elevate that entry to root *)
+           I = {  Record Entry ID provided by N
+                  Record Entry Spatial Location provided by N
+                  Record Entry Child Pointer provided by N
+	          Operation = Delete
+	          Containing Node is Parent of N
+	          Parent Node determined by stored tree traversal
+	       }    
+           Add I to A
+           
+           
+           For each record in N
+             B = {  Record Entry ID provided by N
+	            Record Entry Spatial Location provided by N
+	            Record Entry Data Pointer provided by N
+	     	    Operation = Insert
+	         }  
+             Add B to reservation buffer
+             
+           
+           N = Parent of N
+         
+         (* For all nodes that don't underflow, update bounding box *)
+         While N != NULL
+           
+           I = {  Record Entry ID provided by N
+                  Record Entry Spatial Location provided provided by modified N
+                  Record Entry Child Pointer provided by N
+	          Operation = Update
+	          Containing Node is Parent of N
+	          Parent Node determined by stored tree traversal
+	       }    
+           Add I to A
+           
+           N = Parent of N
+             
        
-     Convert BufferObjects to IndexUnits (essentially the same thing only on disk)
-     Cluster IndexUnits with same containing node into same page
+     Check for and remove any redundancies in generated index units (e.g. insertions into a deleted page)
+     Cluster index units with the same containing node into same page
      Add remaining IndexUnits to free space in arbitrary page
      For each newly formed page
        Call UpdateNTT(Page)
