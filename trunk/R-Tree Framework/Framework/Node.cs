@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    public class Node
+    public class Node : PageData
     {
         protected List<NodeEntry> nodeEntries;
         protected Guid address, parent;
