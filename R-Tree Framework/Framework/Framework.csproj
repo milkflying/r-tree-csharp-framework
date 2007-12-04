@@ -41,6 +41,7 @@
     <Compile Include="Node.cs" />
     <Compile Include="NodeEntry.cs" />
     <Compile Include="Page.cs" />
+    <Compile Include="PageData.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Query.cs" />

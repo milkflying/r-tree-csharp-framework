@@ -11,11 +11,23 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
         protected Dictionary<Guid, Int64> addressTranslationTable;
         protected Dictionary<Int64, Page> pageTranslationTable;
         protected SortedList<Int64, Page> leastRecentlyUsed;
- 
+        protected Queue<Int64> freePages;
+        protected List<Page> dirtyPages();
         protected String storageFileLocation;
         protected FileStream storageReader;
         protected Int32 pageSize, cacheSize;
+        protected Int64 nextPageAddress;
 
+        protected virtual Int64 NextPageAddress
+        {
+            get
+            {
+                Int64 address = nextPageAddress;
+                nextPageAddress += PageSize;
+                return address;
+            }
+            set { nextPageAddress = value; }
+        }
         public virtual Int32 PageSize
         {
             get { return pageSize; }
@@ -46,16 +58,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
             get { return leastRecentlyUsed; }
             set { leastRecentlyUsed = value; }
         }
-        protected virtual Dictionary<Int64, Record> LoadedRecords
+        protected virtual List<Page> DirtyPages
         {
-            get { return loadedRecords; }
-            set { loadedRecords = value; }
+            get { return dirtyPages; }
+            set { dirtyPages = value; }
         }
-        protected virtual Dictionary<Int64, Node> LoadedNodes
+        protected virtual Queue<Int64> FreePages
         {
-            get { return loadedNodes; }
-            set { loadedNodes = value; }
-        }
+            get { return freePages; }
+            set { freePages = value; }
+        } 
         protected virtual FileStream StorageReader
         {
             get { return storageReader; }
@@ -77,71 +89,108 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
             AddressTranslationTable = new Dictionary<Guid, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
             LeastRecentlyUsedList = new SortedList<Int64, Page>();
+            DirtyPages = new List<Page>();
+            FreePages = new Queue<Int64>();
         }
-
+        
         public virtual Record LookupRecord(Guid address)
         {
-            Int64 offset = AddressTranslationTable[address];
-            if (PageTranslationTable.ContainsKey(offset))
-            {
-                Page page = PageTranslationTable[offset];
-                LeastRecentlyUsedList.RemoveAt(LeastRecentlyUsedList.IndexOfValue(page));
-                LeastRecentlyUsedList.Add(DateTime.Now.Ticks, page);
-                return LoadedRecords[offset];
-            }
-            else
-            {
-                Page page = LoadPageFromMemory(offset);
-                PageTranslationTable.Add(readPage.Address, readPage);
-                return new record(recordData);
-            }
+            Record record = new Record(LookupPage(address).Data);
+            CacheOverflowCheck();
+            return record;
         }
         public virtual Record LookupNode(Guid address)
         {
-            Int64 offset = AddressTranslationTable[address];
-            Byte[] recordData;
-            StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
-            StorageReader.Read(recordData, 0, PageSize);
-            return new record(recordData);
+            Node node = new Node(LookupPage(address));
+            CacheOverflowCheck();
+            return node;
         }
-        public virtual void WriteRecord(Record record)
+        public virtual void WritePageData(PageData data)
         {
-            Int64 address = AddressTranslationTable[record.Address];
-            Page data;
-            if (PageTranslationTable.ContainsKey(address))
-                data = PageTranslationTable[address];
+            Page page;
+            if (!AddressTranslationTable.ContainsKey(data.Address))
+                page = AllocateNewPage(data.Address);
             else
-                data = LoadPageFromMemory(address);
-            data.Data = record.GeneratePageData();
+            {
+                Int64 address = AddressTranslationTable[data.Address];
+                if (PageTranslationTable.ContainsKey(address))
+                    page = PageTranslationTable[address];
+                else
+                    page = LoadPageFromMemory(address);
+            }
+            page.Data = data.GeneratePageData();
+            DirtyPages.Add(page);
+            if (LeastRecentlyUsedList.ContainsValue(page))
+                LeastRecentlyUsedList.RemoveAt(LeastRecentlyUsedList.IndexOfValue(page));
+            LeastRecentlyUsedList.Add(DateTime.Now.Ticks, page);
+            CacheOverflowCheck();
         }
-        public virtual void WriteNode(Node node)
+        public virtual void DeletePageData(PageData data)
         {
+            Int64 address = AddressTranslationTable[data.Address];
+            AddressTranslationTable.Remove(data.Address);
+            Page page = PageTranslationTable[address];
+            PageTranslationTable.Remove(address);
+            LeastRecentlyUsedList.RemoveAt(LeastRecentlyUsedList.IndexOfValue(page));
+            while(DirtyPages.Contains(page))
+                DirtyPages.Remove(page);
+            FreePages.Enqueue(address);
+        }
+        protected virtual Page LookupPage(Guid address)
+        {
+            Page page;
+            Int64 offset = AddressTranslationTable[address];
+            if (PageTranslationTable.ContainsKey(offset))
+            {
+                page = PageTranslationTable[offset];
+                LeastRecentlyUsedList.RemoveAt(LeastRecentlyUsedList.IndexOfValue(page));
+            }
+            else
+            {
+                page = LoadPageFromMemory(offset);
+                PageTranslationTable.Add(readPage.Address, readPage);
+            }
+            LeastRecentlyUsedList.Add(DateTime.Now.Ticks, page);
+            return page;
         }
         protected virtual Page LoadPageFromMemory(Int64 offset)
         {
             Byte[] data = new Byte[PageSize];
-            StorageReader.Seek(offset, SeekOrigin.Begin);
-            StorageReader.Read(recordData, 0, PageSize);
-            Page readPage = new Page(Guid.NewGuid(), offset, data);
-            if (leastRecentlyUsed.Count == CacheSize)
-                EvictPage();
-            LeastRecentlyUsedList.Add(DateTime.Now.Ticks, readPage);
+            StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
+            StorageReader.Read(data, 0, PageSize);
+            return new Page(Guid.NewGuid(), offset, data);
+        }
+        protected virtual void WritePageToMemory(Page page)
+        {
+            StorageReader.Seek(page.Address, SeekOrigin.Begin);
+            StorageReader.Write(page.Data, 0, PageSize);
         }
         protected virtual void EvictPage()
         {
-            leastRecentlyUsed.RemoveAt(0);
+            Page page = leastRecentlyUsed[leastRecentlyUsed.Keys[0]];
+            if (DirtyPages.Contains(page))
+                WritePageToMemory(page);
+            leastRecentlyUsed.RemoveAt[0];
+            while (DirtyPages.Contains(page))
+                DirtyPages.Remove(page);
+            PageTranslationTable.Remove(page.Address);
         }
-
+        protected virtual void CacheOverflowCheck()
+        {
+            while (PageTranslationTable.Count > CacheSize)
+                EvictPage();
+        }
+        protected virtual Page AllocateNewPage(Guid address)
+        {
+            Int64 pageAddress;
+            if (FreePages.Count > 0)
+                pageAddress = FreePages.Dequeue();
+            else
+                pageAddress = NextPageAddress;
+            AddressTranslationTable.Add(address, pageAddress);
+            Page newPage = new Page(Guid.NewGuid(), pageAddress, new Byte[PageSize]);
+            PageTranslationTable.Add(pageAddress, newPage);
+            return newPage;
+        }
     }
 }
-
-/* todo
-make abstract dictionary containing the pages for quick lookup
-make abstract priority queue used to determine which page is evicted
-function for writing back abstract page
-function for creating abstract new page worth of data
-function for generating abstract node from data indexer abstract page
-function for saving abstract ndoe to abstract page worth of data
-function for reading abstract page of data and creating abstract record
-function for saving abstract record as abstract page of data
-*/

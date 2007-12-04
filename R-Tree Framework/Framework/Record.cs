@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
-    public class Record
+    public class Record : PageData
     {
         protected virtual MinimumBoundingBox minimumBoundingBox;
         protected virtual Guid address;
