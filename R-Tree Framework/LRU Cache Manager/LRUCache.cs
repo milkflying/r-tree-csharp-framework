@@ -1,40 +1,64 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Edu.Psu.Cse.R_Tree_Framework.Framework;
+using System.IO;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
 {
-    public class Page{}
     public class LRUCacheManager
     {
         protected Dictionary<Guid, Int64> addressTranslationTable;
-        protected Dictionary<Int64, Page> pageIDTranslationTable;
-        protected leastRecentlyUsedList;
+        protected Dictionary<Int64, Page> pageTranslationTable;
+        protected SortedList<Int64, Page> leastRecentlyUsedList;
+        protected Dictionary<Int64, Record> loadedRecords;
+        protected Dictionary<Int64, Node> loadedNodes;
+ 
         protected String storageFileLocation;
         protected FileStream storageReader;
         protected Int32 pageSize, cacheSize;
 
-        protected Int32 PageSize
+        public virtual Int32 PageSize
         {
             get { return pageSize; }
-            set { pageSize = value; }
+            protected set { pageSize = value; }
         }
-        protected Int32 CacheSize
+        public virtual Int32 CacheSize
         {
             get { return cacheSize; }
-            set { cacheSize = value; }
+            protected set { cacheSize = value; }
         }
-        protected String StorageFileLocation
+        public virtual String StorageFileLocation
         {
             get { return storageFileLocation; }
-            set { storageFileLocation = value; }
+            protected set { storageFileLocation = value; }
         }
-        protected Dictionary<Guid, Int32> AddressTranslationTable
+        protected virtual Dictionary<Guid, Int64> AddressTranslationTable
         {
             get { return addressTranslationTable; }
             set { addressTranslationTable = value; }
         }
-        protected  FileStream StorageReader
+        protected virtual Dictionary<Int64, Page> PageTranslationTable
+        {
+            get { return pageTranslationTable; }
+            set { pageTranslationTable = value; }
+        }
+        protected virtual SortedList<Int64, Page> LeastRecentlyUsedList
+        {
+            get { return leastRecentlyUsedList; }
+            set { leastRecentlyUsedList = value; }
+        }
+        protected virtual Dictionary<Int64, Record> LoadedRecords
+        {
+            get { return loadedRecords; }
+            set { loadedRecords = value; }
+        }
+        protected virtual Dictionary<Int64, Node> LoadedNodes
+        {
+            get { return loadedNodes; }
+            set { loadedNodes = value; }
+        }
+        protected virtual FileStream StorageReader
         {
             get { return storageReader; }
             set { storageReader = value; }
@@ -44,32 +68,62 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
         {
             StorageFileLocation = storageFileLocation;
             StorageReader = new FileStream(
-                StorageFileLocation, 
-                FileMode.Create, 
-                FileAccess.ReadWrite, 
-                FileShare.None, 
-                8, 
+                StorageFileLocation,
+                FileMode.Create,
+                FileAccess.ReadWrite,
+                FileShare.None,
+                8,
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
             pageSize = pageSize;
             CacheSize = numberOfPagesToCache;
-
+            AddressTranslationTable = new Dictionary<Guid, Int64>();
+            PageTranslationTable = new Dictionary<Int64, Page>();
+            LeastRecentlyUsedList = new SortedList<Int64, Page>();
         }
 
-        public Record LookupRecord(Guid address)
+        public virtual Record LookupRecord(Guid address)
+        {
+            Int64 offset = AddressTranslationTable[address];
+            if (PageTranslationTable.ContainsKey(offset))
+            {
+                Page page = PageTranslationTable[offset];
+                LeastRecentlyUsedList.RemoveAt(LeastRecentlyUsedList.IndexOfValue(page));
+                LeastRecentlyUsedList.Add(DateTime.Now.Ticks, page);
+                return LoadedRecords[offset];
+            }
+            else
+            {
+            Page page = LoadPageFromMemory(offset);
+            PageTranslationTable.Add(readPage.Address, readPage);
+            return new record(recordData);
+        }
+        public virtual Record LookupNode(Guid address)
         {
             Int64 offset = AddressTranslationTable[address];
             Byte[] recordData;
-            StorageReader.Seek(offset, SeekOrigin.Begin);
+            StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
             StorageReader.Read(recordData, 0, PageSize);
-            //Reader byte sequence of a record at the offset location
-
             return new record(recordData);
         }
+        protected virtual Page LoadPageFromMemory(Int64 offset)
+        {
+            Byte[] data = new Byte[PageSize];
+            StorageReader.Seek(offset, SeekOrigin.Begin);
+            StorageReader.Read(recordData, 0, PageSize);
+            Page readPage = new Page(Guid.NewGuid(), offset, data);
+            if (leastRecentlyUsedList.Count = CacheSize)
+                EvictPage();
+            LeastRecentlyUsedList.Add(DateTime.Now.Ticks, readPage);
+        }
+        protected virtual void EvictPage()
+        {
+            leastRecentlyUsedList.RemoveAt(0);
+        }
+
     }
 }
 
 /* todo
-define page 
 make abstract dictionary containing the pages for quick lookup
 make abstract priority queue used to determine which page is evicted
 function for writing back abstract page
