@@ -10,9 +10,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
     {
         protected Dictionary<Guid, Int64> addressTranslationTable;
         protected Dictionary<Int64, Page> pageTranslationTable;
-        protected SortedList<Int64, Page> leastRecentlyUsedList;
-        protected Dictionary<Int64, Record> loadedRecords;
-        protected Dictionary<Int64, Node> loadedNodes;
+        protected SortedList<Int64, Page> leastRecentlyUsed;
  
         protected String storageFileLocation;
         protected FileStream storageReader;
@@ -45,8 +43,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
         }
         protected virtual SortedList<Int64, Page> LeastRecentlyUsedList
         {
-            get { return leastRecentlyUsedList; }
-            set { leastRecentlyUsedList = value; }
+            get { return leastRecentlyUsed; }
+            set { leastRecentlyUsed = value; }
         }
         protected virtual Dictionary<Int64, Record> LoadedRecords
         {
@@ -93,9 +91,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
             }
             else
             {
-            Page page = LoadPageFromMemory(offset);
-            PageTranslationTable.Add(readPage.Address, readPage);
-            return new record(recordData);
+                Page page = LoadPageFromMemory(offset);
+                PageTranslationTable.Add(readPage.Address, readPage);
+                return new record(recordData);
+            }
         }
         public virtual Record LookupNode(Guid address)
         {
@@ -105,19 +104,32 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
             StorageReader.Read(recordData, 0, PageSize);
             return new record(recordData);
         }
+        public virtual void WriteRecord(Record record)
+        {
+            Int64 address = AddressTranslationTable[record.Address];
+            Page data;
+            if (PageTranslationTable.ContainsKey(address))
+                data = PageTranslationTable[address];
+            else
+                data = LoadPageFromMemory(address);
+            data.Data = record.GeneratePageData();
+        }
+        public virtual void WriteNode(Node node)
+        {
+        }
         protected virtual Page LoadPageFromMemory(Int64 offset)
         {
             Byte[] data = new Byte[PageSize];
             StorageReader.Seek(offset, SeekOrigin.Begin);
             StorageReader.Read(recordData, 0, PageSize);
             Page readPage = new Page(Guid.NewGuid(), offset, data);
-            if (leastRecentlyUsedList.Count = CacheSize)
+            if (leastRecentlyUsed.Count == CacheSize)
                 EvictPage();
             LeastRecentlyUsedList.Add(DateTime.Now.Ticks, readPage);
         }
         protected virtual void EvictPage()
         {
-            leastRecentlyUsedList.RemoveAt(0);
+            leastRecentlyUsed.RemoveAt(0);
         }
 
     }
