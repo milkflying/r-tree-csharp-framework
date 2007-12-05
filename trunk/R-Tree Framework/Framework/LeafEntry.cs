@@ -10,5 +10,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             : base(minimumBoundingBox, recordIdentifier)
         {
         }
+        public LeafEntry(Byte[] data)
+            : base(data)
+        {
+        }
     }
 }

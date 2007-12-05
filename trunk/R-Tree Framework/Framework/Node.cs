@@ -41,8 +41,33 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             ChildType = childType;
             nodeEntries = new List<NodeEntry>(maxNodeEntries);
         }
-        public Node(Byte[] pageData)
+        public Node(Guid address, Type childType, Byte[] pageData)
         {
+            Address = address;
+            ChildType = childType;
+            Byte[] parentAddress = new Byte[16];
+            Int32 index = 32, nodeEntryCount;
+
+            Array.Copy(pageData, index, parentAddress, 0, 16);
+            Parent = new Guid(parentAddress);
+            index += 16;
+
+            nodeEntryCount = BitConverter.ToInt32(pageData, index);
+            index += 4;
+
+            NodeEntries = new List<NodeEntry>(nodeEntryCount);
+            for (int i = 0; i < nodeEntryCount; i++)
+            {
+                Byte[] entryData = new Byte[Constants.NODE_ENTRY_SIZE];
+                Array.Copy(pageData, index, entryData, 0, Constants.NODE_ENTRY_SIZE);
+                AddNodeEntry(entryData);
+                index += Constants.NODE_ENTRY_SIZE;
+            }
+        }
+
+        protected virtual void AddNodeEntry(Byte[] entryData)
+        {
+            NodeEntries.Add(new NodeEntry(entryData));
         }
         public MinimumBoundingBox CalculateMinimumBoundingBox()
         {
@@ -55,7 +80,28 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 
         public Byte[] GeneratePageData()
         {
-            return new Byte[1];
+            Int32 index = 0;
+            Byte[] data = new Byte[Constants.NODE_SIZE];
+            
+            this.GetType().GUID.ToByteArray().CopyTo(data, index);
+            index += 16;
+
+            ChildType.GUID.ToByteArray().CopyTo(data, index);
+            index += 16;
+
+            Parent.ToByteArray().CopyTo(data, index);
+            index += 16;
+
+            BitConverter.GetBytes(NodeEntries.Count).CopyTo(data, index);
+            index += 4;
+
+            foreach (NodeEntry entry in NodeEntries)
+            {
+                entry.GetBytes().CopyTo(data, index);
+                index += Constants.NODE_ENTRY_SIZE;
+            }
+
+            return data;
         }
         public void AddNodeEntry(NodeEntry child)
         {

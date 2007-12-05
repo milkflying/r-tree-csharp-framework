@@ -10,13 +10,13 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             : base(maxRecordEntries, parent, typeof(Record))
         {
         }
-        public Leaf(Byte[] pageData)
-            : base(pageData)
+        public Leaf(Guid address, Byte[] pageData)
+            : base(address, typeof(Record), pageData)
         {
         }
-        public void AddNodeEntry(LeafEntry record)
+        protected override void AddNodeEntry(Byte[] entryData)
         {
-            NodeEntries.Add(record);
+            NodeEntries.Add(new LeafEntry(entryData));
         }
     }
 }

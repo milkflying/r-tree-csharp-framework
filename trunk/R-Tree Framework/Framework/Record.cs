@@ -15,7 +15,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             get { return recordID; }
             protected set { recordID = value; }
         }
-        public virtual MinimumBoundingBox MinimumBoundingBox
+        public virtual MinimumBoundingBox BoundingBox
         {
             get { return minimumBoundingBox; }
             protected set { minimumBoundingBox = value; }
@@ -30,15 +30,27 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         {
             RecordID = recordID;
             Address = Guid.NewGuid();
-            MinimumBoundingBox = minimumBoundingBox;
+            BoundingBox = minimumBoundingBox;
         }
-        public Record(Byte[] data)
+        public Record(Guid Address, Byte[] data)
         {
+            BoundingBox = new MinimumBoundingBox(
+                BitConverter.ToDouble(data, 0),
+                BitConverter.ToDouble(data, 8),
+                BitConverter.ToDouble(data, 16),
+                BitConverter.ToDouble(data, 24));
+            RecordID = BitConverter.ToInt32(data, 32);
         }
 
         public virtual Byte[] GeneratePageData()
         {
-            return new Byte[1];
+            Byte[] data = new Byte[Constants.RECORD_SIZE];
+            BitConverter.GetBytes(BoundingBox.MinX).CopyTo(data, 0);
+            BitConverter.GetBytes(BoundingBox.MinY).CopyTo(data, 8);
+            BitConverter.GetBytes(BoundingBox.MaxX).CopyTo(data, 16);
+            BitConverter.GetBytes(BoundingBox.MaxY).CopyTo(data, 24);
+            BitConverter.GetBytes(RecordID).CopyTo(data, 32);
+            return data;
         }
     }
 }

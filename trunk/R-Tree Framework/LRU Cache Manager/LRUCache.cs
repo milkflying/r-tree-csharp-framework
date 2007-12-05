@@ -19,7 +19,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         protected String storageFileLocation;
         protected FileStream storageReader;
         protected Int32 pageSize, cacheSize;
-        protected Int64 nextPageAddress;
+        protected Int64 nextPageAddress, ticks;
 
         protected virtual Int64 NextPageAddress
         {
@@ -76,7 +76,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             get { return storageReader; }
             set { storageReader = value; }
         }
-
+        protected virtual Int64 Ticks
+        {
+            get { return ticks; }
+            set { ticks = value; }
+        }
         public LRUCacheManager(String storageFileLocation, Int32 pageSize, Int32 numberOfPagesToCache)
         {
             StorageFileLocation = storageFileLocation;
@@ -87,24 +91,45 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 FileShare.None,
                 8,
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
-            pageSize = pageSize;
+            PageSize = pageSize;
             CacheSize = numberOfPagesToCache;
             AddressTranslationTable = new Dictionary<Guid, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
             LeastRecentlyUsed = new SortedList<Int64, Page>();
             DirtyPages = new List<Page>();
             FreePages = new Queue<Int64>();
+            Ticks = 0;
         }
         
         public virtual Record LookupRecord(Guid address)
         {
-            Record record = new Record(LookupPage(address).Data);
+            Record record = new Record(address, LookupPage(address).Data);
             CacheOverflowCheck();
             return record;
         }
         public virtual Node LookupNode(Guid address)
         {
-            Node node = new Node(LookupPage(address).Data);
+            Node node;
+            Byte[] type = new Byte[16];
+            Page page = LookupPage(address);
+            Array.Copy(page.Data, type, 16);
+            if (typeof(Leaf).GUID.Equals(new Guid(type)))
+                node = new Leaf(address, page.Data);
+            else if (typeof(Node).GUID.Equals(new Guid(type)))
+            {
+                Byte[] childType = new Byte[16];
+                Array.Copy(page.Data, childType, 16);
+                if (typeof(Leaf).GUID.Equals(new Guid(type)))
+                    node = new Node(address, typeof(Leaf), page.Data);
+                else if (typeof(Node).GUID.Equals(new Guid(type)))
+                    node = new Node(address, typeof(Node), page.Data);
+                else if (typeof(Record).GUID.Equals(new Guid(type)))
+                    throw new Exception();
+                else
+                    throw new Exception();
+            }
+            else
+                throw new Exception();
             CacheOverflowCheck();
             return node;
         }
@@ -119,24 +144,30 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 if (PageTranslationTable.ContainsKey(address))
                     page = PageTranslationTable[address];
                 else
+                {
                     page = LoadPageFromMemory(address);
+                    PageTranslationTable.Add(page.Address, page);
+                }
             }
             page.Data = data.GeneratePageData();
             DirtyPages.Add(page);
             if (LeastRecentlyUsed.ContainsValue(page))
                 LeastRecentlyUsed.RemoveAt(LeastRecentlyUsed.IndexOfValue(page));
-            LeastRecentlyUsed.Add(DateTime.Now.Ticks, page);
+            LeastRecentlyUsed.Add(Ticks++, page);
             CacheOverflowCheck();
         }
         public virtual void DeletePageData(PageData data)
         {
             Int64 address = AddressTranslationTable[data.Address];
             AddressTranslationTable.Remove(data.Address);
-            Page page = PageTranslationTable[address];
-            PageTranslationTable.Remove(address);
-            LeastRecentlyUsed.RemoveAt(LeastRecentlyUsed.IndexOfValue(page));
-            while(DirtyPages.Contains(page))
-                DirtyPages.Remove(page);
+            if (PageTranslationTable.ContainsKey(address))
+            {
+                Page page = PageTranslationTable[address];
+                PageTranslationTable.Remove(address);
+                LeastRecentlyUsed.RemoveAt(LeastRecentlyUsed.IndexOfValue(page));
+                while (DirtyPages.Contains(page))
+                    DirtyPages.Remove(page);
+            }
             FreePages.Enqueue(address);
         }
         protected virtual Page LookupPage(Guid address)
@@ -153,7 +184,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 page = LoadPageFromMemory(offset);
                 PageTranslationTable.Add(page.Address, page);
             }
-            LeastRecentlyUsed.Add(DateTime.Now.Ticks, page);
+            LeastRecentlyUsed.Add(Ticks++, page);
             return page;
         }
         protected virtual Page LoadPageFromMemory(Int64 offset)
@@ -162,14 +193,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
             StorageReader.Read(data, 0, PageSize);
             Page page = new Page(Guid.NewGuid(), offset, data);
-            PageFault(this, new LRUCacheEventArgs(page));
+            if (PageFault != null)
+                PageFault(this, new LRUCacheEventArgs(page));
             return page;
         }
         protected virtual void WritePageToMemory(Page page)
         {
             StorageReader.Seek(page.Address, SeekOrigin.Begin);
             StorageReader.Write(page.Data, 0, PageSize);
-            PageWrite(this, new LRUCacheEventArgs(page));
+            if (PageWrite != null)
+                PageWrite(this, new LRUCacheEventArgs(page));
         }
         protected virtual void EvictPage()
         {
