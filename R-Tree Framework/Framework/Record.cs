@@ -6,9 +6,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class Record : PageData
     {
-        protected virtual MinimumBoundingBox minimumBoundingBox;
-        protected virtual Guid address;
-        protected virtual Int32 recordID;
+        protected MinimumBoundingBox minimumBoundingBox;
+        protected Guid address;
+        protected Int32 recordID;
 
         public virtual Int32 RecordID
         {
@@ -31,6 +31,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             RecordID = recordID;
             Address = Guid.NewGuid();
             MinimumBoundingBox = minimumBoundingBox;
+        }
+        public Record(Byte[] data)
+        {
         }
 
         public virtual Byte[] GeneratePageData()
