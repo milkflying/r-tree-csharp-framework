@@ -7,8 +7,8 @@
     <ProjectGuid>{2F37A0D6-7A76-4459-8F50-4FAFA9522419}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache.Highest_Tree_Level_Cache</RootNamespace>
-    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache.Highest_Tree_Level_Cache</AssemblyName>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers</RootNamespace>
+    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Highest_Tree_Level_Cache</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

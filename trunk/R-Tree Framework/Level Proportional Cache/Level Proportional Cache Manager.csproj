@@ -7,7 +7,7 @@
     <ProjectGuid>{68917546-315D-42E1-8FD3-403E7C1232EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache</RootNamespace>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers</RootNamespace>
     <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

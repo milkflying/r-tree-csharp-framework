@@ -7,7 +7,7 @@
     <ProjectGuid>{C4FFBD16-B8AE-4794-B116-21B2617FF658}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics.Performance_Analyzer</RootNamespace>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics</RootNamespace>
     <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics.Performance_Analyzer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,7 +33,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PerformanceAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{DCC40259-AE91-4A83-926F-E70B53ABE762}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

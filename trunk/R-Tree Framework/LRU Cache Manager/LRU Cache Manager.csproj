@@ -7,7 +7,7 @@
     <ProjectGuid>{A3B647C1-12C5-425B-95AF-CAC042DD39A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache</RootNamespace>
+    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers</RootNamespace>
     <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LRUCache.cs" />
+    <Compile Include="LRUCacheEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
