@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache.Highest_Tree_Level_Cache")]
+[assembly: AssemblyTitle("Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Highest_Tree_Level_Cache")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache.Highest_Tree_Level_Cache")]
+[assembly: AssemblyProduct("Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Highest_Tree_Level_Cache")]
 [assembly: AssemblyCopyright("Copyright ©  2007 Michael Kozeniauskas")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

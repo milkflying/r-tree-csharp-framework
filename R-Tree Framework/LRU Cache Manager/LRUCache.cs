@@ -4,10 +4,13 @@ using System.Text;
 using Edu.Psu.Cse.R_Tree_Framework.Framework;
 using System.IO;
 
-namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
+namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
 {
     public class LRUCacheManager : CacheManager
     {
+        public event CacheEventHandler PageFault;
+        public event CacheEventHandler PageWrite;
+
         protected Dictionary<Guid, Int64> addressTranslationTable;
         protected Dictionary<Int64, Page> pageTranslationTable;
         protected SortedList<Int64, Page> leastRecentlyUsed;
@@ -158,12 +161,15 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache
             Byte[] data = new Byte[PageSize];
             StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
             StorageReader.Read(data, 0, PageSize);
-            return new Page(Guid.NewGuid(), offset, data);
+            Page page = new Page(Guid.NewGuid(), offset, data);
+            PageFault(this, new LRUCacheEventArgs(page));
+            return page;
         }
         protected virtual void WritePageToMemory(Page page)
         {
             StorageReader.Seek(page.Address, SeekOrigin.Begin);
             StorageReader.Write(page.Data, 0, PageSize);
+            PageWrite(this, new LRUCacheEventArgs(page));
         }
         protected virtual void EvictPage()
         {
