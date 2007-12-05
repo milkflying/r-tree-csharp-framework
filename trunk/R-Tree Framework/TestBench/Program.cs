@@ -9,11 +9,11 @@ using System.IO;
 
 namespace TestBench
 {
-    public class Program
+    public class Program : IDisposable
     {
         public static Int32
-            MINIMUM_OCCUPANCY = MAXIMUM_OCCUPANCY / 3,
             MAXIMUM_OCCUPANCY = Constants.NODE_ENTRIES_PER_NODE,
+            MINIMUM_OCCUPANCY = MAXIMUM_OCCUPANCY / 3,
             CACHE_SIZE = 0;
 
         public static String 
@@ -24,9 +24,11 @@ namespace TestBench
 
         public static void Main(string[] args)
         {
-            Program program = new Program(QUERY_PLAN_LOCATION);
-            program.BuildIndex(DATA_SET_LOCATION);
+            //Program program = new Program(QUERY_PLAN_LOCATION);
+            Program program = new Program(DATA_SET_LOCATION, "savedIndex.dat", "savedCache.dat");
+            //program.BuildIndex(DATA_SET_LOCATION);
             program.ExecuteQueryPlan();
+            program.Dispose();
         }
 
         private String queryPlan;
@@ -41,6 +43,14 @@ namespace TestBench
             index = new R_Tree(MINIMUM_OCCUPANCY, MAXIMUM_OCCUPANCY, cache);
         }
 
+        public Program(String queryPlan, String indexLoc, String cacheLoc)
+        {
+            this.queryPlan = queryPlan;
+            cache = new LRUCacheManager(cacheLoc, CACHE_SIZE);
+            analyzer = new PerformanceAnalyzer(cache);
+            index = new R_Tree(indexLoc, cache);
+        }
+
         public void BuildIndex(String dataFileLocation)
         {
             StreamReader reader = new StreamReader(dataFileLocation);
@@ -53,6 +63,7 @@ namespace TestBench
                 index.Insert(record);
             }
             reader.Close();
+            //index.SaveIndex("savedIndex.dat", "savedCache.dat", "savedMemory.dat");
         }
         public void ExecuteQueryPlan()
         {
@@ -100,6 +111,10 @@ namespace TestBench
             }
             reader.Close();
             writer.Close();
+        }
+        public virtual void Dispose()
+        {
+            cache.Dispose();
         }
     }
 }

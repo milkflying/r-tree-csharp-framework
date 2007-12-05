@@ -100,7 +100,37 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             FreePages = new Queue<Int64>();
             Ticks = 0;
         }
-        
+        public LRUCacheManager(String savedLocation, Int32 numberOfPagesToCache)
+        {
+            StreamReader reader = new StreamReader(savedLocation);
+            StorageFileLocation = reader.ReadLine();
+            PageSize = Int32.Parse(reader.ReadLine());
+            NextPageAddress = Int64.Parse(reader.ReadLine());
+            StorageReader = new FileStream(
+                StorageFileLocation,
+                FileMode.Create,
+                FileAccess.ReadWrite,
+                FileShare.None,
+                8,
+                FileOptions.WriteThrough | FileOptions.RandomAccess);
+            CacheSize = numberOfPagesToCache;
+            AddressTranslationTable = new Dictionary<Guid, Int64>();
+            PageTranslationTable = new Dictionary<Int64, Page>();
+            LeastRecentlyUsed = new SortedList<Int64, Page>();
+            DirtyPages = new List<Page>();
+            FreePages = new Queue<Int64>();
+            Ticks = 0;
+            if (!reader.ReadLine().Equals("AddressTranslationTable"))
+                throw new Exception();
+            String buffer;
+            while (!(buffer = reader.ReadLine()).Equals("FreePages"))
+                AddressTranslationTable.Add(
+                    new Guid(buffer),
+                    Int64.Parse(reader.ReadLine()));
+            while (!reader.EndOfStream)
+                FreePages.Enqueue(Int64.Parse(reader.ReadLine()));
+            reader.Close();
+        }
         public virtual Record LookupRecord(Guid address)
         {
             Record record = new Record(address, LookupPage(address).Data);
@@ -235,6 +265,39 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         {
             while (PageTranslationTable.Count > 0)
                 EvictPage();
+        }
+
+        public virtual void SaveCache(String cacheSaveLocation, String memorySaveLocation)
+        {
+            Int64 position = StorageReader.Position;
+            StorageReader.Close();
+            File.Copy(StorageFileLocation, memorySaveLocation, true);
+            StorageReader = new FileStream(
+                StorageFileLocation,
+                FileMode.Open,
+                FileAccess.ReadWrite,
+                FileShare.None,
+                8,
+                FileOptions.WriteThrough | FileOptions.RandomAccess);
+            StorageReader.Seek(position, SeekOrigin.Begin);
+            StreamWriter writer = new StreamWriter(cacheSaveLocation);
+            writer.WriteLine(memorySaveLocation);
+            writer.WriteLine(PageSize);
+            writer.WriteLine(NextPageAddress);
+            writer.WriteLine("AddressTranslationTable");
+            foreach(KeyValuePair<Guid, Int64> entry in AddressTranslationTable)
+            {
+                writer.WriteLine(entry.Key);
+                writer.WriteLine(entry.Value);
+            }
+            writer.WriteLine("FreePages");
+            foreach (Int64 page in FreePages)
+                writer.WriteLine(page);
+            writer.Close();
+        }
+        public virtual void Dispose()
+        {
+            StorageReader.Close();
         }
     }
 }

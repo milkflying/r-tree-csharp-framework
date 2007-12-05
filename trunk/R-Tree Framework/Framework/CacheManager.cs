@@ -6,7 +6,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public delegate void CacheEventHandler(object sender, EventArgs args);
 
-    public interface CacheManager
+    public interface CacheManager : IDisposable
     {
         event CacheEventHandler PageFault;
         event CacheEventHandler PageWrite;
@@ -19,5 +19,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         Node LookupNode(Guid address);
         Record LookupRecord(Guid address);
         void FlushCache();
+        void SaveCache(String cacheSaveLocation, String memorySaveLocation);
     }
 }

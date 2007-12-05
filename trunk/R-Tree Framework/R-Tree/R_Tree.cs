@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using Edu.Psu.Cse.R_Tree_Framework.Framework;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
@@ -56,7 +57,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             TreeHeight = 1;
             Cache.FlushCache();
         }
-
+        public R_Tree(String indexSavedLocation, CacheManager cache)
+        {
+            Cache = cache;
+            StreamReader reader = new StreamReader(indexSavedLocation);
+            Root = new Guid(reader.ReadLine());
+            MinimumNodeOccupancy = Int32.Parse(reader.ReadLine());
+            MaximumNodeOccupancy = Int32.Parse(reader.ReadLine());
+            TreeHeight = Int32.Parse(reader.ReadLine());
+            reader.Close();
+        }
         #endregion
         #region Public Methods
 
@@ -110,7 +120,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             else
                 return null;
         }
-
+        public virtual void SaveIndex(String indexSaveLocation, String cacheSaveLocation, String memorySaveLocation)
+        {
+            Cache.SaveCache(cacheSaveLocation, memorySaveLocation);
+            StreamWriter writer = new StreamWriter(indexSaveLocation);
+            writer.WriteLine(Root);
+            writer.WriteLine(MinimumNodeOccupancy);
+            writer.WriteLine(MaximumNodeOccupancy);
+            writer.WriteLine(TreeHeight);
+            writer.Close();
+        }
         #endregion
         #region Protected Methods
 
@@ -312,15 +331,21 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             {
                 node1 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
                 node2 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
-                if (nodeToBeSplit.ChildType.Equals(typeof(Leaf)))
-                    Console.WriteLine("L");
-                else if (nodeToBeSplit.ChildType.Equals(typeof(Node)))
-                    Console.WriteLine("N");
-                else
-                    Console.WriteLine("?");
             }
             node1.AddNodeEntry(seeds[0]);
             node2.AddNodeEntry(seeds[1]);
+            if (!(seeds[0] is LeafEntry))
+            {
+                Node child = Cache.LookupNode(seeds[0].Child);
+                child.Parent = node1.Address;
+                Cache.WritePageData(child);
+            }
+            if (!(seeds[1] is LeafEntry))
+            {
+                Node child = Cache.LookupNode(seeds[1].Child);
+                child.Parent = node2.Address;
+                Cache.WritePageData(child);
+            }
             while (entries.Count > 0)
             {
                 if (node1.NodeEntries.Count + entries.Count == MinimumNodeOccupancy)
