@@ -10,7 +10,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #region Instance Variables
 
         protected Int32 minimumNodeOccupancy, maximumNodeOccupancy, treeHeight;
-        protected Node root;
+        protected Guid root;
         protected CacheManager cache;
 
         #endregion
@@ -31,7 +31,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             get { return maximumNodeOccupancy; }
             protected set { maximumNodeOccupancy = value; }
         }
-        public Node Root
+        public Guid Root
         {
             get { return root; }
             protected set { root = value; }
@@ -50,8 +50,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             MinimumNodeOccupancy = minimumNodeOccupancy;
             MaximumNodeOccupancy = maximumNodeOccupancy;
             Cache = cache;
-            Root = new Leaf(MaximumNodeOccupancy, Guid.Empty);
+            Leaf rootNode = new Leaf(MaximumNodeOccupancy, Guid.Empty);
+            root = rootNode.Address;
+            Cache.WritePageData(rootNode);
             TreeHeight = 1;
+            Cache.FlushCache();
         }
 
         #endregion
@@ -59,6 +62,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 
         public virtual void Insert(Record record)
         {
+            Cache.WritePageData(record);
             Leaf leafToInsertInto = ChooseLeaf(record);
             Insert(record, leafToInsertInto);
             if (leafToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
@@ -72,7 +76,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         public virtual void Delete(Record record)
         {
-            Leaf leafWithRecord = FindLeaf(record, Root);
+            Leaf leafWithRecord = FindLeaf(record, Cache.LookupNode(Root));
             if (leafWithRecord == null)
                 return;
             LeafEntry entryToRemove = null;
@@ -81,12 +85,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     entryToRemove = entry;
             leafWithRecord.RemoveNodeEntry(entryToRemove);
             CondenseTree(leafWithRecord);
-            if (Root.NodeEntries.Count == 1)
+            Node rootNode = Cache.LookupNode(Root);
+            if (rootNode.NodeEntries.Count == 1)
             {
-                Node newRoot = Cache.LookupNode(Root.NodeEntries[0].Child);
+                Node newRoot = Cache.LookupNode(rootNode.NodeEntries[0].Child);
                 newRoot.Parent = Guid.Empty;
-                Root = newRoot;
+                Root = newRoot.Address;
+                Cache.DeletePageData(rootNode);
+                Cache.WritePageData(newRoot);
             }
+            Cache.DeletePageData(record);
         }
         public virtual void Update(Record originalRecord, Record newRecord)
         {
@@ -96,9 +104,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public virtual List<Record> Search(Query query)
         {
             if (query is RegionQuery)
-                return Search(query as RegionQuery, Root);
+                return Search(query as RegionQuery, Cache.LookupNode(Root));
             else if (query is KNearestNeighborQuery)
-                return Search(query as KNearestNeighborQuery, root);
+                return Search(query as KNearestNeighborQuery, Cache.LookupNode(Root));
             else
                 return null;
         }
@@ -193,7 +201,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual Leaf ChooseLeaf(Record record)
         {
-            Node node = Root;
+            Node node = Cache.LookupNode(Root);
             while (!(node is Leaf))
             {
                 NodeEntry minEnlargment = node.NodeEntries[0];
@@ -208,12 +216,13 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                         minEnlargment = nodeEntry;
                     }
                 }
+                node = Cache.LookupNode(minEnlargment.Child);
             }
             return node as Leaf;
         }
         protected virtual Node ChooseNode(Node node)
         {
-            Node insertionNode = Root;
+            Node insertionNode = Cache.LookupNode(Root);
             MinimumBoundingBox nodeBoundingBox = node.CalculateMinimumBoundingBox();
             Int32 nodeHeight = CalculateHeight(node), currentDepth = 1;
             while (currentDepth + nodeHeight < TreeHeight)
@@ -281,10 +290,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         protected virtual void Insert(Record record, Leaf leaf)
         {
             leaf.AddNodeEntry(new LeafEntry(record.MinimumBoundingBox, record.Address));
+            Cache.WritePageData(leaf);
         }
         protected virtual void Insert(Node newNode, Node node)
         {
             node.AddNodeEntry(new NodeEntry(newNode.CalculateMinimumBoundingBox(), newNode.Address));
+            Cache.WritePageData(node);
         }
         protected virtual List<Node> Split(Node nodeToBeSplit)
         {
@@ -292,8 +303,17 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             List<NodeEntry> seeds = PickSeeds(entries);
             entries.Remove(seeds[0]);
             entries.Remove(seeds[1]);
-            Node node1 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType),
+            Node node1, node2;
+            if (nodeToBeSplit is Leaf)
+            {
+                node1 = new Leaf(MaximumNodeOccupancy, nodeToBeSplit.Parent);
+                node2 = new Leaf(MaximumNodeOccupancy, nodeToBeSplit.Parent);
+            }
+            else
+            {
+                node1 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
                 node2 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
+            }
             node1.AddNodeEntry(seeds[0]);
             node2.AddNodeEntry(seeds[1]);
             while (entries.Count > 0)
@@ -301,40 +321,66 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 if (node1.NodeEntries.Count + entries.Count == MinimumNodeOccupancy)
                 {
                     foreach (NodeEntry entry in entries)
+                    {
                         node1.AddNodeEntry(entry);
+                        if(!(entry is LeafEntry))
+                        {
+                            Node child = Cache.LookupNode(entry.Child);
+                            child.Parent = node1.Address;
+                            Cache.WritePageData(child);
+                        }
+                    }
                     break;
                 }
                 else if (node2.NodeEntries.Count + entries.Count == MinimumNodeOccupancy)
                 {
                     foreach (NodeEntry entry in entries)
+                    {
                         node2.AddNodeEntry(entry);
+                        if (!(entry is LeafEntry))
+                        {
+                            Node child = Cache.LookupNode(entry.Child);
+                            child.Parent = node2.Address;
+                            Cache.WritePageData(child);
+                        }
+                    }
                     break;
                 }
                 MinimumBoundingBox minimumBoundingBox1 = node1.CalculateMinimumBoundingBox(),
                 minimumBoundingBox2 = node2.CalculateMinimumBoundingBox();
                 NodeEntry nextEntry = PickNext(entries, minimumBoundingBox1, minimumBoundingBox2);
+                Node nodeToEnter;
                 if (GetFutureSize(nextEntry.MinimumBoundingBox, minimumBoundingBox1) ==
                     GetFutureSize(nextEntry.MinimumBoundingBox, minimumBoundingBox2))
                 {
                     if (minimumBoundingBox1.GetArea() == minimumBoundingBox2.GetArea())
                         if (node1.NodeEntries.Count <= node2.NodeEntries.Count)
-                            node1.AddNodeEntry(nextEntry);
+                            nodeToEnter = node1;
                         else
-                            node2.AddNodeEntry(nextEntry);
+                            nodeToEnter = node2;
                     else if (minimumBoundingBox1.GetArea() < minimumBoundingBox2.GetArea())
-                        node1.AddNodeEntry(nextEntry);
+                        nodeToEnter = node1;
                     else
-                        node2.AddNodeEntry(nextEntry);
+                        nodeToEnter = node2;
                 }
                 else if (GetFutureSize(nextEntry.MinimumBoundingBox, minimumBoundingBox1) <
                     GetFutureSize(nextEntry.MinimumBoundingBox, minimumBoundingBox2))
-                    node1.AddNodeEntry(nextEntry);
+                    nodeToEnter = node1;
                 else
-                    node2.AddNodeEntry(nextEntry);
+                    nodeToEnter = node2;
+                nodeToEnter.AddNodeEntry(nextEntry);
+                if (!(nextEntry is LeafEntry))
+                {
+                    Node child = Cache.LookupNode(nextEntry.Child);
+                    child.Parent = nodeToEnter.Address;
+                    Cache.WritePageData(child);
+                }
             }
             List<Node> newNodes = new List<Node>();
             newNodes.Add(node1);
             newNodes.Add(node2);
+            Cache.WritePageData(node1);
+            Cache.WritePageData(node2);
             return newNodes;
         }
         protected virtual List<NodeEntry> PickSeeds(List<NodeEntry> seedPool)
@@ -387,28 +433,36 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual void AdjustTree(Node node1, Node node2)
         {
-            if (node1 == Root)
-                return;
-            if (Root == null)
+            if (node1.Address.Equals(Root))
             {
-                Root = new Node(MaximumNodeOccupancy, Guid.Empty, typeof(Node));
-                Root.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
-                Root.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
-                node1.Parent = Root.Address;
-                node2.Parent = Root.Address;
+                Cache.WritePageData(node1);
+                return;
+            }
+            if (Root.Equals(Guid.Empty))
+            {
+                Node rootNode = new Node(MaximumNodeOccupancy, Guid.Empty, typeof(Node));
+                Root = rootNode.Address;
+                rootNode.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
+                rootNode.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
+                node1.Parent = Root;
+                node2.Parent = Root;
+                Cache.WritePageData(rootNode);
                 TreeHeight++;
             }            
             Node parent = Cache.LookupNode(node1.Parent);
             parent.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
+            Cache.WritePageData(node1);
             if (node2 != null)
             {
+                Cache.WritePageData(node2);
                 NodeEntry newEntry = new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address);
                 parent.AddNodeEntry(newEntry);
                 if (parent.NodeEntries.Count > MaximumNodeOccupancy)
                 {
                     List<Node> splitNodes = Split(parent);
-                    if (parent == Root)
-                        Root = null;
+                    Cache.WritePageData(node2);
+                    if (parent.Address.Equals(Root))
+                        Root = Guid.Empty;
                     RemoveFromParent(parent);
                     AdjustTree(splitNodes[0], splitNodes[1]);
                     return;
@@ -437,7 +491,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         protected virtual void CondenseTree(Node node)
         {
             List<Node> eliminatedNodes = new List<Node>();
-            while(node != root)
+            while(!node.Address.Equals(Root))
             {
                 Node parent = Cache.LookupNode(node.Parent);
                 NodeEntry nodeEntry = null;
@@ -448,9 +502,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 {
                     parent.RemoveNodeEntry(nodeEntry);
                     eliminatedNodes.Add(node);
+                    Cache.DeletePageData(node);
                 }
                 else
                     nodeEntry.MinimumBoundingBox = node.CalculateMinimumBoundingBox();
+                Cache.WritePageData(parent);
                 node = parent;
             }
             for (int i = 0; i < eliminatedNodes.Count; i++)
@@ -466,14 +522,18 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual void RemoveFromParent(Node node)
         {
-            if (node.Parent.Equals(Guid.Empty))
-                return;
-            Node parent = Cache.LookupNode(node.Parent);
-            NodeEntry entryToRemove = null;
-            foreach (NodeEntry entry in parent.NodeEntries)
-                if (entry.Child.Equals(node.Address))
-                    entryToRemove = entry;
-            parent.RemoveNodeEntry(entryToRemove);
+            if (!node.Parent.Equals(Guid.Empty))
+            {
+                Node parent = Cache.LookupNode(node.Parent);
+                NodeEntry entryToRemove = null;
+                foreach (NodeEntry entry in parent.NodeEntries)
+                    if (entry.Child.Equals(node.Address))
+                        entryToRemove = entry;
+                parent.RemoveNodeEntry(entryToRemove);
+                Cache.WritePageData(parent);
+            }
+            Cache.DeletePageData(node);
+
         }
         protected virtual Double GetDistance(Double x, Double y, MinimumBoundingBox area)
         {

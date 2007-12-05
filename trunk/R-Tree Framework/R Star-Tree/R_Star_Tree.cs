@@ -46,7 +46,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 else
                 {
                     OverflowMarkers.Add(level);
-                    ReInsert(nodeToInsertInto);
+                    ReInsert(nodeToInsertInto, level);
                     AdjustTree(nodeToInsertInto, level);
                 }
             }
@@ -59,7 +59,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual Node ChooseNode(NodeEntry entry, Int32 level)
         {
-            Node insertionNode = Root;
+            Node insertionNode = Cache.LookupNode(Root);
             Int32 currentDepth = 1;
             while (currentDepth < level)
             {
@@ -144,8 +144,18 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             foreach (KeyValuePair<List<NodeEntry>, List<Pair<Node, Node>>> axis in axii)
                 for (int i = 1; i < maximumNodeOccupancy - 2 * minimumNodeOccupancy + 2 + 1; i++)
                 {
-                    Node group1 = new Node(maximumNodeOccupancy, Guid.Empty, typeof(NodeEntry)),
-                        group2 = new Node(maximumNodeOccupancy, Guid.Empty, typeof(NodeEntry));
+                    Node group1, group2;
+                    if (nodeToBeSplit is Leaf)
+                    {
+                        group1 = new Leaf(maximumNodeOccupancy, nodeToBeSplit.Parent);
+                        group2 = new Leaf(maximumNodeOccupancy, nodeToBeSplit.Parent);
+                    }
+                    else
+                    {
+                        group1 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, typeof(NodeEntry));
+                        group2 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, typeof(NodeEntry));
+                    }
+
                     group1.NodeEntries.AddRange(axis.Key.GetRange(1, i));
                     group2.NodeEntries.AddRange(axis.Key.GetRange(i, axis.Key.Count - i));
                     axis.Value.Add(new Pair<Node, Node>(group1, group2));
@@ -191,6 +201,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             List<Node> newNodes = new List<Node>();
             newNodes.Add(chosenDistribution.Value1);
             newNodes.Add(chosenDistribution.Value2);
+            foreach (Node newNode in newNodes)
+            {
+                foreach (NodeEntry entry in newNode.NodeEntries)
+                {
+                    Node child = Cache.LookupNode(entry.Child);
+                    child.Parent = newNode.Address;
+                    Cache.WritePageData(child);
+                }
+                Cache.WritePageData(newNode);
+            }
             return newNodes;
         }
         protected virtual Double GetFutureOverlap(NodeEntry entry, NodeEntry insertionEntry, Node node)
@@ -269,21 +289,28 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual void AdjustTree(Node node1, Node node2, Int32 level)
         {
-            if (node1 == Root)
-                return;
-            if (Root == null)
+            if (node1.Address.Equals(Root))
             {
-                Root = new Node(MaximumNodeOccupancy, Guid.Empty, typeof(Node));
-                Root.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
-                Root.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
-                node1.Parent = Root.Address;
-                node2.Parent = Root.Address;
+                Cache.WritePageData(node1);
+                return;
+            }
+            if (Root.Equals(Guid.Empty))
+            {
+                Node rootNode = new Node(MaximumNodeOccupancy, Guid.Empty, typeof(Node));
+                Root = rootNode.Address;
+                rootNode.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
+                rootNode.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
+                node1.Parent = Root;
+                node2.Parent = Root;
+                Cache.WritePageData(rootNode);
                 TreeHeight++;
             }
             Node parent = Cache.LookupNode(node1.Parent);
             parent.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
+            Cache.WritePageData(node1);
             if (node2 != null)
             {
+                Cache.WritePageData(node2);
                 NodeEntry newEntry = new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address);
                 parent.AddNodeEntry(newEntry);
                 if (parent.NodeEntries.Count > MaximumNodeOccupancy)
@@ -291,8 +318,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     if (OverflowMarkers.Contains(level))
                     {
                         List<Node> splitNodes = Split(parent);
-                        if (parent == Root)
-                            Root = null;
+                        if (parent.Address.Equals(Root))
+                            Root = Guid.Empty;
                         RemoveFromParent(parent);
                         AdjustTree(splitNodes[0], splitNodes[1], level - 1);
                         return;
@@ -300,8 +327,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     else
                     {
                         OverflowMarkers.Add(level);
-                        ReInsert(parent);
-                        AdjustTree(parent, level);
+                        ReInsert(parent, level - 1);
+                        AdjustTree(parent, level - 1);
+                        return;
                     }
                 }
             }
