@@ -27,7 +27,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public override void Insert(Record record)
         {
             OverflowMarkers = new List<Int32>();
-            LeafEntry newEntry = new LeafEntry(record.MinimumBoundingBox, record.Address);
+            LeafEntry newEntry = new LeafEntry(record.BoundingBox, record.Address);
             Insert(newEntry, TreeHeight);
         }
 
@@ -55,7 +55,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected override Leaf ChooseLeaf(Record record)
         {
-            return ChooseNode(new LeafEntry(record.MinimumBoundingBox, record.Address), TreeHeight) as Leaf;
+            return ChooseNode(new LeafEntry(record.BoundingBox, record.Address), TreeHeight) as Leaf;
         }
         protected virtual Node ChooseNode(NodeEntry entry, Int32 level)
         {
@@ -152,8 +152,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
                     else
                     {
-                        group1 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, typeof(NodeEntry));
-                        group2 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, typeof(NodeEntry));
+                        group1 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
+                        group2 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
                     }
 
                     group1.NodeEntries.AddRange(axis.Key.GetRange(1, i));
