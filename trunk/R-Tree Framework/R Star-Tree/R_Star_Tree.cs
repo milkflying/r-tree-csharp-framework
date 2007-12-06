@@ -16,7 +16,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected Int32 NumberOfEntriesForReInsert
         {
-            get { return 3 * MaximumNodeOccupancy / 10 + ((3 * MaximumNodeOccupancy) % 10 > 4 ? 1 : 0); }
+            get { return MaximumNodeOccupancy * 3 / 10 + ((MaximumNodeOccupancy * 3) % 10 > 4 ? 1 : 0); }
         }
 
         public R_Star_Tree(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)

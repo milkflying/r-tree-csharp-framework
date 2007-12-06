@@ -7,13 +7,18 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics
 {
     public class PerformanceAnalyzer
     {
-        protected Int32 pageFaults;
+        protected Int32 pageFaults, pageWrites;
         protected CacheManager cache;
 
         public virtual Int32 PageFaults
         {
             get { return pageFaults; }
             protected set { pageFaults = value; }
+        }
+        public virtual Int32 PageWrites
+        {
+            get { return pageWrites; }
+            protected set { pageWrites = value; }
         }
         public virtual CacheManager Cache
         {
@@ -24,6 +29,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics
         public PerformanceAnalyzer(CacheManager cache)
         {
             PageFaults = 0;
+            PageWrites = 0;
             Cache = cache;
             cache.PageFault += new CacheEventHandler(PageFaulted);
             cache.PageWrite += new CacheEventHandler(PageWritten);
@@ -31,11 +37,17 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics
 
         protected virtual void PageWritten(object sender, EventArgs args)
         {
+            PageWrites++;
         }
 
         protected virtual void PageFaulted(object sender, EventArgs args)
         {
             PageFaults++;
+        }
+        public virtual void ClearStatistics()
+        {
+            PageWrites = 0;
+            PageFaults = 0;
         }
     }
 }
