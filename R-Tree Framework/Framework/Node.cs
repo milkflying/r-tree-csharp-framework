@@ -71,11 +71,22 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         }
         public MinimumBoundingBox CalculateMinimumBoundingBox()
         {
-            MinimumBoundingBox min = (nodeEntries[0] as NodeEntry).MinimumBoundingBox;
+            Double minX = nodeEntries[0].MinimumBoundingBox.MinX,
+                minY = nodeEntries[0].MinimumBoundingBox.MinY,
+                maxX = nodeEntries[0].MinimumBoundingBox.MaxX, 
+                maxY = nodeEntries[0].MinimumBoundingBox.MaxY;
             foreach (NodeEntry node in nodeEntries)
-                if (node.MinimumBoundingBox.GetArea() < min.GetArea())
-                    min = node.MinimumBoundingBox;
-            return min;
+            {
+                if (node.MinimumBoundingBox.MinX < minX)
+                    minX = node.MinimumBoundingBox.MinX;
+                if (node.MinimumBoundingBox.MinY < minY)
+                    minY = node.MinimumBoundingBox.MinY;
+                if (node.MinimumBoundingBox.MaxX > maxX)
+                    maxX = node.MinimumBoundingBox.MaxX;
+                if (node.MinimumBoundingBox.MaxY > maxY)
+                    maxY = node.MinimumBoundingBox.MaxY;
+            }
+            return new MinimumBoundingBox(minX, minY, maxX, maxY);
         }
 
         public Byte[] GeneratePageData()

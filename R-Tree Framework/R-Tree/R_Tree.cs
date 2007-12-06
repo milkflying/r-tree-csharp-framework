@@ -167,10 +167,19 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             List<Record> results = new List<Record>(kNN.K);
             EnqueNodeEntries(kNN, node, proximityQueue);
             while (results.Count < kNN.K && proximityQueue.Count > 0)
-                if (proximityQueue.Peek().Value is LeafEntry)
-                    results.Add(Cache.LookupRecord(proximityQueue.Dequeue().Value.Child));
+            {
+                NodeEntry closestEntry = proximityQueue.Dequeue().Value;
+                if (closestEntry is LeafEntry)
+                {
+                    Record closestRecord = Cache.LookupRecord(closestEntry.Child);
+                    results.Add(closestRecord);
+                }
                 else
-                    EnqueNodeEntries(kNN, Cache.LookupNode(proximityQueue.Dequeue().Value.Child), proximityQueue);
+                {
+                    Node closestNode = Cache.LookupNode(closestEntry.Child);
+                    EnqueNodeEntries(kNN, closestNode, proximityQueue);
+                }
+            }
             return results;
         }
         protected virtual Boolean Overlaps(WindowQuery window, MinimumBoundingBox area)
@@ -593,14 +602,33 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual Double GetDistance(Double x1, Double y1, Double x2, Double y2)
         {
-            return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+            return (((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
         }
         protected virtual void EnqueNodeEntries(KNearestNeighborQuery kNN, Node node, PriorityQueue<NodeEntry, Double> proximityQueue)
         {
             foreach (NodeEntry entry in node.NodeEntries)
-                proximityQueue.Enqueue(entry, GetDistance(kNN.X, kNN.Y, entry.MinimumBoundingBox));
+                proximityQueue.Enqueue(entry, GetDistance(kNN.X, kNN.Y, entry.MinimumBoundingBox) * -1);
         }
 
         #endregion
+
+        public void ForceMBBUpdate()
+        {
+            ForceMBBUpdate(Cache.LookupNode(Root));
+        }
+        private MinimumBoundingBox ForceMBBUpdate(Node node)
+        {
+            foreach(NodeEntry entry in node.NodeEntries)
+                ForceMBBUpdate(entry);
+            Cache.WritePageData(node);
+            return node.CalculateMinimumBoundingBox();
+        }
+        private void ForceMBBUpdate(NodeEntry entry)
+        {
+            if (entry is LeafEntry)
+                return;
+            else
+                entry.MinimumBoundingBox = ForceMBBUpdate(Cache.LookupNode(entry.Child));
+        }
     }
 }
