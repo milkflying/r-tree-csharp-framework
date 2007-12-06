@@ -6,7 +6,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class Page
     {
-        protected Guid id;
+        protected Address id;
         protected Byte[] data;
         protected Int64 address;
 
@@ -16,7 +16,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             set { address = value; }
         }
 
-        public Guid ID
+        public Address ID
         {
             get { return id; }
             protected set { id = value; }
@@ -28,7 +28,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             set { data = value; }
         }
 
-        public Page(Guid id, Int64 address, Byte[] data)
+        public Page(Address id, Int64 address, Byte[] data)
         {
             ID = id;
             Address = address;

@@ -6,27 +6,27 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class RangeQuery : RegionQuery
     {
-        protected Double centerX, centerY, radius;
+        protected Single centerX, centerY, radius;
 
-        public Double CenterX
+        public Single CenterX
         {
             get { return centerX; }
             protected set { centerX = value; }
         }
 
-        public Double CenterY
+        public Single CenterY
         {
             get { return centerY; }
             protected set { centerY = value; }
         }
 
-        public Double Radius
+        public Single Radius
         {
             get { return radius; }
             protected set { radius = value; }
         }
 
-        public RangeQuery(Double centerX, Double centerY, Double radius)
+        public RangeQuery(Single centerX, Single centerY, Single radius)
         {
             this.centerX = centerX;
             this.centerY = centerY;

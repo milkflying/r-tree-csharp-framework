@@ -50,6 +50,10 @@
       <Project>{C4FFBD16-B8AE-4794-B116-21B2617FF658}</Project>
       <Name>Performance Analyzer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\R Star-Tree\R Star-Tree.csproj">
+      <Project>{0E238662-2FB6-4989-B287-C2706BCED5A6}</Project>
+      <Name>R Star-Tree</Name>
+    </ProjectReference>
     <ProjectReference Include="..\R-Tree\R-Tree.csproj">
       <Project>{A4C6C32A-ACF2-46E9-8416-1C31F61FF581}</Project>
       <Name>R-Tree</Name>

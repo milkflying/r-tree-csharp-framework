@@ -189,12 +189,12 @@ namespace TestBench
         public void BuildIndex(String dataFileLocation)
         {
             StreamReader reader = new StreamReader(dataFileLocation);
-            Double maxX = 0, maxY = 0;
+            Single maxX = 0, maxY = 0;
             while (!reader.EndOfStream)
             {
                 String[] values = reader.ReadLine().Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 Int32 recordId = Int32.Parse(values[0]);
-                Double x = Double.Parse(values[1]), y = Double.Parse(values[2]);
+                Single x = Single.Parse(values[1]), y = Single.Parse(values[2]);
                 if (x > maxX)
                     maxX = x;
                 if (y > maxY)
@@ -226,7 +226,7 @@ namespace TestBench
                     {
                         case 'R':
                             {
-                                Double x = Double.Parse(values[3]), y = Double.Parse(values[4]), r = Double.Parse(values[5]);
+                                Single x = Single.Parse(values[3]), y = Single.Parse(values[4]), r = Single.Parse(values[5]);
                                 query = new RangeQuery(x, y, r);
                                 writer.WriteLine("Traditional Range Search");
                                 writer.WriteLine("Point: ({0:F2},{1:F2})", x, y);
@@ -235,7 +235,7 @@ namespace TestBench
                             }
                         case 'W':
                             {
-                                Double x = Double.Parse(values[3]), y = Double.Parse(values[4]), r = Double.Parse(values[5]);
+                                Single x = Single.Parse(values[3]), y = Single.Parse(values[4]), r = Single.Parse(values[5]);
                                 query = new WindowQuery(x - r, y - r, x, y);
                                 writer.WriteLine("Traditional Window Search");
                                 writer.WriteLine("Lower Point: ({0:F2},{1:F2})", x - r, y - r);
@@ -244,7 +244,7 @@ namespace TestBench
                             }
                         case 'K':
                             {
-                                Double x = Double.Parse(values[3]), y = Double.Parse(values[4]);
+                                Single x = Single.Parse(values[3]), y = Single.Parse(values[4]);
                                 Int32 k = Int32.Parse(values[5]);
                                 query = new KNearestNeighborQuery(k, x, y);
                                 writer.WriteLine("Traditional Nearest Neighbor Search");

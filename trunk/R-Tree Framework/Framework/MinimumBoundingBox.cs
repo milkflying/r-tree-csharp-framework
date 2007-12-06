@@ -6,33 +6,33 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public struct MinimumBoundingBox
     {
-        private Double maxX, maxY, minX, minY;
+        private Single maxX, maxY, minX, minY;
 
-        public Double MinY
+        public Single MinY
         {
             get { return minY; }
             set { minY = value; }
         }
 
-        public Double MinX
+        public Single MinX
         {
             get { return minX; }
             set { minX = value; }
         }
 
-        public Double MaxY
+        public Single MaxY
         {
             get { return maxY; }
             set { maxY = value; }
         }
 
-        public Double MaxX
+        public Single MaxX
         {
             get { return maxX; }
             set { maxX = value; }
         }
 
-        public MinimumBoundingBox(Double minX, Double minY, Double maxX, Double maxY)
+        public MinimumBoundingBox(Single minX, Single minY, Single maxX, Single maxY)
         {
             this.minX = minX;
             this.minY = minY;
@@ -40,12 +40,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             this.maxY = maxY;
         }
 
-        public Double GetArea()
+        public Single GetArea()
         {
             return (MaxX - MinX) * (MaxY - MinY);
         }
 
-        public Double GetPerimeter()
+        public Single GetPerimeter()
         {
             return 2*((MaxX - MinX) + (MaxY - MinY));
         }

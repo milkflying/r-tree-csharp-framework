@@ -7,7 +7,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
     public class Node : PageData
     {
         protected List<NodeEntry> nodeEntries;
-        protected Guid address, parent;
+        protected Address address, parent;
         protected Type childType;
 
         public Type ChildType
@@ -16,13 +16,28 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             protected set { childType = value; }
         }
 
-        public Guid Parent
+        protected virtual Byte ChildTypeID
+        {
+            get
+            {
+                if (ChildType.Equals(typeof(Leaf)))
+                    return (Byte)1;
+                else
+                    return (Byte)0;
+            }
+        }
+        protected virtual Byte TypeID
+        {
+            get { return (Byte)0; }
+        }
+
+        public Address Parent
         {
             get { return parent; }
             set { parent = value; }
         }
 
-        public Guid Address
+        public Address Address
         {
             get { return address; }
             protected set { address = value; }
@@ -34,28 +49,28 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             protected set { nodeEntries = value; }
         }
 
-        public Node(int maxNodeEntries, Guid parent, Type childType)
+        public Node(int maxNodeEntries, Address parent, Type childType)
         {
-            Address = Guid.NewGuid();
+            Address = Address.NewAddress();
             Parent = parent;
             ChildType = childType;
-            nodeEntries = new List<NodeEntry>(maxNodeEntries);
+            nodeEntries = new List<NodeEntry>(maxNodeEntries + 1);
         }
-        public Node(Guid address, Type childType, Byte[] pageData)
+        public Node(Address address, Type childType, Byte[] pageData)
         {
             Address = address;
             ChildType = childType;
-            Byte[] parentAddress = new Byte[16];
-            Int32 index = 32, nodeEntryCount;
+            Byte[] parentAddress = new Byte[Constants.ADDRESS_SIZE];
+            Int32 index = 2, nodeEntryCount;
 
-            Array.Copy(pageData, index, parentAddress, 0, 16);
-            Parent = new Guid(parentAddress);
-            index += 16;
+            Array.Copy(pageData, index, parentAddress, 0, Constants.ADDRESS_SIZE);
+            Parent = new Address(parentAddress);
+            index += Constants.ADDRESS_SIZE;
 
-            nodeEntryCount = BitConverter.ToInt32(pageData, index);
-            index += 4;
+            nodeEntryCount = BitConverter.ToInt16(pageData, index);
+            index += 2;
 
-            NodeEntries = new List<NodeEntry>(nodeEntryCount);
+            NodeEntries = new List<NodeEntry>(nodeEntryCount + 1);
             for (int i = 0; i < nodeEntryCount; i++)
             {
                 Byte[] entryData = new Byte[Constants.NODE_ENTRY_SIZE];
@@ -71,7 +86,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         }
         public MinimumBoundingBox CalculateMinimumBoundingBox()
         {
-            Double minX = nodeEntries[0].MinimumBoundingBox.MinX,
+            Single minX = nodeEntries[0].MinimumBoundingBox.MinX,
                 minY = nodeEntries[0].MinimumBoundingBox.MinY,
                 maxX = nodeEntries[0].MinimumBoundingBox.MaxX, 
                 maxY = nodeEntries[0].MinimumBoundingBox.MaxY;
@@ -91,20 +106,17 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 
         public Byte[] GeneratePageData()
         {
-            Int32 index = 0;
+            Int32 index = 2;
             Byte[] data = new Byte[Constants.NODE_SIZE];
-            
-            this.GetType().GUID.ToByteArray().CopyTo(data, index);
-            index += 16;
 
-            ChildType.GUID.ToByteArray().CopyTo(data, index);
-            index += 16;
+            data[0] = TypeID;
+            data[1] = ChildTypeID;
 
             Parent.ToByteArray().CopyTo(data, index);
-            index += 16;
+            index += Constants.ADDRESS_SIZE;
 
-            BitConverter.GetBytes(NodeEntries.Count).CopyTo(data, index);
-            index += 4;
+            BitConverter.GetBytes((Int16)NodeEntries.Count).CopyTo(data, index);
+            index += 2;
 
             foreach (NodeEntry entry in NodeEntries)
             {

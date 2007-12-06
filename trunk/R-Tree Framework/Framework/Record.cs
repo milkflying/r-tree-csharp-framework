@@ -7,7 +7,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
     public class Record : PageData
     {
         protected MinimumBoundingBox minimumBoundingBox;
-        protected Guid address;
+        protected Address address;
         protected Int32 recordID;
 
         public virtual Int32 RecordID
@@ -20,7 +20,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             get { return minimumBoundingBox; }
             protected set { minimumBoundingBox = value; }
         }
-        public virtual Guid Address
+        public virtual Address Address
         {
             get { return address; }
             protected set { address = value; }
@@ -29,16 +29,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         public Record(Int32 recordID, MinimumBoundingBox minimumBoundingBox)
         {
             RecordID = recordID;
-            Address = Guid.NewGuid();
+            Address = Address.NewAddress();
             BoundingBox = minimumBoundingBox;
         }
-        public Record(Guid Address, Byte[] data)
+        public Record(Address Address, Byte[] data)
         {
             BoundingBox = new MinimumBoundingBox(
-                BitConverter.ToDouble(data, 0),
-                BitConverter.ToDouble(data, 8),
-                BitConverter.ToDouble(data, 16),
-                BitConverter.ToDouble(data, 24));
+                BitConverter.ToSingle(data, 0),
+                BitConverter.ToSingle(data, 8),
+                BitConverter.ToSingle(data, 16),
+                BitConverter.ToSingle(data, 24));
             RecordID = BitConverter.ToInt32(data, 32);
         }
 

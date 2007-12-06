@@ -16,8 +16,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         String StorageFileLocation { get; }
         void WritePageData(PageData data);
         void DeletePageData(PageData data);
-        Node LookupNode(Guid address);
-        Record LookupRecord(Guid address);
+        Node LookupNode(Address address);
+        Record LookupRecord(Address address);
         void FlushCache();
         void SaveCache(String cacheSaveLocation, String memorySaveLocation);
     }
