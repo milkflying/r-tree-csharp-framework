@@ -7,25 +7,25 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
     public class KNearestNeighborQuery : Query
     {
         protected Int32 k;
-        protected Double x, y;
+        protected Single x, y;
 
         public Int32 K
         {
             get { return k; }
             protected set { k = value; }
         }
-        public Double X
+        public Single X
         {
             get { return x; }
             protected set { x = value; }
         }
-        public Double Y
+        public Single Y
         {
             get { return y; }
             protected set { y = value; }
         }
 
-        public KNearestNeighborQuery(Int32 k, Double x, Double y)
+        public KNearestNeighborQuery(Int32 k, Single x, Single y)
         {
             this.k = k;
             this.x = x;

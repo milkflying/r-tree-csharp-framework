@@ -6,7 +6,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class LeafEntry : NodeEntry
     {
-        public LeafEntry(MinimumBoundingBox minimumBoundingBox, Guid recordIdentifier)
+        public LeafEntry(MinimumBoundingBox minimumBoundingBox, Address recordIdentifier)
             : base(minimumBoundingBox, recordIdentifier)
         {
         }

@@ -7,20 +7,20 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
     public class NodeEntry
     {
         protected MinimumBoundingBox minimumBoundingBox;
-        protected Guid child;
+        protected Address child;
 
         public MinimumBoundingBox MinimumBoundingBox
         {
             get { return minimumBoundingBox; }
             set { minimumBoundingBox = value; }
         }
-        public Guid Child
+        public Address Child
         {
             get { return child; }
             protected set { child = value; }
         }
 
-        public NodeEntry(MinimumBoundingBox minimumBoundingBox, Guid child)
+        public NodeEntry(MinimumBoundingBox minimumBoundingBox, Address child)
         {
             MinimumBoundingBox = minimumBoundingBox;
             Child = child;
@@ -28,24 +28,29 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 
         public NodeEntry(Byte[] data)
         {
-            Byte[] childAddress = new Byte[16];
-            Array.Copy(data, childAddress, 16);
-            Child = new Guid(childAddress);
+            Byte[] childAddress = new Byte[4];
+            Array.Copy(data, childAddress, 4);
+            Child = new Address(childAddress);
             MinimumBoundingBox = new MinimumBoundingBox(
-                BitConverter.ToDouble(data, 16),
-                BitConverter.ToDouble(data, 24),
-                BitConverter.ToDouble(data, 32),
-                BitConverter.ToDouble(data, 40));
+                BitConverter.ToSingle(data, 4),
+                BitConverter.ToSingle(data, 8),
+                BitConverter.ToSingle(data, 12),
+                BitConverter.ToSingle(data, 16));
         }
 
         public Byte[] GetBytes()
         {
+            Int32 index = 0;
             Byte[] data = new Byte[Constants.NODE_ENTRY_SIZE];
-            Child.ToByteArray().CopyTo(data, 0);
-            BitConverter.GetBytes(MinimumBoundingBox.MinX).CopyTo(data, 16);
-            BitConverter.GetBytes(MinimumBoundingBox.MinY).CopyTo(data, 24);
-            BitConverter.GetBytes(MinimumBoundingBox.MaxX).CopyTo(data, 32);
-            BitConverter.GetBytes(MinimumBoundingBox.MaxY).CopyTo(data, 40);
+            Child.ToByteArray().CopyTo(data, index);
+            index += Constants.ADDRESS_SIZE;
+            BitConverter.GetBytes(MinimumBoundingBox.MinX).CopyTo(data, index);
+            index += 4;
+            BitConverter.GetBytes(MinimumBoundingBox.MinY).CopyTo(data, index);
+            index += 4;
+            BitConverter.GetBytes(MinimumBoundingBox.MaxX).CopyTo(data, index);
+            index += 4;
+            BitConverter.GetBytes(MinimumBoundingBox.MaxY).CopyTo(data, index);
             return data;
         }
     }

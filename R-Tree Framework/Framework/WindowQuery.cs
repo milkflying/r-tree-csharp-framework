@@ -6,33 +6,33 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class WindowQuery : RegionQuery
     {
-        protected Double minX, minY, maxX, maxY;
+        protected Single minX, minY, maxX, maxY;
 
-        public Double MinX
+        public Single MinX
         {
             get { return minX; }
             protected set { minX = value; }
         }
 
-        public Double MinY
+        public Single MinY
         {
             get { return minY; }
             protected set { minY = value; }
         }
 
-        public Double MaxX
+        public Single MaxX
         {
             get { return maxX; }
             protected set { maxX = value; }
         }
 
-        public Double MaxY
+        public Single MaxY
         {
             get { return maxY; }
             protected set { maxY = value; }
         }
 
-        public WindowQuery(Double minX, Double minY, Double maxX, Double maxY)
+        public WindowQuery(Single minX, Single minY, Single maxX, Single maxY)
         {
             this.minX = minX;
             this.minY = minY;

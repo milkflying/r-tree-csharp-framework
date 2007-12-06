@@ -11,7 +11,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         public event CacheEventHandler PageFault;
         public event CacheEventHandler PageWrite;
 
-        protected Dictionary<Guid, Int64> addressTranslationTable;
+        protected SortedDictionary<Address, Int64> addressTranslationTable;
         protected Dictionary<Int64, Page> pageTranslationTable;
         protected SortedList<Int64, Page> leastRecentlyUsed;
         protected Queue<Int64> freePages;
@@ -46,7 +46,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             get { return storageFileLocation; }
             protected set { storageFileLocation = value; }
         }
-        protected virtual Dictionary<Guid, Int64> AddressTranslationTable
+        protected virtual SortedDictionary<Address, Int64> AddressTranslationTable
         {
             get { return addressTranslationTable; }
             set { addressTranslationTable = value; }
@@ -93,7 +93,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
             PageSize = pageSize;
             CacheSize = numberOfPagesToCache;
-            AddressTranslationTable = new Dictionary<Guid, Int64>();
+            AddressTranslationTable = new SortedDictionary<Address, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
             LeastRecentlyUsed = new SortedList<Int64, Page>();
             DirtyPages = new List<Page>();
@@ -114,7 +114,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 8,
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
             CacheSize = numberOfPagesToCache;
-            AddressTranslationTable = new Dictionary<Guid, Int64>();
+            AddressTranslationTable = new SortedDictionary<Address, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
             LeastRecentlyUsed = new SortedList<Int64, Page>();
             DirtyPages = new List<Page>();
@@ -125,35 +125,35 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             String buffer;
             while (!(buffer = reader.ReadLine()).Equals("FreePages"))
                 AddressTranslationTable.Add(
-                    new Guid(buffer),
+                    new Address(buffer),
                     Int64.Parse(reader.ReadLine()));
             while (!reader.EndOfStream)
                 FreePages.Enqueue(Int64.Parse(reader.ReadLine()));
             reader.Close();
         }
-        public virtual Record LookupRecord(Guid address)
+        public virtual Record LookupRecord(Address address)
         {
             Record record = new Record(address, LookupPage(address).Data);
             CacheOverflowCheck();
             return record;
         }
-        public virtual Node LookupNode(Guid address)
+        public virtual Node LookupNode(Address address)
         {
             Node node;
-            Byte[] type = new Byte[16];
+            Byte[] type = new Byte[1];
             Page page = LookupPage(address);
-            Array.Copy(page.Data, type, 16);
-            if (typeof(Leaf).GUID.Equals(new Guid(type)))
+            Array.Copy(page.Data, type, 1);
+            if (type[0] == (Byte)1)
                 node = new Leaf(address, page.Data);
-            else if (typeof(Node).GUID.Equals(new Guid(type)))
+            else if (type[0] == (Byte)0)
             {
-                Byte[] childType = new Byte[16];
-                Array.Copy(page.Data, childType, 16);
-                if (typeof(Leaf).GUID.Equals(new Guid(type)))
+                Byte[] childType = new Byte[1];
+                Array.Copy(page.Data, childType, 1);
+                if (childType[0] == (Byte)1)
                     node = new Node(address, typeof(Leaf), page.Data);
-                else if (typeof(Node).GUID.Equals(new Guid(type)))
+                else if (childType[0] == (Byte)0)
                     node = new Node(address, typeof(Node), page.Data);
-                else if (typeof(Record).GUID.Equals(new Guid(type)))
+                else if (childType[0] == (Byte)2)
                     throw new Exception();
                 else
                     throw new Exception();
@@ -200,7 +200,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             }
             FreePages.Enqueue(address);
         }
-        protected virtual Page LookupPage(Guid address)
+        protected virtual Page LookupPage(Address address)
         {
             Page page;
             Int64 offset = AddressTranslationTable[address];
@@ -222,7 +222,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             Byte[] data = new Byte[PageSize];
             StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
             StorageReader.Read(data, 0, PageSize);
-            Page page = new Page(Guid.NewGuid(), offset, data);
+            Page page = new Page(Address.NewAddress(), offset, data);
             if (PageFault != null)
                 PageFault(this, new LRUCacheEventArgs(page));
             return page;
@@ -249,7 +249,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             while (PageTranslationTable.Count > CacheSize)
                 EvictPage();
         }
-        protected virtual Page AllocateNewPage(Guid address)
+        protected virtual Page AllocateNewPage(Address address)
         {
             Int64 pageAddress;
             if (FreePages.Count > 0)
@@ -257,7 +257,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             else
                 pageAddress = NextPageAddress;
             AddressTranslationTable.Add(address, pageAddress);
-            Page newPage = new Page(Guid.NewGuid(), pageAddress, new Byte[PageSize]);
+            Page newPage = new Page(Address.NewAddress(), pageAddress, new Byte[PageSize]);
             PageTranslationTable.Add(pageAddress, newPage);
             return newPage;
         }
@@ -285,7 +285,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             writer.WriteLine(PageSize);
             writer.WriteLine(NextPageAddress);
             writer.WriteLine("AddressTranslationTable");
-            foreach(KeyValuePair<Guid, Int64> entry in AddressTranslationTable)
+            foreach(KeyValuePair<Address, Int64> entry in AddressTranslationTable)
             {
                 writer.WriteLine(entry.Key);
                 writer.WriteLine(entry.Value);
