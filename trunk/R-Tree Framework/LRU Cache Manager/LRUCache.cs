@@ -108,7 +108,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             NextPageAddress = Int64.Parse(reader.ReadLine());
             StorageReader = new FileStream(
                 StorageFileLocation,
-                FileMode.Create,
+                FileMode.OpenOrCreate,
                 FileAccess.ReadWrite,
                 FileShare.None,
                 8,
@@ -131,10 +131,13 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 FreePages.Enqueue(Int64.Parse(reader.ReadLine()));
             reader.Close();
         }
+        Boolean disablePageFault;
         public virtual Record LookupRecord(Address address)
         {
+            disablePageFault = true;
             Record record = new Record(address, LookupPage(address).Data);
             CacheOverflowCheck();
+            disablePageFault = false;
             return record;
         }
         public virtual Node LookupNode(Address address)
@@ -145,7 +148,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             Array.Copy(page.Data, type, 1);
             if (type[0] == (Byte)1)
                 node = new Leaf(address, page.Data);
-            else if (type[0] == (Byte)0)
+            else  if (type[0] == (Byte)0)
             {
                 Byte[] childType = new Byte[1];
                 Array.Copy(page.Data, childType, 1);
@@ -223,7 +226,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
             StorageReader.Read(data, 0, PageSize);
             Page page = new Page(Address.NewAddress(), offset, data);
-            if (PageFault != null)
+            if (PageFault != null && !disablePageFault)
                 PageFault(this, new LRUCacheEventArgs(page));
             return page;
         }

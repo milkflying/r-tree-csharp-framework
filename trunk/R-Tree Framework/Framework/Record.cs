@@ -32,8 +32,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             Address = Address.NewAddress();
             BoundingBox = minimumBoundingBox;
         }
-        public Record(Address Address, Byte[] data)
+        public Record(Address address, Byte[] data)
         {
+            Address = address;
             BoundingBox = new MinimumBoundingBox(
                 BitConverter.ToSingle(data, 0),
                 BitConverter.ToSingle(data, 8),
