@@ -372,10 +372,28 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         protected virtual void Insert(Node newNode, Node node)
         {
             node.AddNodeEntry(new NodeEntry(newNode.CalculateMinimumBoundingBox(), newNode.Address));
+            newNode.Parent = node.Address;
             Cache.WritePageData(node);
+            Cache.WritePageData(newNode);
         }
         protected virtual Boolean Overlaps(RangeQuery range, MinimumBoundingBox area)
         {
+            Single distance = 0;
+            if (range.CenterX < area.MinX)
+                distance = (range.CenterX - area.MinX) * (range.CenterX - area.MinX);
+            else
+                if (range.CenterX > area.MaxX)
+                    distance = (range.CenterX - area.MaxX) * (range.CenterX - area.MaxX);
+            if (range.CenterY < area.MinY)
+                distance += (range.CenterY - area.MinY) * (range.CenterY - area.MinY);
+            else
+                if (range.CenterY > area.MaxY)
+                    distance += (range.CenterY - area.MaxY) * (range.CenterY - area.MaxY);
+            return (distance < range.Radius * range.Radius); 
+
+
+
+            /*
             return
                 //does not overlap the center point
                 !(
@@ -399,16 +417,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     (range.CenterX > area.MinX && range.CenterX < area.MaxX && range.CenterY > area.MaxY && range.CenterY - area.MaxY < range.Radius) ||
                     (range.CenterY > area.MinY && range.CenterY < area.MaxY && range.CenterX < area.MinX && area.MinX - range.CenterX < range.Radius) ||
                     (range.CenterY > area.MinY && range.CenterY < area.MaxY && range.CenterX > area.MaxX && range.CenterX - area.MaxX < range.Radius)
-                );
+                );*/
         }
         protected virtual Boolean Overlaps(WindowQuery window, MinimumBoundingBox area)
         {
             //checks the only conditions in which they don't overlap
             return !(
-                window.MinX > area.MaxX ||
-                window.MaxX < area.MinX ||
-                window.MinY > area.MaxY ||
-                window.MaxY < area.MinY);
+                window.MinX > area.MaxX ||   // left > right
+                window.MaxX < area.MinX ||   // right < left
+                window.MinY > area.MaxY ||   // bottom > top
+                window.MaxY < area.MinY);    // top < bottom
         }
         protected virtual Boolean Overlaps(MinimumBoundingBox area1, MinimumBoundingBox area2)
         {
@@ -488,7 +506,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 if (window is RangeQuery && Overlaps((RangeQuery)window, nodeEntry.MinimumBoundingBox) ||
                     window is WindowQuery && Overlaps((WindowQuery)window, nodeEntry.MinimumBoundingBox))
                     if (nodeEntry is LeafEntry)
+                    {
                         records.Add(Cache.LookupRecord(nodeEntry.Child));
+                        //Node nodet = Cache.LookupNode(nodeEntry.Child);
+                    }
                     else
                         records.AddRange(Search(window, Cache.LookupNode(nodeEntry.Child)));
             }
@@ -512,6 +533,24 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     Node closestNode = Cache.LookupNode(closestEntry.Child);
                     EnqueNodeEntries(kNN, closestNode, proximityQueue);
                 }
+            }
+            for(int i = 0; i < results.Count; i++)
+                for(int j = i; j < results.Count; j++)
+            {
+                if (results[i].BoundingBox.MinX == results[j].BoundingBox.MinX &&
+                    results[i].BoundingBox.MinY == results[j].BoundingBox.MinY &&
+                    results[i].BoundingBox.MaxX == results[j].BoundingBox.MaxX &&
+                    results[i].BoundingBox.MaxY == results[j].BoundingBox.MaxY)
+                {
+                    if (results[i].RecordID.CompareTo(results[j].RecordID) > 0)
+                    {
+                        Record temp = results[i];
+                        results[i] = results[j];
+                        results[j] = temp;
+                    }
+                }
+                else
+                    break;
             }
             return results;
         }
