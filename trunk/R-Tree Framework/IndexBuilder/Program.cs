@@ -42,6 +42,7 @@ namespace IndexBuilder
                     cacheSaveFileLocation,
                     memorySaveFileLocation);
             indexBuilder.BuildIndex();
+            cacheBuilder.Cache.Dispose();
         }
     }
 }

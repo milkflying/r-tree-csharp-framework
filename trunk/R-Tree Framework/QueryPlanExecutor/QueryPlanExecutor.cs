@@ -82,6 +82,8 @@ namespace QueryPlanExecutor
                 Cache.FlushCache();
                 String[] values = reader.ReadLine().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 Int32 queryNumber = Int32.Parse(values[0]);
+                if (queryNumber % 100 == 0)
+                    Console.WriteLine(queryNumber.ToString());
                 Char queryType = Char.Parse(values[1]);
                 if (queryType == 'Q')
                 {

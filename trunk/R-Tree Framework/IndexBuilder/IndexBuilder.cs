@@ -114,12 +114,14 @@ namespace IndexBuilder
             {
                 String[] values = reader.ReadLine().Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 Int32 recordId = Int32.Parse(values[0]);
+                if (recordId % 2500 == 0)
+                    Console.WriteLine(recordId.ToString());
                 Single x = Single.Parse(values[1]), y = Single.Parse(values[2]);
                 Record record = new Record(recordId, new MinimumBoundingBox(x, y, x, y));
                 TreeIndex.Insert(record);
             }
             reader.Close();
-            TreeIndex.SaveIndex(IndexSaveFileLocation, CacheSaveFileLocation, DataSetFileLocation);
+            TreeIndex.SaveIndex(IndexSaveFileLocation, CacheSaveFileLocation, MemorySaveFileLocation);
         }
 
         #endregion

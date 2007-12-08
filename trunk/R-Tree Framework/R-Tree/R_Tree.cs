@@ -148,7 +148,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             if (Root.Equals(Address.Empty))
             {
-                Node rootNode = new Node(MaximumNodeOccupancy, Address.Empty, typeof(Node));
+                Type childType = node1 is Leaf ? typeof(Leaf) : typeof(Node);
+                Node rootNode = new Node(MaximumNodeOccupancy, Address.Empty, childType);
                 Root = rootNode.Address;
                 node1.Parent = Root;
                 node2.Parent = Root;
@@ -506,10 +507,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 if (window is RangeQuery && Overlaps((RangeQuery)window, nodeEntry.MinimumBoundingBox) ||
                     window is WindowQuery && Overlaps((WindowQuery)window, nodeEntry.MinimumBoundingBox))
                     if (nodeEntry is LeafEntry)
-                    {
                         records.Add(Cache.LookupRecord(nodeEntry.Child));
-                        //Node nodet = Cache.LookupNode(nodeEntry.Child);
-                    }
                     else
                         records.AddRange(Search(window, Cache.LookupNode(nodeEntry.Child)));
             }

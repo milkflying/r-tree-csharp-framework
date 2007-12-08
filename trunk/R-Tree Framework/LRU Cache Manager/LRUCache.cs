@@ -143,20 +143,18 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         public virtual Node LookupNode(Address address)
         {
             Node node;
-            Byte[] type = new Byte[1];
             Page page = LookupPage(address);
-            Array.Copy(page.Data, type, 1);
-            if (type[0] == (Byte)1)
+            Byte type = page.Data[0];
+            if (type == (Byte)1)
                 node = new Leaf(address, page.Data);
-            else  if (type[0] == (Byte)0)
+            else  if (type == (Byte)0)
             {
-                Byte[] childType = new Byte[1];
-                Array.Copy(page.Data, childType, 1);
-                if (childType[0] == (Byte)1)
+                Byte childType = page.Data[1];
+                if (childType == (Byte)1)
                     node = new Node(address, typeof(Leaf), page.Data);
-                else if (childType[0] == (Byte)0)
+                else if (childType == (Byte)0)
                     node = new Node(address, typeof(Node), page.Data);
-                else if (childType[0] == (Byte)2)
+                else if (childType == (Byte)2)
                     throw new Exception();
                 else
                     throw new Exception();
