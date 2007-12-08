@@ -69,10 +69,10 @@ namespace ResultComparitor
 
                 if (!baseResultsQueryType.Equals(newResultsQueryType))
                     ReportQueryHeaderError(comparisonResultsWriter, baseResultsQueryType, newResultsQueryType, baseResultsLine1, newResultsLine1, baseResultsLine2, newResultsLine2, "Inconsistant Query Type", "");
-                else if (!baseResultsLine1.Equals(newResultsLine1))
-                    ReportQueryHeaderError(comparisonResultsWriter, baseResultsQueryType, newResultsQueryType, baseResultsLine1, newResultsLine1, baseResultsLine2, newResultsLine2, "Inconsistant Line 1", "");
-                else if (!baseResultsLine2.Equals(newResultsLine2))
-                    ReportQueryHeaderError(comparisonResultsWriter, baseResultsQueryType, newResultsQueryType, baseResultsLine1, newResultsLine1, baseResultsLine2, newResultsLine2, "Inconsistant Line 2", "");
+                //else if (!baseResultsLine1.Equals(newResultsLine1))
+                //    ReportQueryHeaderError(comparisonResultsWriter, baseResultsQueryType, newResultsQueryType, baseResultsLine1, newResultsLine1, baseResultsLine2, newResultsLine2, "Inconsistant Line 1", "");
+                //else if (!baseResultsLine2.Equals(newResultsLine2))
+                //    ReportQueryHeaderError(comparisonResultsWriter, baseResultsQueryType, newResultsQueryType, baseResultsLine1, newResultsLine1, baseResultsLine2, newResultsLine2, "Inconsistant Line 2", "");
                 
                 else
                 {

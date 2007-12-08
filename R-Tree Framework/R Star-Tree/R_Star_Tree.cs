@@ -132,7 +132,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             Node insertionNode = Cache.LookupNode(Root);
             Int32 currentLevel = 1;
-            while (!(insertionNode is Leaf) && currentLevel < targetLevel)
+            while (!(insertionNode is Leaf) && currentLevel++ < targetLevel)
             {
                 if (insertionNode.ChildType.Equals(typeof(Leaf)))
                 {
@@ -312,17 +312,19 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             Node nodeToInsertInto = ChooseNode(entry, level);
             nodeToInsertInto.AddNodeEntry(entry);
-            Node child = Cache.LookupNode(entry.Child);
-            child.Parent = nodeToInsertInto.Address;
-            Cache.WritePageData(child);
+            if (!(nodeToInsertInto is Leaf))
+            {
+                Node child = Cache.LookupNode(entry.Child);
+                child.Parent = nodeToInsertInto.Address;
+                Cache.WritePageData(child);
+            }
             if (nodeToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
             {
                 List<Node> splitNodes = OverFlowTreatment(nodeToInsertInto, level);
-                nodeToInsertInto = ChooseNode(entry, level);
                 if (splitNodes != null)
                 {
                     RemoveFromParent(nodeToInsertInto);
-                    AdjustTree(splitNodes[0], splitNodes[1]);
+                    AdjustTree(splitNodes[0], splitNodes[1], level);
                 }
                 return;
             }
@@ -373,7 +375,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             if (Root.Equals(Address.Empty))
             {
-                Node rootNode = new Node(MaximumNodeOccupancy, Address.Empty, typeof(Node));
+                Type childType = node1 is Leaf ? typeof(Leaf) : typeof(Node);
+                Node rootNode = new Node(MaximumNodeOccupancy, Address.Empty, childType);
                 Root = rootNode.Address;
                 node1.Parent = Root;
                 node2.Parent = Root;
@@ -403,10 +406,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                             Root = Address.Empty;
                         RemoveFromParent(parent);
                         AdjustTree(splitNodes[0], splitNodes[1], level - 1);
-                        return;
                     }
-                    else
-                        parent = Cache.LookupNode(parent.Address);
+                    return;
                 }
             }
             AdjustTree(parent, null, level - 1);

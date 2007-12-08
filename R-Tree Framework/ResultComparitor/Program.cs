@@ -10,7 +10,14 @@ namespace ResultComparitor
         {
             String
                 baseResults = args[0],
-                newResuls = args[1];
+                newResults = args[1],
+                comparisonResults = args[2];
+            ResultsComparitor
+                resultsComparitor = new ResultsComparitor(
+                    baseResults, 
+                    newResults,
+                    comparisonResults);
+            resultsComparitor.CompareResults();
         }
     }
 }
