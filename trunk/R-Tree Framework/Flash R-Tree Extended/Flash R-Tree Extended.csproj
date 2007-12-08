@@ -33,7 +33,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Flash_R_Tree_Extended.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Flash R-Tree\Flash R-Tree.csproj">
+      <Project>{CA6177E4-919B-4C69-AC57-24ABF74127B2}</Project>
+      <Name>Flash R-Tree</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{DCC40259-AE91-4A83-926F-E70B53ABE762}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\R-Tree\R-Tree.csproj">
+      <Project>{A4C6C32A-ACF2-46E9-8416-1C31F61FF581}</Project>
+      <Name>R-Tree</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

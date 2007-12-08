@@ -27,10 +27,10 @@ namespace TestBench
             QUERY_PLAN_RESULTS_LOCATION_U_L = "query_plan_results\\results_uniform_large.dat",
             QUERY_PLAN_RESULTS_LOCATION_R_S = "query_plan_results\\results_real_small.dat",
             QUERY_PLAN_RESULTS_LOCATION_R_L = "query_plan_results\\results_real_large.dat",
-            COMPARISON_RESULTS_LOCATION_U_S = "comparison_Results\\uniform_small_q30_mod_out.txt",
-            COMPARISON_RESULTS_LOCATION_U_L = "comparison_Results\\uniform_large_q30_mod_out.txt",
-            COMPARISON_RESULTS_LOCATION_R_S = "comparison_Results\\real_small_q30_mod_out.txt",
-            COMPARISON_RESULTS_LOCATION_R_L = "comparison_Results\\real_large_q30_mod_out.txt",
+            COMPARISON_RESULTS_LOCATION_U_S = "uniform_small_q30_mod_out.txt",
+            COMPARISON_RESULTS_LOCATION_U_L = "uniform_large_q30_mod_out.txt",
+            COMPARISON_RESULTS_LOCATION_R_S = "real_small_q30_mod_out.txt",
+            COMPARISON_RESULTS_LOCATION_R_L = "real_large_q30_mod_out.txt",
             SAVED_INDEX_LOCATION_U_S = "saved_index\\uniform_small_saved_index.dat",
             SAVED_INDEX_LOCATION_U_L = "saved_index\\uniform_large_saved_index.dat",
             SAVED_INDEX_LOCATION_R_S = "saved_index\\real_small_saved_index.dat",
@@ -48,14 +48,19 @@ namespace TestBench
         {
             BuildIndexs(typeof(R_Tree));
             RunQueries(typeof(R_Tree));
+            
+            BuildIndexs(typeof(R_Star_Tree));
+            RunQueries(typeof(R_Star_Tree));
+            /*
+            CompareResults(typeof(R_Star_Tree));*/
         }
         public static void RunQueries(Type tree)
         {
             String ext = "";
-            if (tree.Equals(typeof(R_Tree)))
-                ext = "r_tree";
-            else if (tree.Equals(typeof(R_Star_Tree)))
+            if (tree.Equals(typeof(R_Star_Tree)))
                 ext = "r_star_tree";
+            else if (tree.Equals(typeof(R_Tree)))
+                ext = "r_tree";
             Program program = new Program(tree, SAVED_INDEX_LOCATION_U_S+ ext, SAVED_CACHE_LOCATION_U_S + ext);
             program.ExecuteQueryPlan(QUERY_PLAN_LOCATION, QUERY_PLAN_RESULTS_LOCATION_U_S+ ext);
             program.Dispose();
@@ -68,15 +73,15 @@ namespace TestBench
             program = new Program(tree, SAVED_INDEX_LOCATION_R_L + ext, SAVED_CACHE_LOCATION_R_L + ext);
             program.ExecuteQueryPlan(QUERY_PLAN_LOCATION, QUERY_PLAN_RESULTS_LOCATION_R_L+ ext);
             program.Dispose();
-            CompareResults(typeof(R_Tree));
+            CompareResults(tree);
         }
         public static void BuildIndexs(Type tree)
         {
             String ext = "";
-            if (tree.Equals(typeof(R_Tree)))
-                ext = "r_tree";
-            else if (tree.Equals(typeof(R_Star_Tree)))
+            if (tree.Equals(typeof(R_Star_Tree)))
                 ext = "r_star_tree";
+            else if (tree.Equals(typeof(R_Tree)))
+                ext = "r_tree";
             Program program = new Program(tree);
             program.BuildIndex(DATA_SET_LOCATION_U_S);
             program.SaveIndex(SAVED_INDEX_LOCATION_U_S + ext, SAVED_CACHE_LOCATION_U_S + ext, SAVED_MEMORY_LOCATION_U_S + ext);
@@ -97,14 +102,14 @@ namespace TestBench
         public static void CompareResults(Type tree)
         {
             String ext = "";
-            if (tree.Equals(typeof(R_Tree)))
-                ext = "r_tree";
-            else if (tree.Equals(typeof(R_Tree)))
+            if (tree.Equals(typeof(R_Star_Tree)))
                 ext = "r_star_tree";
-                CompareResults("comparison_uniform_small.dat", COMPARISON_RESULTS_LOCATION_U_S, QUERY_PLAN_RESULTS_LOCATION_U_S + ext);
-                CompareResults("comparison_uniform_large.dat", COMPARISON_RESULTS_LOCATION_U_L, QUERY_PLAN_RESULTS_LOCATION_U_L + ext);
-                CompareResults("comparison_real_small.dat", COMPARISON_RESULTS_LOCATION_R_S, QUERY_PLAN_RESULTS_LOCATION_R_S + ext);
-                CompareResults("comparison_real_large.dat", COMPARISON_RESULTS_LOCATION_R_L, QUERY_PLAN_RESULTS_LOCATION_R_L + ext);
+            else if (tree.Equals(typeof(R_Tree)))
+                ext = "r_tree";
+            CompareResults("comparison_Results\\comparison_uniform_small.dat" + ext, COMPARISON_RESULTS_LOCATION_U_S, QUERY_PLAN_RESULTS_LOCATION_U_S + ext);
+            CompareResults("comparison_Results\\comparison_uniform_large.dat" + ext, COMPARISON_RESULTS_LOCATION_U_L, QUERY_PLAN_RESULTS_LOCATION_U_L + ext);
+            CompareResults("comparison_Results\\comparison_real_small.dat" + ext, COMPARISON_RESULTS_LOCATION_R_S, QUERY_PLAN_RESULTS_LOCATION_R_S + ext);
+            CompareResults("comparison_Results\\comparison_real_large.dat" + ext, COMPARISON_RESULTS_LOCATION_R_L, QUERY_PLAN_RESULTS_LOCATION_R_L + ext);
         }
         public static void CompareResults(String outputLocation, String ken, String mine)
         {
@@ -164,7 +169,7 @@ namespace TestBench
                     else if (queryTypeKen.Equals("Traditional Nearest Neighbor Search"))
                     {
                         for (int i = 0; i < resultsKen.Count -1; i++)
-                            if (resultsKen[i] != resultsMine[i])
+                            if (i >= resultsMine.Count ||  resultsKen[i] != resultsMine[i])
                             {
                                 String conflictingResults = "Results in Ken's output:" + Environment.NewLine;
                                 foreach (Int32 result in resultsKen)
@@ -216,9 +221,9 @@ namespace TestBench
         {
             cache = new LRUCacheManager(DATABASE_LOCATION, Constants.PAGE_SIZE, CACHE_SIZE);
             analyzer = new PerformanceAnalyzer(cache);
-            if (tree.Equals(typeof(R_Tree)))
-                index = new R_Tree(MINIMUM_OCCUPANCY, MAXIMUM_OCCUPANCY, cache);
-            else if (tree.Equals(typeof(R_Star_Tree)))
+            if (tree.Equals(typeof(R_Star_Tree)))
+                index = new R_Star_Tree(MINIMUM_OCCUPANCY, MAXIMUM_OCCUPANCY, cache);
+            else if (tree.Equals(typeof(R_Tree)))
                 index = new R_Tree(MINIMUM_OCCUPANCY, MAXIMUM_OCCUPANCY, cache);
         }
 
@@ -226,10 +231,10 @@ namespace TestBench
         {
             cache = new LRUCacheManager(cacheLoc, CACHE_SIZE);
             analyzer = new PerformanceAnalyzer(cache);
-            if (tree.Equals(typeof(R_Tree))) 
+            if (tree.Equals(typeof(R_Star_Tree)))
+                index = new R_Star_Tree(MINIMUM_OCCUPANCY, MAXIMUM_OCCUPANCY, cache);
+            else if (tree.Equals(typeof(R_Tree))) 
                 index = new R_Tree(indexLoc, cache);
-            else if (tree.Equals(typeof(R_Star_Tree)))
-                index = new R_Tree(MINIMUM_OCCUPANCY, MAXIMUM_OCCUPANCY, cache);
         }
 
         public void BuildIndex(String dataFileLocation)

@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{68917546-315D-42E1-8FD3-403E7C1232EA}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{9BB5647B-4A96-4A8C-B97B-26B209B39789}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edu.Psu.Cse.R_Tree_Framework.CacheManagers</RootNamespace>
-    <AssemblyName>Edu.Psu.Cse.R_Tree_Framework.CacheManagers.Level_Proportional_Cache</AssemblyName>
+    <RootNamespace>ResultComparitor</RootNamespace>
+    <AssemblyName>ResultComparitor</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,8 +33,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LevelProportionalCacheManager.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultsComparitor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

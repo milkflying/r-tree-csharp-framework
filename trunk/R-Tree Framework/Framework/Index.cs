@@ -9,6 +9,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         void Insert(Record record);
         void Delete(Record record);
         void Update(Record originalRecord, Record newRecord);
-        List<Record> Search(Query query); 
+        List<Record> Search(Query query);
+        void SaveIndex(String indexSaveLocation, String cacheSaveLocation, String memorySaveLocation);
     }
 }

@@ -31,6 +31,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             : base(minimumNodeOccupancy, maximumNodeOccupancy, cache)
         {
         }
+        public R_Star_Tree(String indexSavedLocation, CacheManager cache)
+            : base(indexSavedLocation, cache)
+        {
+        }
 
         #endregion
         #region Public Methods
