@@ -10,10 +10,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public Flash_R_Tree_Extended(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)
             : base(minimumNodeOccupancy, maximumNodeOccupancy, cache)
         {
+            NodeTranslationTable = new NodeTranslationTableExtended(cache);
         }
         public Flash_R_Tree_Extended(String savedFileLocation, CacheManager cache)
             : base(savedFileLocation, cache)
         {
+            NodeTranslationTable = new NodeTranslationTableExtended(savedFileLocation + ".ntt", cache);
         }
     }
 }
