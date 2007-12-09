@@ -652,24 +652,5 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
 
         #endregion
-
-        /*public void ForceMBBUpdate()
-        {
-            ForceMBBUpdate(Cache.LookupNode(Root));
-        }
-        private MinimumBoundingBox ForceMBBUpdate(Node node)
-        {
-            foreach(NodeEntry entry in node.NodeEntries)
-                ForceMBBUpdate(entry);
-            Cache.WritePageData(node);
-            return node.CalculateMinimumBoundingBox();
-        }
-        private void ForceMBBUpdate(NodeEntry entry)
-        {
-            if (entry is LeafEntry)
-                return;
-            else
-                entry.MinimumBoundingBox = ForceMBBUpdate(Cache.LookupNode(entry.Child));
-        }*/
     }
 }

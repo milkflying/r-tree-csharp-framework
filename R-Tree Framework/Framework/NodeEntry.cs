@@ -28,14 +28,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 
         public NodeEntry(Byte[] data)
         {
-            Byte[] childAddress = new Byte[4];
-            Array.Copy(data, childAddress, 4);
+            Byte[] childAddress = new Byte[Constants.ADDRESS_SIZE];
+            Array.Copy(data, childAddress, Constants.ADDRESS_SIZE);
             Child = new Address(childAddress);
             MinimumBoundingBox = new MinimumBoundingBox(
-                BitConverter.ToSingle(data, 4),
-                BitConverter.ToSingle(data, 8),
-                BitConverter.ToSingle(data, 12),
-                BitConverter.ToSingle(data, 16));
+                BitConverter.ToSingle(data, Constants.ADDRESS_SIZE),
+                BitConverter.ToSingle(data, Constants.ADDRESS_SIZE + 4),
+                BitConverter.ToSingle(data, Constants.ADDRESS_SIZE + 8),
+                BitConverter.ToSingle(data, Constants.ADDRESS_SIZE + 12));
         }
 
         public Byte[] GetBytes()

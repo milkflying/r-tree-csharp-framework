@@ -36,21 +36,22 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         {
             Address = address;
             BoundingBox = new MinimumBoundingBox(
-                BitConverter.ToSingle(data, 0),
-                BitConverter.ToSingle(data, 8),
-                BitConverter.ToSingle(data, 16),
-                BitConverter.ToSingle(data, 24));
-            RecordID = BitConverter.ToInt32(data, 32);
+                BitConverter.ToSingle(data, 1),
+                BitConverter.ToSingle(data, 5),
+                BitConverter.ToSingle(data, 9),
+                BitConverter.ToSingle(data, 13));
+            RecordID = BitConverter.ToInt32(data, 17);
         }
 
         public virtual Byte[] GeneratePageData()
         {
             Byte[] data = new Byte[Constants.RECORD_SIZE];
-            BitConverter.GetBytes(BoundingBox.MinX).CopyTo(data, 0);
-            BitConverter.GetBytes(BoundingBox.MinY).CopyTo(data, 8);
-            BitConverter.GetBytes(BoundingBox.MaxX).CopyTo(data, 16);
-            BitConverter.GetBytes(BoundingBox.MaxY).CopyTo(data, 24);
-            BitConverter.GetBytes(RecordID).CopyTo(data, 32);
+            data[0] = (Byte)PageDataType.Record;
+            BitConverter.GetBytes(BoundingBox.MinX).CopyTo(data, 1);
+            BitConverter.GetBytes(BoundingBox.MinY).CopyTo(data, 5);
+            BitConverter.GetBytes(BoundingBox.MaxX).CopyTo(data, 9);
+            BitConverter.GetBytes(BoundingBox.MaxY).CopyTo(data, 13);
+            BitConverter.GetBytes(RecordID).CopyTo(data, 17);
             return data;
         }
     }

@@ -20,11 +20,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         }
         protected override Byte ChildTypeID
         {
-            get { return (Byte)2; }
+            get { return (Byte)NodeChildType.Record; }
         }
         protected override Byte TypeID
         {
-            get { return (Byte)1; }
+            get { return (Byte)PageDataType.Leaf; }
         }
     }
 }
