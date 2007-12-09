@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using Edu.Psu.Cse.R_Tree_Framework.Framework;
 
 namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
@@ -29,17 +30,19 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Constructors
 
-        public Flash_R_Tree(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, NodeTranslationTable nodeTranslationTable, ReservationBuffer reservationBuffer)
-            : base(minimumNodeOccupancy, maximumNodeOccupancy, nodeTranslationTable)
+        public Flash_R_Tree(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)
+            : base(minimumNodeOccupancy, maximumNodeOccupancy, cache)
         {
-            Buffer = reservationBuffer;
-            NodeTranslationTable = nodeTranslationTable;
+            Buffer = new ReservationBuffer(Constants.RESERVATION_BUFFER_SIZE) ;
+            NodeTranslationTable = new NodeTranslationTable(cache);
+            Cache = NodeTranslationTable;
         }
-        public Flash_R_Tree(String savedFileLocation, NodeTranslationTable nodeTranslationTable, ReservationBuffer reservationBuffer)
-            : base(savedFileLocation, nodeTranslationTable)
+        public Flash_R_Tree(String savedFileLocation, CacheManager cache)
+            : base(savedFileLocation, cache)
         {
-            Buffer = reservationBuffer;
-            NodeTranslationTable = nodeTranslationTable;
+            Buffer = new ReservationBuffer(Constants.RESERVATION_BUFFER_SIZE);
+            NodeTranslationTable = new NodeTranslationTable(savedFileLocation + ".ntt", cache);
+            Cache = NodeTranslationTable;
         }
 
         #endregion
@@ -68,11 +71,21 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         public override void SaveIndex(String indexSaveLocation, String cacheSaveLocation, String memorySaveLocation)
         {
-            throw new Exception("Not implemented");
+            String nodeTranslationTableSaveFileLocation = indexSaveLocation + ".ntt";
+            FlushBuffer();
+            Cache.SaveCache(cacheSaveLocation, memorySaveLocation);
+            NodeTranslationTable.SaveTable(nodeTranslationTableSaveFileLocation);
+            StreamWriter writer = new StreamWriter(indexSaveLocation);
+            writer.WriteLine(nodeTranslationTableSaveFileLocation);
+            writer.WriteLine(Root);
+            writer.WriteLine(MinimumNodeOccupancy);
+            writer.WriteLine(MaximumNodeOccupancy);
+            writer.WriteLine(TreeHeight);
+            writer.Close();
         }
         public override List<Record> Search(Query query)
         {
-            return base.Search(query);
+            throw new Exception();//return base.Search(query);
         }
         public virtual void Flush()
         {
@@ -104,7 +117,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             if (entryToUpdate == null)
             {
                 MinimumBoundingBox mbb = node1.CalculateMinimumBoundingBox();
-                IndexUnit indexUnit = new IndexUnit(parent.Address, entryToUpdate.Child, mbb, Operation.Insert);
+                IndexUnit indexUnit = new IndexUnit(parent.Address, node1.Address, mbb, Operation.Insert);
                 NodeTranslationTable.Add(indexUnit);
                 parent.AddNodeEntry(new NodeEntry(mbb, node1.Address));
             }

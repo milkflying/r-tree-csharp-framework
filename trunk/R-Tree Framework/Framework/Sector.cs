@@ -47,7 +47,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         {
             Int32 index = 0;
             
-            Byte[] data = new Byte[Constants.INDEX_UNIT_SIZE];
+            Byte[] data = new Byte[Constants.SECTOR_SIZE];
             
             data[index++] = (Byte)PageDataType.IndexUnitSector;
             
