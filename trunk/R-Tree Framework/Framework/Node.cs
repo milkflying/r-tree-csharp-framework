@@ -21,14 +21,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             get
             {
                 if (ChildType.Equals(typeof(Leaf)))
-                    return (Byte)1;
+                    return (Byte)NodeChildType.Leaf;
                 else
-                    return (Byte)0;
+                    return (Byte)NodeChildType.Node;
             }
         }
         protected virtual Byte TypeID
         {
-            get { return (Byte)0; }
+            get { return (Byte)PageDataType.Node; }
         }
 
         public Address Parent

@@ -1,0 +1,5 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <StartArguments>"C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\BaseResults\uniform_small_q30_mod_out.txt" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Results\uniform_small.r_tree" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\ComparisonResults\uniform_small.r_tree"</StartArguments>
+  </PropertyGroup>
+</Project>

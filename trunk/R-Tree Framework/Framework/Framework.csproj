@@ -36,6 +36,8 @@
     <Compile Include="Address.cs" />
     <Compile Include="CacheManager.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="IndexUnit.cs" />
+    <Compile Include="Sector.cs" />
     <Compile Include="KNearestNeighborQuery.cs" />
     <Compile Include="Leaf.cs" />
     <Compile Include="LeafEntry.cs" />

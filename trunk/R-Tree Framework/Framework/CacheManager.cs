@@ -11,13 +11,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         event CacheEventHandler PageFault;
         event CacheEventHandler PageWrite;
 
-        Int32 CacheSize { get; }
-        Int32 PageSize { get; }
-        String StorageFileLocation { get; }
         void WritePageData(PageData data);
         void DeletePageData(PageData data);
         Node LookupNode(Address address);
         Record LookupRecord(Address address);
+        Sector LookupSector(Address address);
         void FlushCache();
         void SaveCache(String cacheSaveLocation, String memorySaveLocation);
     }
