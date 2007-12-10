@@ -62,8 +62,8 @@ namespace ExperimentRunner
         }
         public CacheType CacheType
         {
-            get { return CacheType1; }
-            set { CacheType1 = value; }
+            get { return CacheType; }
+            set { CacheType = value; }
         }
         public WorkPlan WorkPlan
         {

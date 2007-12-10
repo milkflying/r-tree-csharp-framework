@@ -258,7 +258,7 @@ namespace TestBench
             indexBuilder.StartInfo.FileName = indexBuilderLocation;
             queryPlanExecutor.StartInfo.FileName = queryPlanExecutorFileLocation;
             resultComparitor.StartInfo.FileName = resultComparitorFileLocation;
-            for (int k = 14; k < numberOfExperiments; k++)
+            for (int k = 0; k < 4 && k < numberOfExperiments; k++)
             {
                 indexBuilder.StartInfo.Arguments =
                     String.Format("\"{0}\" \"{1}\" \"{2}\" \"{3}\" \"{4}\" \"{5}\" \"{6}\" \"{7}\" \"{8}\" \"{9}\" \"{10}\"",

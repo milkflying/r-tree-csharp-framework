@@ -26,6 +26,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         protected Dictionary<Int64, Page> pageTranslationTable;
         protected SortedList<Int64, Page> leastRecentlyUsed;
         protected SortedDictionary<Address, Int64> addressTranslationTable;
+        protected SortedDictionary<Address, Record> records;
 
         #endregion
         #region Properties
@@ -95,12 +96,18 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             get { return ticks; }
             set { ticks = value; }
         }
+        protected SortedDictionary<Address, Record> Records
+        {
+            get { return records; }
+            set { records = value; }
+        }
 
         #endregion
         #region Constructors
 
         public LRUCacheManager(String storageFileLocation, Int32 pageSize, Int32 numberOfPagesToCache)
         {
+            Records = new SortedDictionary<Address, Record>();
             StorageFileLocation = storageFileLocation;
             StorageReader = new FileStream(
                 StorageFileLocation,
@@ -120,6 +127,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         public LRUCacheManager(String savedLocation, Int32 numberOfPagesToCache)
         {
+            Records = new SortedDictionary<Address, Record>();
             StreamReader reader = new StreamReader(savedLocation);
             StorageFileLocation = reader.ReadLine();
             PageSize = Int32.Parse(reader.ReadLine());
@@ -182,10 +190,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         public virtual Record LookupRecord(Address address)
         {
-            DisablePageFault = true;
+            /*DisablePageFault = true;
             Record record = LookupPageData(address) as Record;
             DisablePageFault = false;
-            return record;
+            return record;*/
+            return Records[address];
         }
         public virtual Sector LookupSector(Address address)
         {
@@ -221,6 +230,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         public virtual void WritePageData(PageData data)
         {
+            if (data is Record)
+            {
+                Records.Add(data.Address, data as Record);
+                return;
+            }
             Page page;
             if (!AddressTranslationTable.ContainsKey(data.Address))
                 page = AllocateNewPage(data.Address);
