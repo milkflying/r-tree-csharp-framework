@@ -40,6 +40,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flash R-Tree Extended\Flash R-Tree Extended.csproj">
+      <Project>{872BF86F-E660-4A49-A212-21A5E7D81A32}</Project>
+      <Name>Flash R-Tree Extended</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Flash R-Tree\Flash R-Tree.csproj">
       <Project>{CA6177E4-919B-4C69-AC57-24ABF74127B2}</Project>
       <Name>Flash R-Tree</Name>

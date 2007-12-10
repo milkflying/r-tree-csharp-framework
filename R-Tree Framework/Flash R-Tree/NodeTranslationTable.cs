@@ -48,8 +48,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Constructors
 
-        public NodeTranslationTable(CacheManager underlyingCache)
+        public NodeTranslationTable(CacheManager underlyingCache, Int32 translationListSize)
         {
+            TranslationListSize = translationListSize;
             MemoryManager = underlyingCache;
             NodeToPagesTranslationTable = new SortedList<Address, List<Address>>();
             UnitsToAdd = new List<IndexUnit>();
@@ -78,6 +79,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             while (!reader.EndOfStream)
                 UnitsToAdd.Add(new IndexUnit(Encoding.UTF8.GetBytes(reader.ReadLine())));
             reader.Close();
+
+            MemoryManager.PageFault += new CacheEventHandler(PageFaulted);
+            MemoryManager.PageWrite += new CacheEventHandler(PageWritten);
         }
 
         #endregion
@@ -151,6 +155,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public virtual void WritePageData(PageData data)
         {
             MemoryManager.WritePageData(data);
+            if (data is Node)
+            {
+                NodeToPagesTranslationTable.Remove(data.Address);
+                List<IndexUnit> unitsToRemove = new List<IndexUnit>();
+                foreach (IndexUnit iu in UnitsToAdd)
+                    if (iu.Node.Equals(data.Address))
+                        unitsToRemove.Add(iu);
+                foreach (IndexUnit iu in unitsToRemove)
+                    UnitsToAdd.Remove(iu);
+            }
         }
         public virtual void DeletePageData(PageData data)
         {
@@ -205,13 +219,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             foreach(Sector sector in newSectors)
             {
                 MemoryManager.WritePageData(sector);
+                foreach (IndexUnit iu in sector.IndexUnits)
+                    UnitsToAdd.Remove(iu);
                 foreach (IndexUnit indexUnit in sector.IndexUnits)
                     if (NodeToPagesTranslationTable.ContainsKey(indexUnit.Node))
                     {
                         if (!NodeToPagesTranslationTable[indexUnit.Node].Contains(sector.Address))
                         {
                             NodeToPagesTranslationTable[indexUnit.Node].Add(sector.Address);
-                            CheckSectorListOverflow(indexUnit.Node);
                         }
                     }
                     else
@@ -222,6 +237,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
             }
             UnitsToAdd.Clear();
+            CheckSectorListOverflow();
         }
         public virtual void Dispose()
         {
@@ -271,18 +287,30 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             return sectors;
         }
-        protected virtual void CheckSectorListOverflow(Address nodeAddress)
+        protected virtual void CheckSectorListOverflow()
         {
-            List<Address> sectorList = NodeToPagesTranslationTable[nodeAddress];
-            if (sectorList.Count > TranslationListSize)
+            List<Address> nodeAddresses = new List<Address>(NodeToPagesTranslationTable.Keys);
+            foreach (Address nodeAddress in nodeAddresses)
             {
-                MemoryManager.WritePageData(LookupNode(nodeAddress));
-                NodeToPagesTranslationTable.Remove(nodeAddress);
+                List<Address> sectorList = NodeToPagesTranslationTable[nodeAddress];
+                if (sectorList.Count > TranslationListSize)
+                {
+                    MemoryManager.WritePageData(LookupNode(nodeAddress));
+                    NodeToPagesTranslationTable.Remove(nodeAddress);
+                }
             }
         }
+        protected virtual void PageWritten(object sender, EventArgs args)
+        {
+            if (PageWrite != null)
+                PageWrite(this, args);
+        }
+        protected virtual void PageFaulted(object sender, EventArgs args)
+        {
+            if (PageFault != null)
+                PageFault(this, args);
+        }
 
-
-        //handle split occuring
         #endregion
     }
 }

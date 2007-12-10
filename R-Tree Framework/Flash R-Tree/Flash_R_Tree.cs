@@ -34,7 +34,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             : base(minimumNodeOccupancy, maximumNodeOccupancy, cache)
         {
             Buffer = new ReservationBuffer(Constants.RESERVATION_BUFFER_SIZE) ;
-            NodeTranslationTable = new NodeTranslationTable(cache);
+            NodeTranslationTable = new NodeTranslationTable(cache, Constants.SECTOR_LIST_LENGTH);
             Cache = NodeTranslationTable;
         }
         public Flash_R_Tree(String savedFileLocation, CacheManager cache)
@@ -76,7 +76,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             Cache.SaveCache(cacheSaveLocation, memorySaveLocation);
             NodeTranslationTable.SaveTable(nodeTranslationTableSaveFileLocation);
             StreamWriter writer = new StreamWriter(indexSaveLocation);
-            writer.WriteLine(nodeTranslationTableSaveFileLocation);
             writer.WriteLine(Root);
             writer.WriteLine(MinimumNodeOccupancy);
             writer.WriteLine(MaximumNodeOccupancy);
@@ -85,7 +84,34 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         public override List<Record> Search(Query query)
         {
-            throw new Exception();//return base.Search(query);
+            List<Record> results = base.Search(query);
+            if (query is RegionQuery)
+            {
+                List<BufferItem> bufferedOperations = Condense(Buffer.Buffer);
+                foreach (BufferItem operation in bufferedOperations)
+                {
+                    if (operation.Operation == Operation.Insert)
+                    {
+                        if (query is RangeQuery && Overlaps((RangeQuery)query, operation.Entry.MinimumBoundingBox) ||
+                            query is WindowQuery && Overlaps((WindowQuery)query, operation.Entry.MinimumBoundingBox))
+                                results.Add(Cache.LookupRecord(operation.Entry.Child));
+                    }
+                    else if (operation.Operation == Operation.Delete)
+                    {
+                        Record deletedResult = null;
+                        foreach (Record result in results)
+                            if (result.Address.Equals(operation.Entry.Child))
+                                deletedResult = result;
+                        if (deletedResult != null)
+                            results.Remove(deletedResult);
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+            }
+            return results;
         }
         public virtual void Flush()
         {
@@ -106,8 +132,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 Root = rootNode.Address;
                 node1.Parent = Root;
                 node2.Parent = Root;
+                rootNode.AddNodeEntry(new NodeEntry(node1.CalculateMinimumBoundingBox(), node1.Address));
+                rootNode.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
                 Cache.WritePageData(rootNode);
+                //Node temp = Cache.LookupNode(rootNode.Address);
+                Cache.WritePageData(node1);
+                Cache.WritePageData(node2);
                 TreeHeight++;
+                return;
             }
             Node parent = Cache.LookupNode(node1.Parent);
             NodeEntry entryToUpdate = null;
@@ -133,7 +165,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 MinimumBoundingBox mbb = node2.CalculateMinimumBoundingBox();
                 IndexUnit indexUnit = new IndexUnit(parent.Address, node2.Address, mbb, Operation.Insert);
                 NodeTranslationTable.Add(indexUnit);
-                parent.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
+                parent.AddNodeEntry(new NodeEntry(mbb, node2.Address));
                 Cache.WritePageData(node2);
                 Cache.WritePageData(node1);                
                 if (parent.NodeEntries.Count > MaximumNodeOccupancy)
@@ -168,8 +200,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 }
                 else
                 {
-                    nodeEntry.MinimumBoundingBox = node.CalculateMinimumBoundingBox();
                     MinimumBoundingBox mbb = node.CalculateMinimumBoundingBox();
+                    nodeEntry.MinimumBoundingBox = mbb;
                     IndexUnit indexUnit = new IndexUnit(parent.Address, nodeEntry.Child, nodeEntry.MinimumBoundingBox, Operation.Update);
                     NodeTranslationTable.Add(indexUnit);
                 }
@@ -202,7 +234,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                         {
                             List<Node> splitNodes = Split(leafToInsertInto);
                             RemoveFromParent(leafToInsertInto);
-                            AdjustTree(splitNodes[0] as Leaf, splitNodes[1] as Leaf);
+                            AdjustTree(splitNodes[0], splitNodes[1]);
                         }
                         else
                             AdjustTree(leafToInsertInto);
@@ -270,7 +302,73 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 Root = Address.Empty;
             Cache.DeletePageData(node);
         }
+        protected override List<Record> Search(KNearestNeighborQuery kNN, Node node)
+        {
+            return Search(kNN, node, Condense(Buffer.Buffer));
+        }
+        protected virtual List<Record> Search(KNearestNeighborQuery kNN, Node node, List<BufferItem> changeList)
+        {
+            PriorityQueue<NodeEntry, Single> proximityQueue = new PriorityQueue<NodeEntry, Single>();
+            List<Record> results = new List<Record>(kNN.K);
 
+            List<BufferItem> deletions = new List<BufferItem>();
+            foreach(BufferItem change in changeList)
+                if(change.Operation == Operation.Delete)
+                    deletions.Add(change);
+            foreach(BufferItem deletion in deletions)
+                changeList.Remove(deletion);
+            foreach (BufferItem insertion in deletions)
+                proximityQueue.Enqueue(insertion.Entry, GetDistance(kNN.X, kNN.Y, insertion.Entry.MinimumBoundingBox) * -1);
+
+            EnqueNodeEntries(kNN, node, proximityQueue);
+            while (results.Count < kNN.K && proximityQueue.Count > 0)
+            {
+                NodeEntry closestEntry = proximityQueue.Dequeue().Value;
+                if (closestEntry is LeafEntry)
+                {
+                    Boolean entryDeleted = false;
+                    foreach (BufferItem deletion in deletions)
+                        if (closestEntry.Child.Equals(deletion.Entry.Child))
+                            entryDeleted = true;
+                    if (!entryDeleted)
+                        results.Add(Cache.LookupRecord(closestEntry.Child));
+                }
+                else
+                    EnqueNodeEntries(kNN, Cache.LookupNode(closestEntry.Child), proximityQueue);
+            }
+            for(int i = 0; i < results.Count; i++)
+                for(int j = i; j < results.Count; j++)
+            {
+                if (results[i].BoundingBox.MinX == results[j].BoundingBox.MinX &&
+                    results[i].BoundingBox.MinY == results[j].BoundingBox.MinY &&
+                    results[i].BoundingBox.MaxX == results[j].BoundingBox.MaxX &&
+                    results[i].BoundingBox.MaxY == results[j].BoundingBox.MaxY)
+                {
+                    if (results[i].RecordID.CompareTo(results[j].RecordID) > 0)
+                    {
+                        Record temp = results[i];
+                        results[i] = results[j];
+                        results[j] = temp;
+                    }
+                }
+                else
+                    break;
+            }
+            return results;
+        }
+        protected virtual List<BufferItem> Condense(List<BufferItem> list)
+        {
+            List<BufferItem> condensed = new List<BufferItem>(),
+                expanded = new List<BufferItem>();
+            foreach (BufferItem item in list)
+                if (item.Operation == Operation.Insert)
+                    condensed.Add(item);
+                else
+                    for (int i = 0; i < condensed.Count; i++)
+                        if (condensed[i].Entry.Child.Equals(item.Entry.Child))
+                            condensed.RemoveAt(i--);
+            return condensed;
+        }
         #endregion
     }
 }

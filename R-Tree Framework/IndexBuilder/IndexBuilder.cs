@@ -132,7 +132,7 @@ namespace IndexBuilder
             if (treeType == R_SHARP_TREE)
                 throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
             else if (treeType == FLASH_R_TREE_EXTENDED)
-                throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
+                TreeIndex = new Flash_R_Tree_Extended(MinimumNodeOccupancy, MaximumNodeOccupancy, Cache);
             else if (treeType == FLASH_R_TREE)
                 TreeIndex = new Flash_R_Tree(MinimumNodeOccupancy, MaximumNodeOccupancy, Cache);
             else if (treeType == R_STAR_TREE)
