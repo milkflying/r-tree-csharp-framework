@@ -27,9 +27,9 @@ DEFAULT CONFIGURATION
 -h 500		history of previous query results
 
 
-[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.3 -k 64 -a 10 -b 100 -c 10000 > small_q30.dat
-[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.6 -k 64 -a 10 -b 100 -c 10000 > small_q60.dat
-[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.9 -k 64 -a 10 -b 100 -c 10000 > small_q90.dat
-[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.3 -k 64 -a 10 -b 100 -c 100000 > large_q30.dat
-[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.6 -k 64 -a 10 -b 100 -c 100000 > large_q60.dat
-[APP] -n 1000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.9 -k 64 -a 10 -b 100 -c 100000 > large_q90.dat
+[APP] -n 10000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.3 -k 64 -a 10 -b 100 -c 10000 > small_q30.dat
+[APP] -n 10000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.6 -k 64 -a 10 -b 100 -c 10000 > small_q60.dat
+[APP] -n 10000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.9 -k 64 -a 10 -b 100 -c 10000 > small_q90.dat
+[APP] -n 10000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.3 -k 64 -a 10 -b 100 -c 100000 > large_q30.dat
+[APP] -n 10000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.6 -k 64 -a 10 -b 100 -c 100000 > large_q60.dat
+[APP] -n 10000 -d 2 -l 0 -u 1000 -e 0 -s 1000 -h 500 -q 0.9 -k 64 -a 10 -b 100 -c 100000 > large_q90.dat
