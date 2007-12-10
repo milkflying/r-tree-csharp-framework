@@ -1,0 +1,51 @@
+Constants
+	Root
+		C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments
+	Max Length of Node Translation Buffer
+		4
+	Min Fill Factor
+		30&
+Variables
+	DataSet
+		Uniform
+		Real
+	Cardinality
+		Small
+		Large
+	Cache Size
+		0
+		5
+		10
+	Drive
+		SD:\
+		HD:\
+		FS:\
+	Index
+		R*-Tree
+		FR
+		FRe
+		R#
+	Reservation Buffer Size
+		4
+		16
+		64
+	Cache
+		LRU
+		Highest Level
+		Level Proportional
+	Query Plan
+		30%
+		60%
+		90%
+Files Per Experiment
+	Cache Save Location		HD		ROOT\Cache		DATASET.CARDINALITY.CACHESIZE.DRIVE.INDEX.RBSIZE.CACHE.QUERYPLAN.cache
+	Database Save Location		HD		ROOT\Database		DATASET.CARDINALITY.CACHESIZE.DRIVE.INDEX.RBSIZE.CACHE.QUERYPLAN.database
+	Database Run Location		Drive		Drive\			DATASET.CARDINALITY.CACHESIZE.DRIVE.INDEX.RBSIZE.CACHE.QUERYPLAN.database
+	DataSet Location		HD		ROOT\DataSet		DATASET.CARDINALITY.dataset
+	Index Save Location		HD		ROOT\Index		DATASET.CARDINALITY.CACHESIZE.DRIVE.INDEX.RBSIZE.CACHE.QUERYPLAN.index
+	Memory Save Location		HD		ROOT\Memory		DATASET.CARDINALITY.CACHESIZE.DRIVE.INDEX.RBSIZE.CACHE.QUERYPLAN.memory
+	Query Plan Location		HD		ROOT\QueryPlan		QUERYPLANPERCENTAGE.queryplan
+	Results Save Location		HD		ROOT\Results		DATASET.CARDINALITY.CACHESIZE.DRIVE.INDEX.RBSIZE.CACHE.QUERYPLAN.results
+
+"Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRUCacheManager, Edu.Psu.Cse.R_Tree_Framework.CacheManagers.LRU_Cache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" "Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree_Extended, Edu.Psu.Cse.R_Tree_Framework.Indexes.Flash_R_Tree_Extended, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Databases\uniform_small.flash_r_tree_extended" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\DataSets\uniform_small.dat" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Indexes\uniform_small.flash_r_tree_extended" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Caches\uniform_small.flash_r_tree_extended" "C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Memories\uniform_small.flash_r_tree_extended" "4096" "0" "61" "204"
+ 
