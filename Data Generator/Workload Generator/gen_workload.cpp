@@ -79,7 +79,7 @@ int main (int argc, char** argv)
 				cutoff = (int)atol(argv[++a]);
 				break;
 			case 'n':
-				dimen = (int)atol(argv[++a]);
+				item_count = (int)atol(argv[++a]);
 				break;
 			case 'h':
 				hist = (int)atol(argv[++a]);
