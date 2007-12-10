@@ -16,7 +16,7 @@ namespace TestBench
         }
         public void Run()
         {
-            String build = "Debug";
+            String build = "Release";
 
             String rootFileLocation = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\",
                 db = @"Databases\",
@@ -35,7 +35,7 @@ namespace TestBench
                 queryPlanExecutorFileLocation = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\R-Tree Framework\QueryPlanExecutor\bin\" + build + @"\QueryPlanExecutor.exe",
                 resultComparitorFileLocation = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\R-Tree Framework\ResultComparitor\bin\" + build +  @"\ResultComparitor.exe";
             
-            Int32 numberOfExperiments = 12;
+            Int32 numberOfExperiments = 16;
 
             Type cacheType = typeof(LRUCacheManager);
             Int32
@@ -201,6 +201,54 @@ namespace TestBench
             baseResultsFileLocation[11] = rootFileLocation + b + r_l + "_q30_mod_out.txt";
             comparisonResultsFileLocation[11] = rootFileLocation + cr + r_l + ext;
             #endregion
+            #region Flash R-Tree Extended Uniform Small
+            treeType[12] = typeof(Flash_R_Tree_Extended);
+            ext = ".flash_r_tree_extended";
+            databaseFileLocation[12] = rootFileLocation + db + u_s + ext;
+            dataSetFileLocation[12] = rootFileLocation + ds + u_s + ".dat";
+            indexSaveFileLocation[12] = rootFileLocation + i + u_s + ext;
+            cacheSaveFileLocation[12] = rootFileLocation + c + u_s + ext;
+            memorySaveFileLocation[12] = rootFileLocation + m + u_s + ext;
+            resultsSaveFileLocation[12] = rootFileLocation + r + u_s + ext;
+            baseResultsFileLocation[12] = rootFileLocation + b + u_s + "_q30_mod_out.txt";
+            comparisonResultsFileLocation[12] = rootFileLocation + cr + u_s + ext;
+             #endregion
+            #region Flash R-Tree Extended Uniform Large
+            treeType[13] = typeof(Flash_R_Tree_Extended);
+            ext = ".flash_r_tree_extended";
+            databaseFileLocation[13] = rootFileLocation + db + u_l + ext;
+            dataSetFileLocation[13] = rootFileLocation + ds + u_l + ".dat";
+            indexSaveFileLocation[13] = rootFileLocation + i + u_l + ext;
+            cacheSaveFileLocation[13] = rootFileLocation + c + u_l + ext;
+            memorySaveFileLocation[13] = rootFileLocation + m + u_l + ext;
+            resultsSaveFileLocation[13] = rootFileLocation + r + u_l + ext;
+            baseResultsFileLocation[13] = rootFileLocation + b + u_l + "_q30_mod_out.txt";
+            comparisonResultsFileLocation[13] = rootFileLocation + cr + u_l + ext;
+            #endregion
+            #region Flash R-Tree Extended Real Small
+            treeType[14] = typeof(Flash_R_Tree_Extended);
+            ext = ".flash_r_tree_extended";
+            databaseFileLocation[14] = rootFileLocation + db + r_s + ext;
+            dataSetFileLocation[14] = rootFileLocation + ds + r_s + ".dat";
+            indexSaveFileLocation[14] = rootFileLocation + i + r_s + ext;
+            cacheSaveFileLocation[14] = rootFileLocation + c + r_s + ext;
+            memorySaveFileLocation[14] = rootFileLocation + m + r_s + ext;
+            resultsSaveFileLocation[14] = rootFileLocation + r + r_s + ext;
+            baseResultsFileLocation[14] = rootFileLocation + b + r_s + "_q30_mod_out.txt";
+            comparisonResultsFileLocation[14] = rootFileLocation + cr + r_s + ext;
+            #endregion
+            #region Flash R-Tree Extended Real Large
+            treeType[15] = typeof(Flash_R_Tree_Extended);
+            ext = ".flash_r_tree_extended";
+            databaseFileLocation[15] = rootFileLocation + db + r_l + ext;
+            dataSetFileLocation[15] = rootFileLocation + ds + r_l + ".dat";
+            indexSaveFileLocation[15] = rootFileLocation + i + r_l + ext;
+            cacheSaveFileLocation[15] = rootFileLocation + c + r_l + ext;
+            memorySaveFileLocation[15] = rootFileLocation + m + r_l + ext;
+            resultsSaveFileLocation[15] = rootFileLocation + r + r_l + ext;
+            baseResultsFileLocation[15] = rootFileLocation + b + r_l + "_q30_mod_out.txt";
+            comparisonResultsFileLocation[15] = rootFileLocation + cr + r_l + ext;
+            #endregion
 
             Process
                 indexBuilder = new Process(),
@@ -210,12 +258,8 @@ namespace TestBench
             indexBuilder.StartInfo.FileName = indexBuilderLocation;
             queryPlanExecutor.StartInfo.FileName = queryPlanExecutorFileLocation;
             resultComparitor.StartInfo.FileName = resultComparitorFileLocation;
-
-            for (int k = 0; k < numberOfExperiments; k++)
+            for (int k = 14; k < numberOfExperiments; k++)
             {
-                
-                if (k != 8 && k != 10)
-                    continue;
                 indexBuilder.StartInfo.Arguments =
                     String.Format("\"{0}\" \"{1}\" \"{2}\" \"{3}\" \"{4}\" \"{5}\" \"{6}\" \"{7}\" \"{8}\" \"{9}\" \"{10}\"",
                     cacheType.AssemblyQualifiedName,

@@ -49,9 +49,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         }
         public IndexUnit(Byte[] data)
         {
-            if (data[0] == (Byte)0)
+            if (data[0] == (Byte)Operation.Insert)
                 Operation = Operation.Insert;
-            else if (data[0] == (Byte)1)
+            else if (data[0] == (Byte)Operation.Delete)
                 Operation = Operation.Delete;
             else
                 Operation = Operation.Update;

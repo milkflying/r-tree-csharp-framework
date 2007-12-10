@@ -31,8 +31,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics
             PageFaults = 0;
             PageWrites = 0;
             Cache = cache;
-            cache.PageFault += new CacheEventHandler(PageFaulted);
-            cache.PageWrite += new CacheEventHandler(PageWritten);
+            Cache.PageFault += new CacheEventHandler(PageFaulted);
+            Cache.PageWrite += new CacheEventHandler(PageWritten);
         }
 
         protected virtual void PageWritten(object sender, EventArgs args)

@@ -9,8 +9,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
     {
         #region Constructors
 
-        public NodeTranslationTableExtended(CacheManager underlyingCache)
-            :base(underlyingCache)
+        public NodeTranslationTableExtended(CacheManager underlyingCache, Int32 translationListSize)
+            :base(underlyingCache, translationListSize)
         {
         }
         public NodeTranslationTableExtended(String tableSaveLocation, CacheManager underlyingCache)
@@ -20,7 +20,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 
         #endregion
         #region Protected Methods
-
+        
         protected override List<Sector> GenerateSectors(List<IndexUnit> indexUnits)
         {
             SortedList<Address, List<IndexUnit>> groupings = new SortedList<Address, List<IndexUnit>>();
@@ -31,28 +31,56 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 groupings[indexUnit.Node].Add(indexUnit);
             }
             List<Sector> sectors = new List<Sector>();
-            List<List<IndexUnit>> newGroupings = new List<List<IndexUnit>>();
-            while (groupings.Count > 0)
+            List<List<IndexUnit>> newGroupings = new List<List<IndexUnit>>(groupings.Values);
+            /*
+             * while (originalGroupings.Count > 0)
             {
-                List<IndexUnit> grouping = groupings[groupings.Keys[0]];
+                List<IndexUnit> grouping = originalGroupings[0];
                 if (grouping.Count > Constants.INDEX_UNIT_ENTRIES_PER_SECTOR)
                 {
                     Pair<List<IndexUnit>, List<IndexUnit>> subGroupings = SplitGrouping(grouping);
-                    newGroupings.Add(subGroupings.Value1);
-                    newGroupings.Add(subGroupings.Value2);
+                    for(int i = 0; i < subGroupings.Value1.Count; i++)
+                        for(int j = i; j < subGroupings.Value1.Count; j++)
+                            if (grouping.IndexOf(subGroupings.Value1[i]) > grouping.IndexOf(subGroupings.Value1[j]))
+                            {
+                                IndexUnit temp = subGroupings.Value1[i];
+                                subGroupings.Value1[i] = subGroupings.Value1[j];
+                                subGroupings.Value1[j] = temp;
+
+                            }
+                    for (int i = 0; i < subGroupings.Value2.Count; i++)
+                        for (int j = i; j < subGroupings.Value2.Count; j++)
+                            if (grouping.IndexOf(subGroupings.Value2[i]) > grouping.IndexOf(subGroupings.Value2[j]))
+                            {
+                                IndexUnit temp = subGroupings.Value2[i];
+                                subGroupings.Value2[i] = subGroupings.Value2[j];
+                                subGroupings.Value2[j] = temp;
+
+                            }
+                    originalGroupings.Add(subGroupings.Value1);
+                    originalGroupings.Add(subGroupings.Value2);
                 }
                 else
                     newGroupings.Add(grouping);
-                groupings.RemoveAt(groupings.IndexOfValue(grouping));
+                originalGroupings.RemoveAt(0);
             }
+             */
             while (newGroupings.Count > 0)
             {
                 Sector newSector = new Sector(Constants.INDEX_UNIT_ENTRIES_PER_SECTOR);
-                List<IndexUnit> initialGrouping = newGroupings[0];
+                List<IndexUnit> initialGrouping = newGroupings[0], addedUnits = new List<IndexUnit>();
                 newGroupings.Remove(initialGrouping);
-                foreach (IndexUnit i in initialGrouping)
-                    newSector.AddIndexUnit(i);
-                while (newSector.IndexUnits.Count <= Constants.INDEX_UNIT_ENTRIES_PER_SECTOR &&
+                while (initialGrouping.Count > 0 && newSector.IndexUnits.Count < Constants.INDEX_UNIT_ENTRIES_PER_SECTOR)
+                {
+                    newSector.AddIndexUnit(initialGrouping[0]);
+                    addedUnits.Add(initialGrouping[0]);
+                    initialGrouping.RemoveAt(0);
+                }
+                if (initialGrouping.Count > 0)
+                    newGroupings.Add(initialGrouping);
+                else
+                    initialGrouping = addedUnits;
+                while (newSector.IndexUnits.Count < Constants.INDEX_UNIT_ENTRIES_PER_SECTOR &&
                     newGroupings.Count > 0)
                 {
                     List<List<IndexUnit>> eligibleGroupings = new List<List<IndexUnit>>();
@@ -67,10 +95,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     initialGrouping.AddRange(closestGrouping);
                     newGroupings.Remove(closestGrouping);
                 }
+                sectors.Add(newSector);
             }
             return sectors;
         }
-        protected virtual List<IndexUnit> PickClosestGrouping(List<IndexUnit> grouping, List<List<IndexUnit>> possibleGroupings)
+        protected virtual List<IndexUnit> PickClosestGrouping(List<IndexUnit> grouping, 
+            List<List<IndexUnit>> possibleGroupings)
         {
             List<IndexUnit> closestGrouping = possibleGroupings[0];
             MinimumBoundingBox mbb = CalculateMinimumBoundingBox(grouping);
@@ -88,7 +118,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         }
         protected virtual Single GetCenterDistance(MinimumBoundingBox box1, MinimumBoundingBox box2)
         {
-            return GetDistance((box1.MaxX + box1.MinX) / 2, (box1.MaxY + box1.MinY) / 2, (box2.MaxX + box2.MinX) / 2, (box2.MaxY + box2.MinY) / 2);
+            return GetDistance((box1.MaxX + box1.MinX) / 2, (box1.MaxY + box1.MinY) / 2, 
+                (box2.MaxX + box2.MinX) / 2, (box2.MaxY + box2.MinY) / 2);
         }
         protected virtual Pair<IndexUnit, IndexUnit> PickSeeds(List<IndexUnit> seedPool)
         {
@@ -172,7 +203,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             return new Pair<List<IndexUnit>, List<IndexUnit>>(grouping1, grouping2);
         }
-        protected virtual IndexUnit PickNext(List<IndexUnit> entryPool, MinimumBoundingBox minimumBoundingBox1, MinimumBoundingBox minimumBoundingBox2)
+        protected virtual IndexUnit PickNext(List<IndexUnit> entryPool, MinimumBoundingBox minimumBoundingBox1, 
+            MinimumBoundingBox minimumBoundingBox2)
         {
             IndexUnit nextEntry = entryPool[0];
 
@@ -217,7 +249,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             return (((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
         }
-
+        
         #endregion
     }
 }

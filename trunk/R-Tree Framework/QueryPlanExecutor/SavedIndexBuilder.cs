@@ -71,9 +71,9 @@ namespace QueryPlanExecutor
             if (treeType == R_SHARP_TREE)
                 throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
             else if (treeType == FLASH_R_TREE_EXTENDED)
-                throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
+                TreeIndex = new Flash_R_Tree_Extended(SavedIndexFileLocation, Cache);
             else if (treeType == FLASH_R_TREE)
-                throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
+                TreeIndex = new Flash_R_Tree(SavedIndexFileLocation, Cache);
             else if (treeType == R_STAR_TREE)
                 TreeIndex = new R_Star_Tree(SavedIndexFileLocation, Cache);
             else if (treeType == R_TREE)
