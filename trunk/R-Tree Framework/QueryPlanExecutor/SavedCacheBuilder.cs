@@ -20,8 +20,7 @@ namespace QueryPlanExecutor
 
         protected CacheManager cache;
         protected Type cacheType;
-        protected String savedCacheFileLocation;
-        protected Int32 cacheSize;
+        protected String savedCacheFileLocation, memoryRunLocation;
 
         #endregion
         #region Properties
@@ -41,20 +40,20 @@ namespace QueryPlanExecutor
             get { return savedCacheFileLocation; }
             set { savedCacheFileLocation = value; }
         }
-        protected virtual Int32 CacheSize
+        protected virtual String MemoryRunLocation
         {
-            get { return cacheSize; }
-            set { cacheSize = value; }
+            get { return memoryRunLocation; }
+            set { memoryRunLocation = value; }
         }
 
         #endregion
         #region Constructors
 
-        public SavedCacheBuilder(Type cacheType, String savedCacheFileLocation, Int32 cacheSize)
+        public SavedCacheBuilder(Type cacheType, String savedCacheFileLocation, String memoryRunLocation)
         {
             CacheType = cacheType;
             SavedCacheFileLocation = savedCacheFileLocation;
-            CacheSize = cacheSize;
+            MemoryRunLocation = memoryRunLocation;
         }
 
         #endregion
@@ -67,7 +66,7 @@ namespace QueryPlanExecutor
             else if (CacheType == LEVEL_PROPORTIONAL_CACHE)
                 throw new Exception("Cache type not yet implemented"); //Cache = new LevelProportionalCacheManager();
             else if (CacheType == LRU_CACHE)
-                Cache = new LRUCacheManager(SavedCacheFileLocation, CacheSize);
+                Cache = new LRUCacheManager(SavedCacheFileLocation, MemoryRunLocation);
             else
                 throw new Exception("No such cache type exists.");
         }
