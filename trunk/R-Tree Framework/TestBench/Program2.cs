@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Edu.Psu.Cse.R_Tree_Framework.Framework;
 using Edu.Psu.Cse.R_Tree_Framework.Indexes;
 using Edu.Psu.Cse.R_Tree_Framework.CacheManagers;
+using System.IO;
 
 namespace TestBench
 {
@@ -12,9 +13,44 @@ namespace TestBench
     {
         internal static void Main(string[] args)
         {
-            (new Program2()).Run();
+            String bob = "";
+            foreach (FileInfo file in (new DirectoryInfo(bob)).GetFiles())
+            {
+                    StreamReader cacheReader = new StreamReader(file.FullName);
+                    String memloc = cacheReader.ReadLine();
+                    FileStream memoryReader = new FileStream(
+                    memloc,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.None,
+                    8,
+                    FileOptions.WriteThrough | FileOptions.RandomAccess);
+                    Byte[] dataBlock = new Byte[1];
+                    Int32 address = 0;
+                    Int32 numberOfNodes = 0;
+                    while (address < memoryReader.Length)
+                    {
+                        memoryReader.Read(dataBlock, address, 1);
+                        address += Constants.PAGE_SIZE;
+                        if (dataBlock[0] == (Byte)PageDataType.Leaf || dataBlock[0] == (Byte)PageDataType.Node)
+                            numberOfNodes++;
+                    }
+                    memoryReader.Close();
+                    StreamWriter cachewriter = new StreamWriter(file.FullName + "xx");
+                    cachewriter.WriteLine(memloc);
+                    cachewriter.WriteLine(cacheReader.ReadLine());
+                    cachewriter.WriteLine(cacheReader.ReadLine());
+                    cachewriter.WriteLine(numberOfNodes);
+                    while(!cacheReader.EndOfStream)
+                        cachewriter.WriteLine(cacheReader.ReadLine());
+                    cacheReader.Close();
+                    cachewriter.Close();
+                    File.Delete(file.FullName);
+                    File.Move(file.FullName + "xx", file.FullName);
+            }
+           // (new Program2()).Run();
         }
-        public void Run()
+        /*public void Run()
         {
             String build = "Release";
 
@@ -41,8 +77,8 @@ namespace TestBench
             Int32
                 pageSize = Constants.PAGE_SIZE,
                 cacheSize = 0,
-                maximumNodeOcupancy = Constants.NODE_ENTRIES_PER_NODE,
-                minimumNodeOccupancy = maximumNodeOcupancy * 3 / 10;
+                //maximumNodeOcupancy = Constants.NODE_ENTRIES_PER_NODE,
+                //minimumNodeOccupancy = maximumNodeOcupancy * 3 / 10;
             String queryPlanFileLocation = rootFileLocation + @"QueryPlans\large_q30.dat",
                 ext;
             Type[]
@@ -298,6 +334,6 @@ namespace TestBench
                 resultComparitor.Start();
                 resultComparitor.WaitForExit();
             }
-        }
+        }*/
     }
 }

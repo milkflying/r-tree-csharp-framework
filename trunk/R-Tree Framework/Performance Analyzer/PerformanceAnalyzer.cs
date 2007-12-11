@@ -33,7 +33,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics
             get { return pageWrites; }
             protected set { pageWrites = value; }
         }
-        public virtual DateTime ExecutionTime
+        public virtual TimeSpan ExecutionTime
         {
             get { return OperationEnd - OperationStart; }
         }
