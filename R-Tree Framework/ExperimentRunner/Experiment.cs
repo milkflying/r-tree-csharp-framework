@@ -8,6 +8,8 @@ namespace ExperimentRunner
     public enum Cardinality { Small, Large }
     public enum IndexType { R_Star_Tree, Flash_R_Tree, Flash_R_Tree_Extended, R_Sharp_Tree }
     public enum ReservationBufferSize { None, Small, Medium, Large }
+    public enum CacheSize { None, Medium, Large }
+    public enum CacheType { None, LRU, LevelProportional, HighestTreeLevel }
 
     public abstract class Experiment
     {
@@ -18,6 +20,8 @@ namespace ExperimentRunner
         protected Cardinality cardinality;
         protected IndexType indexType;
         protected ReservationBufferSize reservationBufferSize;
+        protected CacheSize cacheSize;
+        protected CacheType cacheType;
 
         public virtual DataSet DataSet
         {
@@ -38,6 +42,16 @@ namespace ExperimentRunner
         {
             get { return reservationBufferSize; }
             protected set { reservationBufferSize = value; }
+        }
+        public virtual CacheSize CacheSize
+        {
+            get { return cacheSize; }
+            protected set { cacheSize = value; }
+        }
+        public virtual CacheType CacheType
+        {
+            get { return cacheType; }
+            protected set { cacheType = value; }
         }
 
         public virtual String CacheSaveLocation
@@ -93,12 +107,16 @@ namespace ExperimentRunner
             DataSet dataSet,
             Cardinality cardinality,
             IndexType indexType,
-            ReservationBufferSize reservationBufferSize)
+            ReservationBufferSize reservationBufferSize,
+            CacheType cacheType,
+            CacheSize cacheSize)
         {
             DataSet = dataSet;
             Cardinality = cardinality;
             IndexType = indexType;
             ReservationBufferSize = reservationBufferSize;
+            CacheType = cacheType;
+            CacheSize = cacheSize;
         }
     }
 }
