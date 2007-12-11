@@ -12,10 +12,16 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 
         protected NodeTranslationTable nodeTranslationTable;
         protected ReservationBuffer buffer;
+        protected Int32 bufferSize;
 
         #endregion
         #region Properties
 
+        protected virtual Int32 BufferSize
+        {
+            get { return bufferSize; }
+            set { bufferSize = value; }
+        }
         protected virtual ReservationBuffer Buffer
         {
             get { return buffer; }
@@ -33,14 +39,20 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         public Flash_R_Tree(CacheManager cache, Int32 reservationBufferSize)
             : base(cache)
         {
-            Buffer = new ReservationBuffer(reservationBufferSize);
+            BufferSize = reservationBufferSize;
+            Buffer = new ReservationBuffer(BufferSize);
             NodeTranslationTable = new NodeTranslationTable(cache);
             Cache = NodeTranslationTable;
         }
-        public Flash_R_Tree(String savedFileLocation, CacheManager cache, Int32 reservationBufferSize)
+        public Flash_R_Tree(String savedFileLocation, CacheManager cache)
             : base(savedFileLocation, cache)
         {
-            Buffer = new ReservationBuffer(reservationBufferSize);
+            StreamReader reader = new StreamReader(savedFileLocation);
+            reader.ReadLine();
+            reader.ReadLine();
+            BufferSize = Int32.Parse(reader.ReadLine());
+            reader.Close();
+            Buffer = new ReservationBuffer(BufferSize);
             NodeTranslationTable = new NodeTranslationTable(savedFileLocation + ".ntt", cache);
             Cache = NodeTranslationTable;
         }
@@ -78,6 +90,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             StreamWriter writer = new StreamWriter(indexSaveLocation);
             writer.WriteLine(Root);
             writer.WriteLine(TreeHeight);
+            writer.WriteLine(BufferSize);
             writer.Close();
         }
         public override List<Record> Search(Query query)

@@ -17,7 +17,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         #region Instance Variables
 
         protected Boolean disablePageFault;
-        protected Int32 pageSize, cacheSize;
+        protected Int32 cacheSize;
         protected Int64 nextPageAddress, ticks;
         protected String storageFileLocation;
         protected FileStream storageReader;
@@ -26,7 +26,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         protected Dictionary<Int64, Page> pageTranslationTable;
         protected SortedList<Int64, Page> leastRecentlyUsed;
         protected SortedDictionary<Address, Int64> addressTranslationTable;
-        protected SortedDictionary<Address, Record> records;
 
         #endregion
         #region Properties
@@ -66,15 +65,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             get
             {
                 Int64 address = nextPageAddress;
-                nextPageAddress += PageSize;
+                nextPageAddress += Constants.PAGE_SIZE;
                 return address;
             }
             set { nextPageAddress = value; }
-        }
-        protected virtual Int32 PageSize
-        {
-            get { return pageSize; }
-            set { pageSize = value; }
         }
         protected virtual Dictionary<Int64, Page> PageTranslationTable
         {
@@ -96,18 +90,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             get { return ticks; }
             set { ticks = value; }
         }
-        protected SortedDictionary<Address, Record> Records
-        {
-            get { return records; }
-            set { records = value; }
-        }
 
         #endregion
         #region Constructors
 
-        public LRUCacheManager(String storageFileLocation, Int32 pageSize, Int32 numberOfPagesToCache)
+        public LRUCacheManager(String storageFileLocation, Int32 numberOfPagesToCache)
         {
-            Records = new SortedDictionary<Address, Record>();
             StorageFileLocation = storageFileLocation;
             StorageReader = new FileStream(
                 StorageFileLocation,
@@ -116,7 +104,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 FileShare.None,
                 8,
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
-            PageSize = pageSize;
             CacheSize = numberOfPagesToCache;
             AddressTranslationTable = new SortedDictionary<Address, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
@@ -125,21 +112,21 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             FreePages = new Queue<Int64>();
             Ticks = 0;
         }
-        public LRUCacheManager(String savedLocation, Int32 numberOfPagesToCache)
+        public LRUCacheManager(String savedLocation, String memoryRunLocation)
         {
-            Records = new SortedDictionary<Address, Record>();
             StreamReader reader = new StreamReader(savedLocation);
             StorageFileLocation = reader.ReadLine();
-            PageSize = Int32.Parse(reader.ReadLine());
+            File.Copy(StorageFileLocation, memoryRunLocation, true);
+            StorageFileLocation = memoryRunLocation;
             NextPageAddress = Int64.Parse(reader.ReadLine());
+            CacheSize = Int32.Parse(reader.ReadLine());
             StorageReader = new FileStream(
-                StorageFileLocation,
+                memoryRunLocation,
                 FileMode.OpenOrCreate,
                 FileAccess.ReadWrite,
                 FileShare.None,
                 8,
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
-            CacheSize = numberOfPagesToCache;
             AddressTranslationTable = new SortedDictionary<Address, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
             LeastRecentlyUsed = new SortedList<Int64, Page>();
@@ -178,6 +165,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         public virtual void Dispose()
         {
             StorageReader.Close();
+            File.Delete(StorageFileLocation);
         }
         public virtual void FlushCache()
         {
@@ -190,11 +178,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         public virtual Record LookupRecord(Address address)
         {
-            /*DisablePageFault = true;
+            DisablePageFault = true;
             Record record = LookupPageData(address) as Record;
             DisablePageFault = false;
-            return record;*/
-            return Records[address];
+            return record;
         }
         public virtual Sector LookupSector(Address address)
         {
@@ -215,8 +202,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             StorageReader.Seek(position, SeekOrigin.Begin);
             StreamWriter writer = new StreamWriter(cacheSaveLocation);
             writer.WriteLine(memorySaveLocation);
-            writer.WriteLine(PageSize);
             writer.WriteLine(NextPageAddress);
+            writer.WriteLine(CacheSize);
             writer.WriteLine("AddressTranslationTable");
             foreach (KeyValuePair<Address, Int64> entry in AddressTranslationTable)
             {
@@ -230,11 +217,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         public virtual void WritePageData(PageData data)
         {
-            if (data is Record)
-            {
-                Records.Add(data.Address, data as Record);
-                return;
-            }
             Page page;
             if (!AddressTranslationTable.ContainsKey(data.Address))
                 page = AllocateNewPage(data.Address);
@@ -268,7 +250,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             else
                 pageAddress = NextPageAddress;
             AddressTranslationTable.Add(address, pageAddress);
-            Page newPage = new Page(Address.NewAddress(), pageAddress, new Byte[PageSize]);
+            Page newPage = new Page(Address.NewAddress(), pageAddress, new Byte[Constants.PAGE_SIZE]);
             PageTranslationTable.Add(pageAddress, newPage);
             return newPage;
         }
@@ -289,9 +271,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         protected virtual Page LoadPageFromMemory(Int64 offset)
         {
-            Byte[] data = new Byte[PageSize];
-            StorageReader.Seek(offset - offset % PageSize, SeekOrigin.Begin);
-            StorageReader.Read(data, 0, PageSize);
+            Byte[] data = new Byte[Constants.PAGE_SIZE];
+            StorageReader.Seek(offset - offset % Constants.PAGE_SIZE, SeekOrigin.Begin);
+            StorageReader.Read(data, 0, Constants.PAGE_SIZE);
             Page page = new Page(Address.NewAddress(), offset, data);
             if (PageFault != null && !DisablePageFault)
                 PageFault(this, new LRUCacheEventArgs(page));
@@ -340,7 +322,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         protected virtual void WritePageToMemory(Page page)
         {
             StorageReader.Seek(page.Address, SeekOrigin.Begin);
-            StorageReader.Write(page.Data, 0, PageSize);
+            StorageReader.Write(page.Data, 0, Constants.PAGE_SIZE);
             if (PageWrite != null)
                 PageWrite(this, new LRUCacheEventArgs(page));
         }

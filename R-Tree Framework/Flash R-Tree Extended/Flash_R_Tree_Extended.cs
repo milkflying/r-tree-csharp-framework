@@ -13,8 +13,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             NodeTranslationTable = new NodeTranslationTableExtended(cache);
             Cache = NodeTranslationTable;
         }
-        public Flash_R_Tree_Extended(String savedFileLocation, CacheManager cache, Int32 reservationBufferSize)
-            : base(savedFileLocation, cache, reservationBufferSize)
+        public Flash_R_Tree_Extended(String savedFileLocation, CacheManager cache)
+            : base(savedFileLocation, cache)
         {
             NodeTranslationTable = new NodeTranslationTableExtended(savedFileLocation + ".ntt", cache);
             Cache = NodeTranslationTable;

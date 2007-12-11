@@ -53,13 +53,13 @@ namespace QueryPlanExecutor
             String resultSaveFileLocation, 
             String savedCacheFileLocation, 
             String savedIndexFileLocation, 
+            String databaseRunFileLocation,
             Type cacheType, 
-            Type treeType, 
-            Int32 cacheSize)
+            Type treeType)
         {
             QueryPlanFileLocation = queryPlanFileLocation;
             ResultSaveFileLocation = resultSaveFileLocation;
-            SavedCacheBuilder cacheBuilder = new SavedCacheBuilder(cacheType, savedCacheFileLocation, cacheSize);
+            SavedCacheBuilder cacheBuilder = new SavedCacheBuilder(cacheType, savedCacheFileLocation, databaseRunFileLocation);
             cacheBuilder.BuildCache();
             Cache = cacheBuilder.Cache;
             SavedIndexBuilder indexBuilder = new SavedIndexBuilder(treeType, Cache, savedIndexFileLocation);

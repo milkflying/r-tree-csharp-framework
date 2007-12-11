@@ -8,25 +8,24 @@ namespace QueryPlanExecutor
     {
         internal static void Main(string[] args)
         {
-            String 
-                queryPlanFileLocation = args[0], 
-                resultSaveFileLocation= args[1], 
-                savedCacheFileLocation= args[2],
-                savedIndexFileLocation = args[3];
+            String
+                queryPlanFileLocation = args[0],
+                resultSaveFileLocation = args[1],
+                savedCacheFileLocation = args[2],
+                savedIndexFileLocation = args[3],
+                databaseRunFileLocation = args[4];
             Type
-                cacheType = Type.GetType(args[4]),
-                treeType = Type.GetType(args[5]);
-            Int32
-                cacheSize = Int32.Parse(args[6]);
+                cacheType = Type.GetType(args[5]),
+                treeType = Type.GetType(args[6]);
             QueryPlanExecutor
                 queryPlanExecutor = new QueryPlanExecutor(
                     queryPlanFileLocation, 
                     resultSaveFileLocation, 
                     savedCacheFileLocation, 
-                    savedIndexFileLocation, 
+                    savedIndexFileLocation,
+                    databaseRunFileLocation,
                     cacheType, 
-                    treeType, 
-                    cacheSize);
+                    treeType);
             queryPlanExecutor.ExecuteQueryPlan();
         }
     }
