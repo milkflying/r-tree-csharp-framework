@@ -49,12 +49,12 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             protected set { nodeEntries = value; }
         }
 
-        public Node(int maxNodeEntries, Address parent, Type childType)
+        public Node(Address parent, Type childType)
         {
             Address = Address.NewAddress();
             Parent = parent;
             ChildType = childType;
-            nodeEntries = new List<NodeEntry>(maxNodeEntries + 1);
+            nodeEntries = new List<NodeEntry>(Constants.MAXIMUM_ENTRIES_PER_NODE + 1);
         }
         public Node(Address address, Type childType, Byte[] pageData)
         {
@@ -70,7 +70,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             nodeEntryCount = BitConverter.ToInt16(pageData, index);
             index += 2;
 
-            NodeEntries = new List<NodeEntry>(nodeEntryCount + 1);
+            NodeEntries = new List<NodeEntry>(Constants.MAXIMUM_ENTRIES_PER_NODE + 1);
             for (int i = 0; i < nodeEntryCount; i++)
             {
                 Byte[] entryData = new Byte[Constants.NODE_ENTRY_SIZE];

@@ -27,7 +27,7 @@ namespace IndexBuilder
             memorySaveFileLocation;
         protected Type treeType;
         protected Index treeIndex;
-        protected Int32 minimumNodeOccupancy, maximumNodeOccupancy;
+        protected Int32 reservationBufferSize;
         protected CacheManager cache;
 
         #endregion
@@ -63,15 +63,10 @@ namespace IndexBuilder
             get { return treeIndex; }
             set { treeIndex = value; }
         }
-        protected virtual Int32 MaximumNodeOccupancy
+        protected virtual Int32 ReservationBufferSize
         {
-            get { return maximumNodeOccupancy; }
-            set { maximumNodeOccupancy = value; }
-        }
-        protected virtual Int32 MinimumNodeOccupancy
-        {
-            get { return minimumNodeOccupancy; }
-            set { minimumNodeOccupancy = value; }
+            get { return reservationBufferSize; }
+            set { reservationBufferSize = value; }
         }
         protected virtual CacheManager Cache
         {
@@ -84,16 +79,14 @@ namespace IndexBuilder
 
         public IndexBuilder(
             Type treeType,
-            Int32 minimumNodeOccupancy,
-            Int32 maximumNodeOccupancy,
+            Int32 reservationBufferSize,
             CacheManager cache,
             String dataSetFileLocation,
             String indexSaveFileLocation,
             String cacheSaveFileLocation,
             String memorySaveFileLocation)
         {
-            MinimumNodeOccupancy = minimumNodeOccupancy;
-            MaximumNodeOccupancy = maximumNodeOccupancy;
+            ReservationBufferSize = reservationBufferSize;
             TreeType = treeType;
             DataSetFileLocation = dataSetFileLocation;
             IndexSaveFileLocation = indexSaveFileLocation;
@@ -132,13 +125,13 @@ namespace IndexBuilder
             if (treeType == R_SHARP_TREE)
                 throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
             else if (treeType == FLASH_R_TREE_EXTENDED)
-                TreeIndex = new Flash_R_Tree_Extended(MinimumNodeOccupancy, MaximumNodeOccupancy, Cache);
+                TreeIndex = new Flash_R_Tree_Extended(Cache, ReservationBufferSize);
             else if (treeType == FLASH_R_TREE)
-                TreeIndex = new Flash_R_Tree(MinimumNodeOccupancy, MaximumNodeOccupancy, Cache);
+                TreeIndex = new Flash_R_Tree(Cache, ReservationBufferSize);
             else if (treeType == R_STAR_TREE)
-                TreeIndex = new R_Star_Tree(MinimumNodeOccupancy, MaximumNodeOccupancy, Cache);
+                TreeIndex = new R_Star_Tree(Cache);
             else if (treeType == R_TREE)
-                TreeIndex = new R_Tree(MinimumNodeOccupancy, MaximumNodeOccupancy, Cache);
+                TreeIndex = new R_Tree(Cache);
             else throw new Exception("No such tree type.");
         }
 

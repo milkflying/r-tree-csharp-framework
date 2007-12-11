@@ -7,14 +7,14 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 {
     public class Flash_R_Tree_Extended : Flash_R_Tree
     {
-        public Flash_R_Tree_Extended(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)
-            : base(minimumNodeOccupancy, maximumNodeOccupancy, cache)
+        public Flash_R_Tree_Extended(CacheManager cache, Int32 reservationBufferSize)
+            : base(cache, reservationBufferSize)
         {
-            NodeTranslationTable = new NodeTranslationTableExtended(cache, Constants.SECTOR_LIST_LENGTH);
+            NodeTranslationTable = new NodeTranslationTableExtended(cache);
             Cache = NodeTranslationTable;
         }
-        public Flash_R_Tree_Extended(String savedFileLocation, CacheManager cache)
-            : base(savedFileLocation, cache)
+        public Flash_R_Tree_Extended(String savedFileLocation, CacheManager cache, Int32 reservationBufferSize)
+            : base(savedFileLocation, cache, reservationBufferSize)
         {
             NodeTranslationTable = new NodeTranslationTableExtended(savedFileLocation + ".ntt", cache);
             Cache = NodeTranslationTable;

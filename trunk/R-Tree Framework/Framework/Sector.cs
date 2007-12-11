@@ -20,10 +20,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             protected set { address = value; }
         }
         
-        public Sector(int maxIndexUnits)
+        public Sector()
         {
             Address = Address.NewAddress();
-            IndexUnits = new List<IndexUnit>(maxIndexUnits + 1);
+            IndexUnits = new List<IndexUnit>(Constants.INDEX_UNIT_ENTRIES_PER_SECTOR + 1);
         }
         public Sector(Address address, Byte[] data)
         {
@@ -33,7 +33,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
             indexUnitCount = BitConverter.ToInt16(data, index);
             index += 2;
 
-            IndexUnits = new List<IndexUnit>(indexUnitCount + 1);
+            IndexUnits = new List<IndexUnit>(Constants.INDEX_UNIT_ENTRIES_PER_SECTOR + 1);
             for (int i = 0; i < indexUnitCount; i++)
             {
                 Byte[] indexUnitData = new Byte[Constants.INDEX_UNIT_SIZE];

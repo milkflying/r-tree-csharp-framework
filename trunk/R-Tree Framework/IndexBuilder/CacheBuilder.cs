@@ -55,11 +55,10 @@ namespace IndexBuilder
         #endregion
         #region Constructors
 
-        public CacheBuilder(Type cacheType, String databaseFileLocation, Int32 pageSize, Int32 cacheSize)
+        public CacheBuilder(Type cacheType, String databaseFileLocation, Int32 cacheSize)
         {
             CacheType = cacheType;
             DatabaseFileLocation = databaseFileLocation;
-            PageSize = pageSize;
             CacheSize = cacheSize;
         }
 
@@ -73,7 +72,7 @@ namespace IndexBuilder
             else if (CacheType == LEVEL_PROPORTIONAL_CACHE)
                 throw new Exception("Cache type not yet implemented"); //Cache = new LevelProportionalCacheManager();
             else if (CacheType == LRU_CACHE)
-                Cache = new LRUCacheManager(DatabaseFileLocation, PageSize, CacheSize);
+                Cache = new LRUCacheManager(DatabaseFileLocation, CacheSize);
             else
                 throw new Exception("No such cache type exists.");
         }

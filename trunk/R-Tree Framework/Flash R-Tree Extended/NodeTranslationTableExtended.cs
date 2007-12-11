@@ -9,8 +9,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
     {
         #region Constructors
 
-        public NodeTranslationTableExtended(CacheManager underlyingCache, Int32 translationListSize)
-            :base(underlyingCache, translationListSize)
+        public NodeTranslationTableExtended(CacheManager underlyingCache)
+            :base(underlyingCache)
         {
         }
         public NodeTranslationTableExtended(String tableSaveLocation, CacheManager underlyingCache)
@@ -32,42 +32,9 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             List<Sector> sectors = new List<Sector>();
             List<List<IndexUnit>> newGroupings = new List<List<IndexUnit>>(groupings.Values);
-            /*
-             * while (originalGroupings.Count > 0)
-            {
-                List<IndexUnit> grouping = originalGroupings[0];
-                if (grouping.Count > Constants.INDEX_UNIT_ENTRIES_PER_SECTOR)
-                {
-                    Pair<List<IndexUnit>, List<IndexUnit>> subGroupings = SplitGrouping(grouping);
-                    for(int i = 0; i < subGroupings.Value1.Count; i++)
-                        for(int j = i; j < subGroupings.Value1.Count; j++)
-                            if (grouping.IndexOf(subGroupings.Value1[i]) > grouping.IndexOf(subGroupings.Value1[j]))
-                            {
-                                IndexUnit temp = subGroupings.Value1[i];
-                                subGroupings.Value1[i] = subGroupings.Value1[j];
-                                subGroupings.Value1[j] = temp;
-
-                            }
-                    for (int i = 0; i < subGroupings.Value2.Count; i++)
-                        for (int j = i; j < subGroupings.Value2.Count; j++)
-                            if (grouping.IndexOf(subGroupings.Value2[i]) > grouping.IndexOf(subGroupings.Value2[j]))
-                            {
-                                IndexUnit temp = subGroupings.Value2[i];
-                                subGroupings.Value2[i] = subGroupings.Value2[j];
-                                subGroupings.Value2[j] = temp;
-
-                            }
-                    originalGroupings.Add(subGroupings.Value1);
-                    originalGroupings.Add(subGroupings.Value2);
-                }
-                else
-                    newGroupings.Add(grouping);
-                originalGroupings.RemoveAt(0);
-            }
-             */
             while (newGroupings.Count > 0)
             {
-                Sector newSector = new Sector(Constants.INDEX_UNIT_ENTRIES_PER_SECTOR);
+                Sector newSector = new Sector();
                 List<IndexUnit> initialGrouping = newGroupings[0], addedUnits = new List<IndexUnit>();
                 newGroupings.Remove(initialGrouping);
                 while (initialGrouping.Count > 0 && newSector.IndexUnits.Count < Constants.INDEX_UNIT_ENTRIES_PER_SECTOR)
