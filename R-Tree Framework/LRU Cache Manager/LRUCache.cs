@@ -17,7 +17,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         #region Instance Variables
 
         protected Boolean disablePageFault;
-        protected Int32 cacheSize;
+        protected Int32 cacheSize, numberOfNodes;
         protected Int64 nextPageAddress, ticks;
         protected String storageFileLocation;
         protected FileStream storageReader;
@@ -30,6 +30,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         #endregion
         #region Properties
 
+        protected virtual Int32 CachePercentage
+        {
+            get { return cacheSize; }
+        }
         protected virtual SortedDictionary<Address, Int64> AddressTranslationTable
         {
             get { return addressTranslationTable; }
@@ -37,8 +41,22 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         protected virtual Int32 CacheSize
         {
-            get { return cacheSize; }
+            get
+            {
+                Int32 pages = cacheSize * NumberOfNodes / 100;
+                if (pages > 0)
+                    return pages;
+                else if (cacheSize > 0)
+                    return 1;
+                else
+                    return 0;
+            }
             set { cacheSize = value; }
+        }
+        protected virtual Int32 NumberOfNodes
+        {
+            get { return numberOfNodes; }
+            set { numberOfNodes = value; }
         }
         protected virtual List<Page> DirtyPages
         {
@@ -105,6 +123,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
                 8,
                 FileOptions.WriteThrough | FileOptions.RandomAccess);
             CacheSize = numberOfPagesToCache;
+            NumberOfNodes = 0;
             AddressTranslationTable = new SortedDictionary<Address, Int64>();
             PageTranslationTable = new Dictionary<Int64, Page>();
             LeastRecentlyUsed = new SortedList<Int64, Page>();
@@ -120,6 +139,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             StorageFileLocation = memoryRunLocation;
             NextPageAddress = Int64.Parse(reader.ReadLine());
             CacheSize = Int32.Parse(reader.ReadLine());
+            NumberOfNodes = Int32.Parse(reader.ReadLine());
             StorageReader = new FileStream(
                 memoryRunLocation,
                 FileMode.OpenOrCreate,
@@ -150,6 +170,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
 
         public virtual void DeletePageData(PageData data)
         {
+            if (!(data is Record))
+                NumberOfNodes--;
             Int64 address = AddressTranslationTable[data.Address];
             AddressTranslationTable.Remove(data.Address);
             if (PageTranslationTable.ContainsKey(address))
@@ -203,7 +225,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
             StreamWriter writer = new StreamWriter(cacheSaveLocation);
             writer.WriteLine(memorySaveLocation);
             writer.WriteLine(NextPageAddress);
-            writer.WriteLine(CacheSize);
+            writer.WriteLine(CachePercentage);
+            writer.WriteLine(NumberOfNodes);
             writer.WriteLine("AddressTranslationTable");
             foreach (KeyValuePair<Address, Int64> entry in AddressTranslationTable)
             {
@@ -219,7 +242,11 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         {
             Page page;
             if (!AddressTranslationTable.ContainsKey(data.Address))
+            {
                 page = AllocateNewPage(data.Address);
+                if (!(data is Record))
+                    NumberOfNodes++;
+            }
             else
             {
                 Int64 address = AddressTranslationTable[data.Address];

@@ -39,7 +39,6 @@
     <Compile Include="NodeEntryUpperAxisComparerY.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="R_Star_Tree.cs" />
-    <None Include="R_Star_Tree.csx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.csproj">
