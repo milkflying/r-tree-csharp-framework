@@ -1,0 +1,8 @@
+Real,Large,Large,R_Sharp_Tree,LRU,None
+Real,Large,Medium,R_Sharp_Tree,LRU,None
+Real,Large,Small,R_Sharp_Tree,LRU,None
+Real,Small,Small,R_Sharp_Tree,LRU,None
+Uniform,Large,Large,R_Sharp_Tree,LRU,None
+Uniform,Large,Medium,R_Sharp_Tree,LRU,None
+Uniform,Large,Small,R_Sharp_Tree,LRU,None
+Uniform,Small,Small,R_Sharp_Tree,LRU,None

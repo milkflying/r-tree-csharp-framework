@@ -18,7 +18,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         public virtual MinimumBoundingBox BoundingBox
         {
             get { return minimumBoundingBox; }
-            protected set { minimumBoundingBox = value; }
+            set { minimumBoundingBox = value; }
         }
         public virtual Address Address
         {

@@ -13,7 +13,7 @@ namespace TestBench
     {
         internal static void Main(string[] args)
         {
-            String bob = "";
+            String bob = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Cache";
             foreach (FileInfo file in (new DirectoryInfo(bob)).GetFiles())
             {
                     StreamReader cacheReader = new StreamReader(file.FullName);
@@ -25,12 +25,13 @@ namespace TestBench
                     FileShare.None,
                     8,
                     FileOptions.WriteThrough | FileOptions.RandomAccess);
-                    Byte[] dataBlock = new Byte[1];
+                    Byte[] dataBlock = new Byte[Constants.PAGE_SIZE];
                     Int32 address = 0;
                     Int32 numberOfNodes = 0;
                     while (address < memoryReader.Length)
                     {
-                        memoryReader.Read(dataBlock, address, 1);
+                        memoryReader.Seek(address - address % Constants.PAGE_SIZE, SeekOrigin.Begin);
+                        memoryReader.Read(dataBlock, 0, Constants.PAGE_SIZE);
                         address += Constants.PAGE_SIZE;
                         if (dataBlock[0] == (Byte)PageDataType.Leaf || dataBlock[0] == (Byte)PageDataType.Node)
                             numberOfNodes++;
