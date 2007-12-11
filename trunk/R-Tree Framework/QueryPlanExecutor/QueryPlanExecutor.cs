@@ -165,10 +165,7 @@ namespace QueryPlanExecutor
                             pooledResults.RemoveAt(i--);
                     Single x = Single.Parse(values[3]), y = Single.Parse(values[4]);
                     Record updatedRecord = new Record(recordToUpdate.Address, recordToUpdate.GeneratePageData());
-                    updatedRecord.BoundingBox.MinX = x;
-                    updatedRecord.BoundingBox.MaxX = x;
-                    updatedRecord.BoundingBox.MinY = y;
-                    updatedRecord.BoundingBox.MaxY = y;
+                    updatedRecord.BoundingBox = new MinimumBoundingBox(x, y, x, y);
                     TreeIndex.Update(recordToUpdate, updatedRecord);
                     writer.WriteLine();
                     writer.WriteLine("Updating Record");

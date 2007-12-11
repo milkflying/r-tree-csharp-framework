@@ -10,9 +10,9 @@ namespace ExperimentRunner
     public class RunWorkPlan : Experiment
     {
         protected static String 
-            FLASH_DRIVE = "A:", 
-            SD_CARD = "B:", 
-            HARD_DRIVE = "C:";
+            FLASH_DRIVE = "T:", 
+            SD_CARD = "S:", 
+            HARD_DRIVE = "R:";
         
         protected Drive drive;
         protected WorkPlan workPlan;
