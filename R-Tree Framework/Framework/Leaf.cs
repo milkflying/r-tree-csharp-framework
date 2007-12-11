@@ -6,8 +6,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
 {
     public class Leaf : Node
     {
-        public Leaf(int maxRecordEntries, Address parent)
-            : base(maxRecordEntries, parent, typeof(Record))
+        public Leaf(Address parent)
+            : base(parent, typeof(Record))
         {
         }
         public Leaf(Address address, Byte[] pageData)

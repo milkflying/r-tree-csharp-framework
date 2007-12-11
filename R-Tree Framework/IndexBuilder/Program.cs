@@ -18,29 +18,25 @@ namespace IndexBuilder
                 cacheSaveFileLocation = args[5],
                 memorySaveFileLocation = args[6];
             Int32 
-                pageSize = Int32.Parse(args[7]),
-                cacheSize = Int32.Parse(args[8]),
-                minimumNodeOccupancy = Int32.Parse(args[9]),
-                maximumNodeOccupancy = Int32.Parse(args[10]);
+                cacheSize = Int32.Parse(args[7]),
+                reservationBufferSize = Int32.Parse(args[8]);
 
             CacheBuilder 
                 cacheBuilder = new CacheBuilder(
                     cacheType,
                     databaseFileLocation,
-                    pageSize, 
                     cacheSize);
             cacheBuilder.BuildCache();
 
             IndexBuilder 
                 indexBuilder = new IndexBuilder(
                     treeType,
-                    minimumNodeOccupancy,
-                    maximumNodeOccupancy,
+                    reservationBufferSize,
                     cacheBuilder.Cache,
                     dataSetFileLocation,
                     indexSaveFileLocation,
                     cacheSaveFileLocation,
-                    memorySaveFileLocation);
+                    memorySaveFileLocation );
             indexBuilder.BuildIndex();
             cacheBuilder.Cache.Dispose();
         }

@@ -10,7 +10,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
     {
         #region Instance Variables
 
-        protected Int32 minimumNodeOccupancy, maximumNodeOccupancy, treeHeight;
+        protected Int32 treeHeight;
         protected Address root;
         protected CacheManager cache;
 
@@ -21,16 +21,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             get { return cache; }
             protected set { cache = value; }
-        }
-        public Int32 MinimumNodeOccupancy
-        {
-            get { return minimumNodeOccupancy; }
-            protected set { minimumNodeOccupancy = value; }
-        }
-        public Int32 MaximumNodeOccupancy
-        {
-            get { return maximumNodeOccupancy; }
-            protected set { maximumNodeOccupancy = value; }
         }
         public Address Root
         {
@@ -46,12 +36,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Constructors
 
-        public R_Tree(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)
+        public R_Tree(CacheManager cache)
         {
-            MinimumNodeOccupancy = minimumNodeOccupancy;
-            MaximumNodeOccupancy = maximumNodeOccupancy;
             Cache = cache;
-            Leaf rootNode = new Leaf(MaximumNodeOccupancy, Address.Empty);
+            Leaf rootNode = new Leaf(Address.Empty);
             root = rootNode.Address;
             Cache.WritePageData(rootNode);
             TreeHeight = 1;
@@ -62,8 +50,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             Cache = cache;
             StreamReader reader = new StreamReader(indexSavedLocation);
             Root = new Address(reader.ReadLine());
-            MinimumNodeOccupancy = Int32.Parse(reader.ReadLine());
-            MaximumNodeOccupancy = Int32.Parse(reader.ReadLine());
             TreeHeight = Int32.Parse(reader.ReadLine());
             reader.Close();
         }
@@ -98,7 +84,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             Cache.WritePageData(record);
             Leaf leafToInsertInto = ChooseLeaf(record);
             Insert(record, leafToInsertInto);
-            if (leafToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
+            if (leafToInsertInto.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
             {
                 List<Node> splitNodes = Split(leafToInsertInto);
                 RemoveFromParent(leafToInsertInto);
@@ -112,8 +98,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             Cache.SaveCache(cacheSaveLocation, memorySaveLocation);
             StreamWriter writer = new StreamWriter(indexSaveLocation);
             writer.WriteLine(Root);
-            writer.WriteLine(MinimumNodeOccupancy);
-            writer.WriteLine(MaximumNodeOccupancy);
             writer.WriteLine(TreeHeight);
             writer.Close();
         }
@@ -149,7 +133,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             if (Root.Equals(Address.Empty))
             {
                 Type childType = node1 is Leaf ? typeof(Leaf) : typeof(Node);
-                Node rootNode = new Node(MaximumNodeOccupancy, Address.Empty, childType);
+                Node rootNode = new Node(Address.Empty, childType);
                 Root = rootNode.Address;
                 node1.Parent = Root;
                 node2.Parent = Root;
@@ -170,7 +154,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             {
                 parent.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
                 Cache.WritePageData(node2);
-                if (parent.NodeEntries.Count > MaximumNodeOccupancy)
+                if (parent.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
                 {
                     List<Node> splitNodes = Split(parent);
                     if (parent.Address.Equals(Root))
@@ -270,7 +254,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 foreach (NodeEntry entry in parent.NodeEntries)
                     if (entry.Child.Equals(node.Address))
                         nodeEntry = entry;
-                if (node.NodeEntries.Count < minimumNodeOccupancy)
+                if (node.NodeEntries.Count < Constants.MINIMUM_ENTRIES_PER_NODE)
                 {
                     parent.RemoveNodeEntry(nodeEntry);
                     eliminatedNodes.Add(node);
@@ -356,7 +340,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             Node nodeToInsertInto = ChooseNode(node);
             Insert(node, nodeToInsertInto);
-            if (nodeToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
+            if (nodeToInsertInto.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
             {
                 List<Node> splitNodes = Split(nodeToInsertInto);
                 RemoveFromParent(nodeToInsertInto);
@@ -561,13 +545,13 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             Node node1, node2;
             if (nodeToBeSplit is Leaf)
             {
-                node1 = new Leaf(MaximumNodeOccupancy, nodeToBeSplit.Parent);
-                node2 = new Leaf(MaximumNodeOccupancy, nodeToBeSplit.Parent);
+                node1 = new Leaf(nodeToBeSplit.Parent);
+                node2 = new Leaf(nodeToBeSplit.Parent);
             }
             else
             {
-                node1 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
-                node2 = new Node(MaximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
+                node1 = new Node(nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
+                node2 = new Node(nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
             }
             node1.AddNodeEntry(seeds[0]);
             node2.AddNodeEntry(seeds[1]);
@@ -585,7 +569,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             }
             while (entries.Count > 0)
             {
-                if (node1.NodeEntries.Count + entries.Count == MinimumNodeOccupancy)
+                if (node1.NodeEntries.Count + entries.Count == Constants.MINIMUM_ENTRIES_PER_NODE)
                 {
                     foreach (NodeEntry entry in entries)
                     {
@@ -599,7 +583,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
                     break;
                 }
-                else if (node2.NodeEntries.Count + entries.Count == MinimumNodeOccupancy)
+                else if (node2.NodeEntries.Count + entries.Count == Constants.MINIMUM_ENTRIES_PER_NODE)
                 {
                     foreach (NodeEntry entry in entries)
                     {

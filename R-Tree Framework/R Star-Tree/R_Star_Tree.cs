@@ -14,10 +14,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Properties
 
-        protected Int32 NumberOfEntriesForReInsert
-        {
-            get { return MaximumNodeOccupancy * 3 / 10 + ((MaximumNodeOccupancy * 3) % 10 > 4 ? 1 : 0); }
-        }
         protected List<Int32> OverflowMarkers
         {
             get { return overflowMarkers; }
@@ -27,8 +23,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Constructors
 
-        public R_Star_Tree(Int32 minimumNodeOccupancy, Int32 maximumNodeOccupancy, CacheManager cache)
-            : base(minimumNodeOccupancy, maximumNodeOccupancy, cache)
+        public R_Star_Tree(CacheManager cache)
+            : base(cache)
         {
         }
         public R_Star_Tree(String indexSavedLocation, CacheManager cache)
@@ -224,22 +220,22 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             axii.Add(yUpperSorted, yUpperDistributions);
 
             foreach (KeyValuePair<List<NodeEntry>, List<Pair<Node, Node>>> axis in axii)
-                for (int i = 0; i < MaximumNodeOccupancy - 2 * MinimumNodeOccupancy + 2; i++)
+                for (int i = 0; i < Constants.MAXIMUM_ENTRIES_PER_NODE - 2 * Constants.MINIMUM_ENTRIES_PER_NODE + 2; i++)
                 {
                     Node group1, group2;
                     if (nodeToBeSplit is Leaf)
                     {
-                        group1 = new Leaf(maximumNodeOccupancy, nodeToBeSplit.Parent);
-                        group2 = new Leaf(maximumNodeOccupancy, nodeToBeSplit.Parent);
+                        group1 = new Leaf(nodeToBeSplit.Parent);
+                        group2 = new Leaf(nodeToBeSplit.Parent);
                     }
                     else
                     {
-                        group1 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
-                        group2 = new Node(maximumNodeOccupancy, nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
+                        group1 = new Node(nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
+                        group2 = new Node(nodeToBeSplit.Parent, nodeToBeSplit.ChildType);
                     }
-                    foreach (NodeEntry entry in axis.Key.GetRange(0, MinimumNodeOccupancy + i))
+                    foreach (NodeEntry entry in axis.Key.GetRange(0, Constants.MINIMUM_ENTRIES_PER_NODE+ i))
                         group1.AddNodeEntry(entry);
-                    foreach (NodeEntry entry in axis.Key.GetRange(MinimumNodeOccupancy + i, axis.Key.Count - (MinimumNodeOccupancy + i)))
+                    foreach (NodeEntry entry in axis.Key.GetRange(Constants.MINIMUM_ENTRIES_PER_NODE + i, axis.Key.Count - (Constants.MINIMUM_ENTRIES_PER_NODE+ i)))
                         group2.AddNodeEntry(entry);
                     axis.Value.Add(new Pair<Node, Node>(group1, group2));
                 }
@@ -318,7 +314,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 child.Parent = nodeToInsertInto.Address;
                 Cache.WritePageData(child);
             }
-            if (nodeToInsertInto.NodeEntries.Count > MaximumNodeOccupancy)
+            if (nodeToInsertInto.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
             {
                 List<Node> splitNodes = OverFlowTreatment(nodeToInsertInto, level);
                 if (splitNodes != null)
@@ -350,7 +346,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             reInsertions = new PriorityQueue<NodeEntry, Single>();
             foreach (NodeEntry entry in node.NodeEntries)
                 distances.Enqueue(entry, GetCenterDistance(nodeBox, entry.MinimumBoundingBox) * -1);
-            for (int i = 0; i < NumberOfEntriesForReInsert; i++)
+            for (int i = 0; i < Constants.NODES_FOR_REINSERT; i++)
                 reInsertions.Enqueue(distances.Peek().Value, distances.Dequeue().Priority * -1);
             foreach (PriorityQueueItem<NodeEntry, Single> entry in reInsertions)
                 node.RemoveNodeEntry(entry.Value);
@@ -376,7 +372,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             if (Root.Equals(Address.Empty))
             {
                 Type childType = node1 is Leaf ? typeof(Leaf) : typeof(Node);
-                Node rootNode = new Node(MaximumNodeOccupancy, Address.Empty, childType);
+                Node rootNode = new Node(Address.Empty, childType);
                 Root = rootNode.Address;
                 node1.Parent = Root;
                 node2.Parent = Root;
@@ -397,7 +393,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             {
                 parent.AddNodeEntry(new NodeEntry(node2.CalculateMinimumBoundingBox(), node2.Address));
                 Cache.WritePageData(node2);
-                if (parent.NodeEntries.Count > MaximumNodeOccupancy)
+                if (parent.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
                 {
                     List<Node> splitNodes = OverFlowTreatment(parent, level - 1);
                     if (splitNodes != null)

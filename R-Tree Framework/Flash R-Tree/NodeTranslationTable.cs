@@ -16,7 +16,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Instance Variables
 
-        protected Int32 translationListSize;
         protected SortedList<Address, List<Address>> nodeToPagesTranslationTable;
         protected CacheManager memoryManager;
         protected List<IndexUnit> unitsToAdd;
@@ -34,11 +33,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             get { return nodeToPagesTranslationTable; }
             set { nodeToPagesTranslationTable = value; }
         }
-        protected virtual Int32 TranslationListSize
-        {
-            get { return translationListSize; }
-            set { translationListSize = value; }
-        }
         protected virtual List<IndexUnit> UnitsToAdd
         {
             get { return unitsToAdd; }
@@ -48,9 +42,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         #endregion
         #region Constructors
 
-        public NodeTranslationTable(CacheManager underlyingCache, Int32 translationListSize)
+        public NodeTranslationTable(CacheManager underlyingCache)
         {
-            TranslationListSize = translationListSize;
             MemoryManager = underlyingCache;
             NodeToPagesTranslationTable = new SortedList<Address, List<Address>>();
             UnitsToAdd = new List<IndexUnit>();
@@ -63,7 +56,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 
             StreamReader reader = new StreamReader(tableSaveLocation);
 
-            TranslationListSize = Int32.Parse(reader.ReadLine());
             reader.ReadLine();
             String buffer;
             if (!(buffer = reader.ReadLine()).Equals("UnitsToAdd"))
@@ -192,7 +184,6 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
         {
             StreamWriter writer = new StreamWriter(tableSaveLocation);
 
-            writer.WriteLine(TranslationListSize);
             writer.WriteLine("NodeToPagesTranslationTable");
             foreach (KeyValuePair<Address, List<Address>> entry in NodeToPagesTranslationTable)
             {
@@ -275,7 +266,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     }
                     if (!inserted)
                     {
-                        Sector sector = new Sector(Constants.INDEX_UNIT_ENTRIES_PER_SECTOR);
+                        Sector sector = new Sector();
                         while (grouping.Value.Count > 0 && sector.IndexUnits.Count + 1 <= Constants.INDEX_UNIT_ENTRIES_PER_SECTOR)
                         {
                             sector.AddIndexUnit(grouping.Value[0]);
@@ -293,7 +284,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             foreach (Address nodeAddress in nodeAddresses)
             {
                 List<Address> sectorList = NodeToPagesTranslationTable[nodeAddress];
-                if (sectorList.Count > TranslationListSize)
+                if (sectorList.Count > Constants.SECTOR_LIST_LENGTH)
                 {
                     MemoryManager.WritePageData(LookupNode(nodeAddress));
                     NodeToPagesTranslationTable.Remove(nodeAddress);
