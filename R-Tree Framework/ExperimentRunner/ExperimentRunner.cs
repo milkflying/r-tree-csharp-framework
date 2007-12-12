@@ -12,7 +12,7 @@ namespace ExperimentRunner
     {
         protected static String
             INDEX_BUILDER = @"..\..\..\IndexBuilder\bin\Release\IndexBuilder.exe",
-            WORK_PLAN_RUNNER = @"..\..\..\QueryPlanExecutor\bin\Release\QueryPlanExecutor.exe";
+            WORK_PLAN_RUNNER = @"..\..\..\QueryPlanExecutor\bin\Debug\QueryPlanExecutor.exe";
 
         protected List<Experiment> experiments;
 
@@ -47,7 +47,7 @@ namespace ExperimentRunner
         public virtual void LoadRunWorkPlanExperiments(String fileLocation)
         {
             StreamReader reader = new StreamReader(fileLocation);
-            while (reader.EndOfStream)
+            while (!reader.EndOfStream)
             {
                 String[] values = reader.ReadLine().Split(',');
                 RunWorkPlan experiment = new RunWorkPlan(
@@ -66,11 +66,18 @@ namespace ExperimentRunner
 
         public virtual void RunExperiments()
         {
+            Int32 k = 1;
             foreach (Experiment experiment in Experiments)
                 if (experiment is BuildIndex)
-                    RunExperiment(experiment as BuildIndex);
+                {
+                    Console.WriteLine("Running Experiment: {0}", k++);
+                        RunExperiment(experiment as BuildIndex);
+                }
                 else
-                    RunExperiment(experiment as RunWorkPlan);
+                {
+                    Console.WriteLine("Running Experiment: {0}", k++);
+                        RunExperiment(experiment as RunWorkPlan);
+                }
         }
         protected virtual void RunExperiment(BuildIndex experiment)
         {
@@ -86,7 +93,7 @@ namespace ExperimentRunner
                 GetCacheSize(experiment.CacheSize),
                 GetReservationBufferSize(experiment.ReservationBufferSize));
             indexBuilder.StartInfo.FileName = INDEX_BUILDER;
-            Console.WriteLine("Building index with arguments: {0}", indexBuilder.StartInfo.Arguments);
+           // Console.WriteLine("Building index with arguments: {0}", indexBuilder.StartInfo.Arguments);
             indexBuilder.Start();
             indexBuilder.WaitForExit();
         }
@@ -102,7 +109,7 @@ namespace ExperimentRunner
                 GetCacheType(experiment.CacheType),
                 GetIndexType(experiment.IndexType));
             workPlanRunner.StartInfo.FileName = WORK_PLAN_RUNNER;
-            Console.WriteLine("Running work plan with arguments: {0}", workPlanRunner.StartInfo.Arguments);
+            //Console.WriteLine("Running work plan with arguments: {0}", workPlanRunner.StartInfo.Arguments);
             workPlanRunner.Start();
             workPlanRunner.WaitForExit();
         }
@@ -115,6 +122,8 @@ namespace ExperimentRunner
                 case CacheType.LevelProportional:
                     return typeof(LevelProportionalCacheManager).AssemblyQualifiedName;
                 case CacheType.LRU:
+                    return typeof(LRUCacheManager).AssemblyQualifiedName;
+                case CacheType.None:
                     return typeof(LRUCacheManager).AssemblyQualifiedName;
                 default:
                     throw new Exception("Illegal Cache Type");

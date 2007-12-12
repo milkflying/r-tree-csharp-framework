@@ -47,9 +47,10 @@ namespace ExperimentRunner
         {
             get
             {
-                return String.Format(@"{0}\WorkPlan\{1}.workplan",
+                return String.Format(@"{0}\WorkPlan\{1}{2}.workplan",
                     ROOT,
-                    WorkPlan.ToString());
+                    Cardinality.ToString(),
+                    GetWorkPlan(WorkPlan));
             }
         }
         public virtual String ResultsSaveLocation
@@ -95,6 +96,12 @@ namespace ExperimentRunner
             else
                 throw new Exception("Uh oh, not a drive type.");
         }
-
+        protected virtual String GetWorkPlan(WorkPlan wp)
+        {
+            if (wp == WorkPlan.Large) return "90";
+            else if (wp == WorkPlan.Medium) return "60";
+            else if (wp == WorkPlan.Small) return "30";
+            else throw new Exception();
+        }
     }
 }

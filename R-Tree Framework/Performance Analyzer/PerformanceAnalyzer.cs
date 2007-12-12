@@ -92,5 +92,15 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Performance_Metrics
             PageWrites = 0;
             PageFaults = 0;
         }
+        public virtual void OperationEnded()
+        {
+            endCPUTime = Process.GetCurrentProcess().TotalProcessorTime;
+            OperationEnd = DateTime.Now;
+        }
+        public virtual void OperationBegan()
+        {
+            OperationStart = DateTime.Now;
+            startCPUTime = Process.GetCurrentProcess().TotalProcessorTime;
+        }
     }
 }

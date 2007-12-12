@@ -211,6 +211,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.CacheManagers
         }
         public virtual void SaveCache(String cacheSaveLocation, String memorySaveLocation)
         {
+            FlushCache();
             Int64 position = StorageReader.Position;
             StorageReader.Close();
             File.Copy(StorageFileLocation, memorySaveLocation, true);

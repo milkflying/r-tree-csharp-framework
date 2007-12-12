@@ -51,6 +51,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             StreamReader reader = new StreamReader(indexSavedLocation);
             Root = new Address(reader.ReadLine());
             TreeHeight = Int32.Parse(reader.ReadLine());
+            Address.NextAddress= Int32.Parse(reader.ReadLine());
             reader.Close();
         }
 
@@ -67,6 +68,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 if (entry.Child.Equals(record.Address))
                     entryToRemove = entry;
             leafWithRecord.RemoveNodeEntry(entryToRemove);
+            if (leafWithRecord.NodeEntries.Count >= Constants.MINIMUM_ENTRIES_PER_NODE)
+                Cache.WritePageData(leafWithRecord);
             CondenseTree(leafWithRecord);
             Node rootNode = Cache.LookupNode(Root);
             if (rootNode.NodeEntries.Count == 1)
@@ -99,6 +102,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             StreamWriter writer = new StreamWriter(indexSaveLocation);
             writer.WriteLine(Root);
             writer.WriteLine(TreeHeight);
+            writer.WriteLine(Address.NextAddress);
             writer.Close();
         }
         public virtual List<Record> Search(Query query)

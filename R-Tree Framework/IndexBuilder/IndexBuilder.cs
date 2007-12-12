@@ -111,6 +111,11 @@ namespace IndexBuilder
                     Console.WriteLine(recordId.ToString());
                 Single x = Single.Parse(values[1]), y = Single.Parse(values[2]);
                 Record record = new Record(recordId, new MinimumBoundingBox(x, y, x, y));
+                if (record.Address.ToString().Equals("18336"))
+                {
+                    Console.WriteLine("Here it is");
+                    Console.ReadLine();
+                }
                 TreeIndex.Insert(record);
             }
             reader.Close();
@@ -125,9 +130,9 @@ namespace IndexBuilder
             if (treeType == R_SHARP_TREE)
                 throw new Exception("Tree type not yet implemented.");//TreeIndex = new R_Sharp_Tree();
             else if (treeType == FLASH_R_TREE_EXTENDED)
-                TreeIndex = new Flash_R_Tree_Extended(Cache, ReservationBufferSize);
+                TreeIndex = new Flash_R_Tree_Extended(Cache, ReservationBufferSize * Constants.INDEX_UNIT_ENTRIES_PER_SECTOR);
             else if (treeType == FLASH_R_TREE)
-                TreeIndex = new Flash_R_Tree(Cache, ReservationBufferSize);
+                TreeIndex = new Flash_R_Tree(Cache, ReservationBufferSize*Constants.INDEX_UNIT_ENTRIES_PER_SECTOR);
             else if (treeType == R_STAR_TREE)
                 TreeIndex = new R_Star_Tree(Cache);
             else if (treeType == R_TREE)

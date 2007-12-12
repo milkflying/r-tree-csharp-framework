@@ -50,6 +50,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             StreamReader reader = new StreamReader(savedFileLocation);
             reader.ReadLine();
             reader.ReadLine();
+            reader.ReadLine();
             BufferSize = Int32.Parse(reader.ReadLine());
             reader.Close();
             Buffer = new ReservationBuffer(BufferSize);
@@ -62,17 +63,10 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
 
         public override void Delete(Record record)
         {
-            Leaf leafWithRecord = FindLeaf(record, Cache.LookupNode(Root));
-            if (leafWithRecord == null)
-                return;
-            LeafEntry entryToRemove = null;
-            foreach (LeafEntry entry in leafWithRecord.NodeEntries)
-                if (entry.Child.Equals(record.Address))
-                    entryToRemove = entry;
-            buffer.DeleteEntry(entryToRemove);
+
+            buffer.DeleteEntry(new LeafEntry(record.BoundingBox, record.Address));
             if (buffer.NeedFlush)
                 FlushBuffer();
-            Cache.DeletePageData(record);
         }
         public override void Insert(Record record)
         {
@@ -90,6 +84,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             StreamWriter writer = new StreamWriter(indexSaveLocation);
             writer.WriteLine(Root);
             writer.WriteLine(TreeHeight);
+            writer.WriteLine(Address.NextAddress);
             writer.WriteLine(BufferSize);
             writer.Close();
         }
@@ -196,34 +191,21 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
             List<Node> eliminatedNodes = new List<Node>();
             while (!node.Address.Equals(Root))
             {
-                Node parent = Cache.LookupNode(node.Parent);
-                NodeEntry nodeEntry = null;
-                foreach (NodeEntry entry in parent.NodeEntries)
-                    if (entry.Child.Equals(node.Address))
-                        nodeEntry = entry;
+                
                 if (node.NodeEntries.Count < Constants.MINIMUM_ENTRIES_PER_NODE)
                 {
-                    IndexUnit indexUnit = new IndexUnit(parent.Address, nodeEntry.Child, nodeEntry.MinimumBoundingBox, Operation.Delete);
-                    NodeTranslationTable.Add(indexUnit);
-                    parent.RemoveNodeEntry(nodeEntry);
+                    RemoveFromParent(node);
                     eliminatedNodes.Add(node);
-                    Cache.DeletePageData(node);
                 }
                 else
-                {
-                    MinimumBoundingBox mbb = node.CalculateMinimumBoundingBox();
-                    nodeEntry.MinimumBoundingBox = mbb;
-                    IndexUnit indexUnit = new IndexUnit(parent.Address, nodeEntry.Child, nodeEntry.MinimumBoundingBox, Operation.Update);
-                    NodeTranslationTable.Add(indexUnit);
-                }
-                node = parent;
+                    NodeTranslationTable.Add(new IndexUnit(node.Parent, node.Address, node.CalculateMinimumBoundingBox(), Operation.Update));
+                node = Cache.LookupNode(node.Parent);
             }
-            for (int i = 0; i < eliminatedNodes.Count; i++)
+            foreach(Node eliminatedNode in eliminatedNodes)
             {
-                Node eliminatedNode = eliminatedNodes[i];
                 if (eliminatedNode is Leaf)
                     foreach (LeafEntry leafEntry in eliminatedNode.NodeEntries)
-                        Insert(Cache.LookupRecord(leafEntry.Child));
+                        InsertRecord(new BufferItem(leafEntry, Operation.Insert));
                 else
                     foreach (NodeEntry entry in eliminatedNode.NodeEntries)
                         Insert(Cache.LookupNode(entry.Child));
@@ -237,27 +219,23 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 {
                     if (operation.Entry is LeafEntry)
                     {
-                        Leaf leafToInsertInto = ChooseLeaf(Cache.LookupRecord(operation.Entry.Child));
-                        IndexUnit indexUnit = new IndexUnit(leafToInsertInto.Address, operation.Entry.Child, operation.Entry.MinimumBoundingBox, operation.Operation);
-                        NodeTranslationTable.Add(indexUnit);
-                        leafToInsertInto.AddNodeEntry(operation.Entry);
-                        if (leafToInsertInto.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
-                        {
-                            List<Node> splitNodes = Split(leafToInsertInto);
-                            RemoveFromParent(leafToInsertInto);
-                            AdjustTree(splitNodes[0], splitNodes[1]);
-                        }
-                        else
-                            AdjustTree(leafToInsertInto);
+                        InsertRecord(operation);
                     }
                 }
                 else if (operation.Operation == Operation.Delete)
                 {
-                    Node nodeToDeleteFrom = Cache.LookupNode(operation.Entry.Child);
-                    IndexUnit indexUnit = new IndexUnit(nodeToDeleteFrom.Address, operation.Entry.Child, operation.Entry.MinimumBoundingBox, operation.Operation);
+                    Record recordToDelete = Cache.LookupRecord(operation.Entry.Child);
+                    Leaf leafWithRecord = FindLeaf(recordToDelete, Cache.LookupNode(Root));
+                    if (leafWithRecord == null)
+                        continue;
+                    LeafEntry entryToRemove = null;
+                    foreach (LeafEntry entry in leafWithRecord.NodeEntries)
+                        if (entry.Child.Equals(recordToDelete.Address))
+                            entryToRemove = entry;
+                    IndexUnit indexUnit = new IndexUnit(leafWithRecord.Address, operation.Entry.Child, operation.Entry.MinimumBoundingBox, operation.Operation);
                     NodeTranslationTable.Add(indexUnit);
-                    nodeToDeleteFrom.RemoveNodeEntry(operation.Entry);
-                    CondenseTree(nodeToDeleteFrom);
+                    leafWithRecord.RemoveNodeEntry(operation.Entry);
+                    CondenseTree(leafWithRecord);
                     Node rootNode = Cache.LookupNode(Root);
                     if (rootNode.NodeEntries.Count == 1)
                     {
@@ -267,12 +245,41 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                         Cache.DeletePageData(rootNode);
                         Cache.WritePageData(newRoot);
                     }
+                    Cache.DeletePageData(recordToDelete);
                 }
                 else
                     throw new Exception();
             }
             Buffer.Clear();
             NodeTranslationTable.FlushIndexUnits();
+        }
+
+        protected virtual void InsertRecord(BufferItem operation)
+        {
+            Leaf leafToInsertInto = ChooseLeaf(Cache.LookupRecord(operation.Entry.Child));
+            IndexUnit indexUnit = new IndexUnit(leafToInsertInto.Address, operation.Entry.Child, operation.Entry.MinimumBoundingBox, operation.Operation);
+            NodeTranslationTable.Add(indexUnit);
+            leafToInsertInto.AddNodeEntry(operation.Entry);
+            if (leafToInsertInto.NodeEntries.Count > Constants.MAXIMUM_ENTRIES_PER_NODE)
+            {
+                List<Node> splitNodes = Split(leafToInsertInto);
+                RemoveFromParent(leafToInsertInto);
+                AdjustTree(splitNodes[0], splitNodes[1]);
+            }
+            else
+                AdjustTree(leafToInsertInto);
+
+
+
+
+
+
+
+
+
+
+
+
         }
         protected override void Insert(Node node)
         {
@@ -328,7 +335,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                     deletions.Add(change);
             foreach(BufferItem deletion in deletions)
                 changeList.Remove(deletion);
-            foreach (BufferItem insertion in deletions)
+            foreach (BufferItem insertion in changeList)
                 proximityQueue.Enqueue(insertion.Entry, GetDistance(kNN.X, kNN.Y, insertion.Entry.MinimumBoundingBox) * -1);
 
             EnqueNodeEntries(kNN, node, proximityQueue);
@@ -347,6 +354,8 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Indexes
                 else
                     EnqueNodeEntries(kNN, Cache.LookupNode(closestEntry.Child), proximityQueue);
             }
+            while (results.Contains(null))
+                results.Remove(null);
             for(int i = 0; i < results.Count; i++)
                 for(int j = i; j < results.Count; j++)
             {
