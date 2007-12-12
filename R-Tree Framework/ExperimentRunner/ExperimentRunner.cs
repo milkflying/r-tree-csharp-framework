@@ -12,7 +12,7 @@ namespace ExperimentRunner
     {
         protected static String
             INDEX_BUILDER = @"..\..\..\IndexBuilder\bin\Release\IndexBuilder.exe",
-            WORK_PLAN_RUNNER = @"..\..\..\QueryPlanExecutor\bin\Debug\QueryPlanExecutor.exe";
+            WORK_PLAN_RUNNER = @"..\..\..\QueryPlanExecutor\bin\Release\QueryPlanExecutor.exe";
 
         protected List<Experiment> experiments;
 
