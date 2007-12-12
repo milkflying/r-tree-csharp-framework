@@ -9,7 +9,7 @@ namespace Edu.Psu.Cse.R_Tree_Framework.Framework
         protected static Int32 nextAddress = 1;
         protected Int32 address;
         
-        protected static Int32 NextAddress
+        public  static Int32 NextAddress
         {
             get { return nextAddress; }
             set { nextAddress = value; }

@@ -13,7 +13,27 @@ namespace TestBench
     {
         internal static void Main(string[] args)
         {
-            String bob = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Cache";
+            String loc = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\TEMP\";
+            foreach (FileInfo file in (new DirectoryInfo(loc)).GetFiles())
+            {
+                StreamReader resultReader = new StreamReader(file.FullName);
+                StreamWriter statWriter = new StreamWriter(file.FullName + ".s");
+                while (!resultReader.EndOfStream)
+                {
+                    while (!resultReader.ReadLine().Equals("Statistics")) ;
+                    String[] buffer = resultReader.ReadLine().Split('\t');
+                    statWriter.WriteLine("{0},{1},{2},{3}", buffer[1], buffer[3], buffer[5], buffer[7]);
+                }
+                resultReader.Close();
+                statWriter.Close();
+            }
+
+
+
+
+
+
+            /*String bob = @"C:\Users\Mike\Documents\R-Tree Framework\trunk\Experiments\Cache";
             foreach (FileInfo file in (new DirectoryInfo(bob)).GetFiles())
             {
                     StreamReader cacheReader = new StreamReader(file.FullName);
@@ -49,7 +69,7 @@ namespace TestBench
                     File.Delete(file.FullName);
                     File.Move(file.FullName + "xx", file.FullName);
             }
-           // (new Program2()).Run();
+           // (new Program2()).Run();*/
         }
         /*public void Run()
         {
