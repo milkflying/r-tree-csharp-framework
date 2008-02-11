@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R-Tree Framework", "R-Tree Framework\R-Tree Framework.csproj", "{600ECC17-DBBB-43FD-9723-438C66801881}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueue", "PriorityQueue\PriorityQueue.csproj", "{07BB3C7A-13E6-48C5-8791-66C31D17F332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{600ECC17-DBBB-43FD-9723-438C66801881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600ECC17-DBBB-43FD-9723-438C66801881}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600ECC17-DBBB-43FD-9723-438C66801881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600ECC17-DBBB-43FD-9723-438C66801881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07BB3C7A-13E6-48C5-8791-66C31D17F332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07BB3C7A-13E6-48C5-8791-66C31D17F332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07BB3C7A-13E6-48C5-8791-66C31D17F332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07BB3C7A-13E6-48C5-8791-66C31D17F332}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

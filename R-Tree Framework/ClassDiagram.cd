@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Segoe UI" Size="9" />
+  <Class Name="R_Tree_Framework.Cache_Manager.AncestralCache" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Cache Manager\AncestralCache.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.HierarchicalCache" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Cache Manager\HierarchicalCache.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.LRUCache" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Cache Manager\LRUCache.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.InteriorNode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\InteriorNode.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.InteriorNodeEntry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\InteriorNodeEntry.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.LeafNode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\LeafNode.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.LeafNodeEntry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\LeafNodeEntry.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.KNearestNeighborQuery" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\KNearestNeighborQuery.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.RangeQuery" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\RangeQuery.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.WindowQuery" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\WindowQuery.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Work_Plan.Deletion" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Work Plan\Deletion.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Work_Plan.Insertion" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Work Plan\Insertion.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Work_Plan.Search" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Work Plan\Search.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Work_Plan.Update" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Work Plan\Update.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="R_Tree_Framework.Work_Plan.WorkPlan" Collapsed="true">
+    <Position X="25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Work Plan\WorkPlan.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Address" Collapsed="true">
+    <Position X="18" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Address.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.IndexUnit" Collapsed="true">
+    <Position X="25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\IndexUnit.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Sector" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Sector.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.MinimumBoundingBox" Collapsed="true">
+    <Position X="21.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\MinimumBoundingBox.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Page" Collapsed="true">
+    <Position X="10.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Page.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Pair&lt;T1, T2&gt;" Collapsed="true">
+    <Position X="23.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Pair.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Record" Collapsed="true">
+    <Position X="18" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Record.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="R_Tree_Framework.Cache_Manager.CacheManager" Collapsed="true">
+    <Position X="19.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Cache Manager\CacheManager.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Index.Index" Collapsed="true">
+    <Position X="15.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\Index.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Index.Node" Collapsed="true">
+    <Position X="21.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\Node.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Index.NodeEntry" Collapsed="true">
+    <Position X="23.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\NodeEntry.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Index.SpatialIndex" Collapsed="true">
+    <Position X="15.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Index\SpatialIndex.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzer" Collapsed="true">
+    <Position X="25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Performance Analyzer\PerformanceAnalyzer.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.ProximityQuery" Collapsed="true">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\ProximityQuery.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.Query" Collapsed="true">
+    <Position X="11.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\Query.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.RegionQuery" Collapsed="true">
+    <Position X="12.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\RegionQuery.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.SpatialQuery" Collapsed="true">
+    <Position X="11.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Query\SpatialQuery.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Work_Plan.DatabaseOperation" Collapsed="true">
+    <Position X="13.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Work Plan\DatabaseOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Work_Plan.Modification" Collapsed="true">
+    <Position X="13.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Work Plan\Modification.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Utility.Addressable" Collapsed="true">
+    <Position X="18" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Addressable.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>

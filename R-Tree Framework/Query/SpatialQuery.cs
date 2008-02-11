@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace R_Tree_Framework.Performance_Analyzer
+namespace R_Tree_Framework.Query
 {
-    public interface PerformanceAnalyzer
+    public interface SpatialQuery : Query
     {
     }
 }
