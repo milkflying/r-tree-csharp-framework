@@ -109,7 +109,7 @@ namespace R_Tree_Framework.Utility
             MaximumValues = new List<CoordinateType>();
 
             Type coordinateType = typeof(CoordinateType);
-            Int32 coordinateSize = Marshal.SizeOf(CoordinateType);
+            Int32 coordinateSize = Marshal.SizeOf(coordinateType);
             if (!(byteData.Length > 0 && byteData.Length % (coordinateSize * 2) == 0))
                 throw new InvalidMinimumBoundingBoxDataException();
             IntPtr coordinateBuffer = Marshal.AllocHGlobal(coordinateSize);
