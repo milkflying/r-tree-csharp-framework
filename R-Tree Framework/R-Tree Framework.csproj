@@ -18,6 +18,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -26,6 +27,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -56,11 +58,16 @@
     <Compile Include="Query\WindowQuery.cs" />
     <Compile Include="Utility\Address.cs" />
     <Compile Include="Utility\Addressable.cs" />
+    <Compile Include="Utility\Exceptions\IncompatibleDimensionsException.cs" />
+    <Compile Include="Utility\Exceptions\InvalidDimensionException.cs" />
+    <Compile Include="Utility\Exceptions\InvalidMinimumBoundingBoxDataException.cs" />
+    <Compile Include="Utility\Exceptions\InvalidRectangleException.cs" />
     <Compile Include="Utility\IndexUnit.cs" />
     <Compile Include="Utility\MinimumBoundingBox.cs" />
     <Compile Include="Utility\Pair.cs" />
     <Compile Include="Utility\Record.cs" />
     <Compile Include="Utility\Page.cs" />
+    <Compile Include="Utility\ISavable.cs" />
     <Compile Include="Utility\Sector.cs" />
     <Compile Include="Work Plan\DatabaseOperation.cs" />
     <Compile Include="Work Plan\Deletion.cs" />
