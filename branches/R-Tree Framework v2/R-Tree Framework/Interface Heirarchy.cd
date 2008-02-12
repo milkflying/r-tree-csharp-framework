@@ -22,13 +22,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="R_Tree_Framework.Framework.RTreeFramework_Interface" Collapsed="true">
-    <Position X="12.75" Y="10.5" Width="2" />
-    <TypeIdentifier>
-      <FileName>Framework\RTreeFrameworkInterface.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="R_Tree_Framework.Index.Index" Collapsed="true">
     <Position X="15.5" Y="13.25" Width="1.5" />
     <TypeIdentifier>
@@ -104,6 +97,13 @@
     <TypeIdentifier>
       <FileName>Utility\ISavable.cs</FileName>
       <HashCode>AACAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Framework.RTreeFramework_Interface" Collapsed="true">
+    <Position X="12.75" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Framework\RTreeFrameworkInterface.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
 </ClassDiagram>

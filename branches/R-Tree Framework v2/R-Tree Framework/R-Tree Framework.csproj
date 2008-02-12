@@ -56,8 +56,8 @@
     <Compile Include="Framework\RTreeFrameworkException.cs" />
     <Compile Include="Exceptions\UtilityException.cs" />
     <Compile Include="Exceptions\WorkPlanException.cs" />
+    <Compile Include="Framework\RTreeFrameworkInterface.cs" />
     <Compile Include="Framework\RTreeFrameworkObject.cs" />
-    <Compile Include="Framework\RTreeFrameworkInterface.cs" />
     <Compile Include="Index\Index.cs" />
     <Compile Include="Index\InteriorNode.cs" />
     <Compile Include="Index\InteriorNodeEntry.cs" />
