@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace R_Tree_Framework.Utility.Exceptions
 {
-    public class InvalidRectangleException<CoordinateType> : Exception
+    public class InvalidRectangleException<CoordinateType> : MinimumBoundingBoxException
     {
         protected Int32 dimension;
         protected CoordinateType minimumValue, maximumValue;

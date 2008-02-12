@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace R_Tree_Framework.Utility.Exceptions
 {
-    public class InvalidMinimumBoundingBoxDataException : Exception
+    public class InvalidMinimumBoundingBoxDataException : MinimumBoundingBoxException
     {
         public InvalidMinimumBoundingBoxDataException()
             : base()

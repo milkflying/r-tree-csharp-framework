@@ -5,7 +5,16 @@ using System.Runtime.Serialization;
 
 namespace R_Tree_Framework.Utility.Exceptions
 {
-    public class IncompatibleDimensionsException : Exception
+    /// <summary>
+    /// This is a enxception that is thrown when the number of minimum values given
+    /// as the Minimum Values list to a MinimumBoundingBox is different than the
+    /// number of maximum values given as the Maximum value list.  The number
+    /// of values indicates the number of dimensions.  If there are not an
+    /// equal number of dimensions, then there is no way to determine which dimension
+    /// requires the singular value; nor is there a way to determine if the
+    /// dimension should continue to infinity or by a singular point interval.
+    /// </summary>
+    public class IncompatibleDimensionsException : MinimumBoundingBoxException
     {
         protected Int32 minimumsDimension, maximumsDimension;
 
@@ -53,36 +62,3 @@ namespace R_Tree_Framework.Utility.Exceptions
         }
     }
 }
-
-
-/*
- * TEMPLATE EXCEPTION
- * 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization;
-
-namespace R_Tree_Framework.Utility.Exceptions
-{
-    public class IncompatibleDimensionsException : Exception
-    {
-        public IncompatibleDimensionsException()
-            : base()
-        {
-        }
-        public IncompatibleDimensionsException(String message)
-            : base(message)
-        {
-        }
-        public IncompatibleDimensionsException(String message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-        public IncompatibleDimensionsException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-    }
-}
-*/

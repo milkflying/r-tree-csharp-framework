@@ -5,7 +5,15 @@ using System.Runtime.Serialization;
 
 namespace R_Tree_Framework.Utility.Exceptions
 {
-    public class InvalidDimensionException : Exception
+    /// <summary>
+    /// This exception is used when the number of dimensions specified for
+    /// the minimum values of a MinimumBoundingBox is less than 1.  A
+    /// MinimumBoundingBox must exist in at least 1 dimension.  This
+    /// exception is not thrown for the number of maximum values
+    /// as an <see cref="IncompatibleDimensionException"/> is generated
+    /// with the valid dimension of the minimum values.
+    /// </summary>
+    public class InvalidDimensionException : MinimumBoundingBoxException
     {
         protected Int32 dimensionCount;
 

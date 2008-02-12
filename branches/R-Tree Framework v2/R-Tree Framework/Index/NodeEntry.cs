@@ -5,7 +5,7 @@ using R_Tree_Framework.Utility;
 
 namespace R_Tree_Framework.Index
 {
-    public interface NodeEntry : Addressable
+    public interface NodeEntry : IAddressable
     {
     }
 }
