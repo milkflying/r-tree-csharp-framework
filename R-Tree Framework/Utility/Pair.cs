@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Utility
 {
-    public class Pair<T1, T2>
+    public class Pair<T1, T2> : RTreeFrameworkObject
     {
         private T1 value1;
         private T2 value2;

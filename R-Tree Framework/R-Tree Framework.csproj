@@ -19,6 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\R-Tree Framework.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\R-Tree Framework.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -35,10 +37,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache Manager\AncestralCache.cs" />
-    <Compile Include="Cache Manager\CacheManager.cs" />
-    <Compile Include="Cache Manager\HierarchicalCache.cs" />
-    <Compile Include="Cache Manager\LRUCache.cs" />
+    <Compile Include="Cache Manager\AncestralCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cache Manager\CacheManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cache Manager\HierarchicalCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cache Manager\LRUCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CacheManagerException.cs" />
+    <Compile Include="Exceptions\IndexException.cs" />
+    <Compile Include="Exceptions\PerformanceAnalyzerException.cs" />
+    <Compile Include="Exceptions\QueryException.cs" />
+    <Compile Include="Framework\RTreeFrameworkException.cs" />
+    <Compile Include="Exceptions\UtilityException.cs" />
+    <Compile Include="Exceptions\WorkPlanException.cs" />
+    <Compile Include="Framework\RTreeFrameworkObject.cs" />
+    <Compile Include="Framework\RTreeFrameworkInterface.cs" />
     <Compile Include="Index\Index.cs" />
     <Compile Include="Index\InteriorNode.cs" />
     <Compile Include="Index\InteriorNodeEntry.cs" />
@@ -57,11 +76,15 @@
     <Compile Include="Query\SpatialQuery.cs" />
     <Compile Include="Query\WindowQuery.cs" />
     <Compile Include="Utility\Address.cs" />
-    <Compile Include="Utility\Addressable.cs" />
+    <Compile Include="Utility\IAddressable.cs" />
+    <Compile Include="Utility\Exceptions\AddressAlreadyInitializedWarning.cs" />
+    <Compile Include="Utility\Exceptions\AddressException.cs" />
+    <Compile Include="Utility\Exceptions\AddressNotInitializedException.cs" />
     <Compile Include="Utility\Exceptions\IncompatibleDimensionsException.cs" />
     <Compile Include="Utility\Exceptions\InvalidDimensionException.cs" />
     <Compile Include="Utility\Exceptions\InvalidMinimumBoundingBoxDataException.cs" />
     <Compile Include="Utility\Exceptions\InvalidRectangleException.cs" />
+    <Compile Include="Utility\Exceptions\MinimumBoundingBoxException.cs" />
     <Compile Include="Utility\IndexUnit.cs" />
     <Compile Include="Utility\MinimumBoundingBox.cs" />
     <Compile Include="Utility\Pair.cs" />
@@ -84,7 +107,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Class Heirarchy.cd" />
     <None Include="ClassDiagram.cd" />
+    <None Include="Exceptions Heirarchy.cd" />
+    <None Include="Interface Heirarchy.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

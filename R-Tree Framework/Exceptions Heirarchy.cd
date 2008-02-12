@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Segoe UI" Size="9" />
+  <Class Name="R_Tree_Framework.Exceptions.CacheManagerException" Collapsed="true">
+    <Position X="6.75" Y="6" Width="2" />
+    <TypeIdentifier>
+      <FileName>Exceptions\CacheManagerException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.IndexException" Collapsed="true">
+    <Position X="9.5" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Exceptions\IndexException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.PerformanceAnalyzerException" Collapsed="true">
+    <Position X="12" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Exceptions\PerformanceAnalyzerException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.QueryException" Collapsed="true">
+    <Position X="15.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Exceptions\QueryException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.UtilityException" Collapsed="true">
+    <Position X="27" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Exceptions\UtilityException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.WorkPlanException" Collapsed="true">
+    <Position X="4.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Exceptions\WorkPlanException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkException" Collapsed="true">
+    <Position X="20" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Framework\RTreeFrameworkException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressAlreadyInitializedWarning" Collapsed="true">
+    <Position X="32" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\AddressAlreadyInitializedWarning.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressException" Collapsed="true">
+    <Position X="34.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\AddressException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressNotInitializedException" Collapsed="true">
+    <Position X="35.25" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\AddressNotInitializedException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.IncompatibleDimensionsException" Collapsed="true">
+    <Position X="17.75" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\IncompatibleDimensionsException.cs</FileName>
+      <HashCode>AAAAAABAQAAAAEAAAAAAAAIAAAAAAAAAAAAAEAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidDimensionException" Collapsed="true">
+    <Position X="21" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\InvalidDimensionException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAEAAEABAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidMinimumBoundingBoxDataException" Collapsed="true">
+    <Position X="24" Y="8.75" Width="3.25" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\InvalidMinimumBoundingBoxDataException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidRectangleException&lt;CoordinateType&gt;" Collapsed="true">
+    <Position X="28" Y="8.75" Width="3.25" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\InvalidRectangleException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAQAAAAEBAAAJAQAAAQAAAAAAAACAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.MinimumBoundingBoxException" Collapsed="true">
+    <Position X="23.25" Y="7.5" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Utility\Exceptions\MinimumBoundingBoxException.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>

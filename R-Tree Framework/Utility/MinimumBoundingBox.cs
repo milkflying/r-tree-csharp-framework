@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using R_Tree_Framework.Utility.Exceptions;
 using System.Runtime.InteropServices;
+using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Utility
 {
@@ -11,26 +12,20 @@ namespace R_Tree_Framework.Utility
     /// of a spatial object.  For each dimension of the rectangle, a minimum value and a maximum value
     /// are stored.  Objects returned from this class that are modified will not affect the original
     /// object.  For example, changes made to the list returned from the 
-    /// <see cref="MinimumBoundingBox.MinimumValues"/> property will not alter the minimum values
+    /// <see cref=" R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;.MinimumValues"/> property will not alter the minimum values
     /// stored within the MinimumBoundingBox object.  Alterations to the bounding box are not
     /// allowed after construction.
     /// </summary>
     /// <typeparam name="CoordinateType"></typeparam>
-    public class MinimumBoundingBox<CoordinateType> : ISavable where CoordinateType : struct, IComparable
+    public class MinimumBoundingBox<CoordinateType> : RTreeFrameworkObject, ISavable where CoordinateType : struct, IComparable
     {
         #region Instance Variables
-
-        #region Protected
 
         protected Int32 dimension;
         protected List<CoordinateType> minimumValues, maximumValues;
 
-        #endregion Protected
-
         #endregion Instance Variables
         #region Properties
-
-        #region Public
 
         /// <summary>
         /// The number of dimensions in which the minimum bounding box exists.
@@ -64,12 +59,8 @@ namespace R_Tree_Framework.Utility
             protected set { minimumValues = value; }
         }
 
-        #endregion Public
-
         #endregion Properties
         #region Constructors
-
-        #region Public
 
         /// <summary>
         /// Constructs a minimum bounding box with the minimum values in each dimension as specified
@@ -83,7 +74,7 @@ namespace R_Tree_Framework.Utility
         /// <param name="maximumValues">The maximum value for each dimension.</param>
         /// <exception cref="InvalidDimensionException">Thrown when the number of dimensions is less than 1.</exception>
         /// <exception cref="IncompatibleDimensionsException">Thrown when the number of dimensions specified by the list of minimum values does not match the number of dimensions specified by the list of maximum values.</exception>
-        /// <exception cref="InvalidRectangleException">Thrown when the minimum value of a dimension is greater than the maximum value of a dimension.</exception>
+        /// <exception cref="InvalidRectangleException&lt;CoordinateType&gt;">Thrown when the minimum value of a dimension is greater than the maximum value of a dimension.</exception>
         public MinimumBoundingBox(List<CoordinateType> minimumValues, List<CoordinateType> maximumValues)
         {
             if (minimumValues.Count < 1)
@@ -99,33 +90,42 @@ namespace R_Tree_Framework.Utility
         }
         /// <summary>
         /// This constructor provides a means of reconstructing a MinimumBoundingBox
-        /// object that has been saved using the <see cref="MinimumBoundingBox.GetBytes"/>
-        /// method from the <see cref="ISavable"/> interface.
+        /// object that has been saved using the <see cref="MinimumBoundingBox&lt;CoordinateType&gt;.GetBytes"/>
+        /// method from the <see cref="ISavable"/> interface.  This constructor begins reading bytes from
+        /// the beginning of the buffer and stops at the end of the buffer.
         /// </summary>
-        /// <param name="byteData">The byte data saved from a previous MinimumBoundingBox object.</param>
-        public unsafe MinimumBoundingBox(Byte[] byteData)
+        /// <param name="byteData">The byte data saved from a previous MinimumBoundingBox object</param>
+        public MinimumBoundingBox(Byte[] byteData)
         {
-            MinimumValues = new List<CoordinateType>();
-            MaximumValues = new List<CoordinateType>();
-
-            Type coordinateType = typeof(CoordinateType);
-            Int32 coordinateSize = Marshal.SizeOf(coordinateType);
-            if (!(byteData.Length > 0 && byteData.Length % (coordinateSize * 2) == 0))
-                throw new InvalidMinimumBoundingBoxDataException();
-            IntPtr coordinateBuffer = Marshal.AllocHGlobal(coordinateSize);
-            for (Int32 i = 0; i < byteData.Length; i += coordinateSize)
-            {
-                Marshal.Copy(byteData, i, coordinateBuffer, coordinateSize);
-                Marshal.PtrToStructure(coordinateBuffer, coordinateType);
-                i += coordinateSize;
-                Marshal.Copy(byteData, i, coordinateBuffer, coordinateSize);
-                Marshal.PtrToStructure(coordinateBuffer, coordinateType);
-            }
-            Marshal.FreeHGlobal(coordinateBuffer);
-            Dimension = MinimumValues.Count;
+            Reconstruct(byteData, 0, byteData.Length);
+        }
+        /// <summary>
+        /// This constructor provides a means of reconstructing a MinimumBoundingBox
+        /// object that has been saved using the <see cref="MinimumBoundingBox&lt;CoordinateType&gt;.GetBytes"/>
+        /// method from the <see cref="ISavable"/> interface.  This constructor begins reading bytes at the
+        /// specified offset value and stops at the end of the buffer.
+        /// </summary>
+        /// <param name="byteData">The byte data saved from a previous MinimumBoundingBox object</param>
+        /// <param name="offset">The start index in the buffer</param>
+        public MinimumBoundingBox(Byte[] byteData, Int32 offset)
+        {
+            Reconstruct(byteData, offset, byteData.Length);
+        }
+        /// <summary>
+        /// This constructor provides a means of reconstructing a MinimumBoundingBox
+        /// object that has been saved using the <see cref="MinimumBoundingBox&lt;CoordinateType&gt;.GetBytes"/>
+        /// method from the <see cref="ISavable"/> interface.  This constructor begins reading bytes at the
+        /// specified offset value and stops when it reaches the end address.  The byte indexed by the end
+        /// address is not considered part of the MinimumBoundingBox saved data.
+        /// </summary>
+        /// <param name="byteData">The byte data saved from a previous MinimumBoundingBox object</param>
+        /// <param name="offset">The start index in the buffer</param>
+        /// <param name="endAddress">One past the last valid index in the buffer</param>
+        public MinimumBoundingBox(Byte[] byteData, Int32 offset, Int32 endAddress)
+        {
+            Reconstruct(byteData, offset, endAddress);
         }
 
-        #endregion Public
 
         #endregion Constructors
         #region ISavable Methods
@@ -168,7 +168,35 @@ namespace R_Tree_Framework.Utility
         {
             return Marshal.SizeOf(typeof(CoordinateType)) * Dimension * 2;
         }
-        
-        #endregion
+        /// <summary>
+        /// This method reconstructs a MinimumBoundingBox object based on saved
+        /// byte data.
+        /// </summary>
+        /// <param name="byteData">The Byte[] buffer from which to reconstruct</param>
+        /// <param name="offset">The start index in the buffer</param>
+        /// <param name="endAddress">One past the last valid index in the buffer</param>
+        protected virtual unsafe void Reconstruct(Byte[] byteData, Int32 offset, Int32 endAddress)
+        {
+            MinimumValues = new List<CoordinateType>();
+            MaximumValues = new List<CoordinateType>();
+
+            Type coordinateType = typeof(CoordinateType);
+            Int32 coordinateSize = Marshal.SizeOf(coordinateType);
+            if (!((endAddress - offset) > 0 && (endAddress - offset) % (coordinateSize * 2) == 0))
+                throw new InvalidMinimumBoundingBoxDataException();
+            IntPtr coordinateBuffer = Marshal.AllocHGlobal(coordinateSize);
+            for (Int32 i = offset; i < endAddress; i += coordinateSize)
+            {
+                Marshal.Copy(byteData, i, coordinateBuffer, coordinateSize);
+                Marshal.PtrToStructure(coordinateBuffer, coordinateType);
+                i += coordinateSize;
+                Marshal.Copy(byteData, i, coordinateBuffer, coordinateSize);
+                Marshal.PtrToStructure(coordinateBuffer, coordinateType);
+            }
+            Marshal.FreeHGlobal(coordinateBuffer);
+            Dimension = MinimumValues.Count;
+        }
+
+        #endregion ISavable Methods
     }
 }
