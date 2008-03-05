@@ -7,7 +7,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Utility
 {
-    public class Address : RTreeFrameworkObject, ISavable
+    public class Address : UtilityObject, ISavable
     {
         #region Static Members 
 
@@ -15,10 +15,15 @@ namespace R_Tree_Framework.Utility
 
         protected static Int32 nextAddress;
         protected static Boolean initialized = false;
+        protected static Address nullAddress = new Address(0);
 
         #endregion Class Variables
         #region Properties
 
+        public static Address NullAddress
+        {
+            get { return NullAddress; }
+        }
         public static Address NextAddress
         {
             get
@@ -40,10 +45,15 @@ namespace R_Tree_Framework.Utility
 
         public static void InitializeAddress(Int32 seed)
         {
-            nextAddress = seed;
-            if (Initialized)
-                throw new AddressAlreadyInitializedWarning();
-            Initialized = true;
+            if (seed > 0)
+            {
+                nextAddress = seed;
+                if (Initialized)
+                    throw new AddressAlreadyInitializedWarning();
+                Initialized = true;
+            }
+            else
+                throw new InvalidAddressSeedException();
         }
         public static Address ReconstructAddress(Byte[] data)
         {

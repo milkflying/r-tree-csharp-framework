@@ -1,184 +1,252 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Font Name="Segoe UI" Size="9" />
-  <Class Name="R_Tree_Framework.Cache_Manager.AncestralCache" Collapsed="true">
-    <Position X="22.25" Y="4.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Deletion">
+    <Position X="30.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Cache Manager\AncestralCache.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Cache_Manager.HierarchicalCache" Collapsed="true">
-    <Position X="22.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Cache Manager\HierarchicalCache.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Cache_Manager.LRUCache" Collapsed="true">
-    <Position X="29" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Cache Manager\LRUCache.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Deletion" Collapsed="true">
-    <Position X="22.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
       <FileName>Work Plan\Deletion.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Insertion" Collapsed="true">
-    <Position X="29.5" Y="3.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Insertion">
+    <Position X="32.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Insertion.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Search" Collapsed="true">
-    <Position X="24.5" Y="4.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Search">
+    <Position X="34.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Search.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Update" Collapsed="true">
-    <Position X="35" Y="4.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Update">
+    <Position X="37" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Update.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.WorkPlan" Collapsed="true">
-    <Position X="24.5" Y="1.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.WorkPlan">
+    <Position X="39.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\WorkPlan.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkObject" Collapsed="true">
-    <Position X="19.75" Y="0.5" Width="2" />
+  <Class Name="R_Tree_Framework.Work_Plan.WorkPlanObject">
+    <Position X="34.75" Y="2" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Work Plan\WorkPlanObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.AncestralCache">
+    <Position X="7.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache Manager\AncestralCache.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.CacheManagerObject">
+    <Position X="9.75" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache Manager\CacheManagerObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.HierarchicalCache">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache Manager\HierarchicalCache.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.LRUCache">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache Manager\LRUCache.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkObject">
+    <Position X="27.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Framework\RTreeFrameworkObject.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="R_Tree_Framework.Index.InteriorNode" Collapsed="true">
-    <Position X="24.5" Y="3.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.Index">
+    <Position X="24.5" Y="3.75" Width="2.25" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAKAAAAAAoAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Index.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.IndexObject">
+    <Position X="19.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\IndexObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.InteriorNode&lt;CoordinateType&gt;">
+    <Position X="14.5" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAIACAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\InteriorNode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Index.InteriorNodeEntry" Collapsed="true">
-    <Position X="31.75" Y="3.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.InteriorNodeEntry&lt;CoordinateType&gt;">
+    <Position X="21" Y="7" Width="2.75" />
     <TypeIdentifier>
+      <HashCode>AACAAAAAAAQAAgCEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\InteriorNodeEntry.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="R_Tree_Framework.Index.LeafNode" Collapsed="true">
-    <Position X="36.25" Y="3.25" Width="1.5" />
+    <Position X="58" Y="0.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\LeafNode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Index.LeafNodeEntry" Collapsed="true">
-    <Position X="26.75" Y="4.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.LeafNodeEntry&lt;CoordinateType&gt;">
+    <Position X="17.75" Y="7" Width="2.5" />
     <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAgCAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>Index\LeafNodeEntry.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.Node&lt;CoordinateType&gt;">
+    <Position X="14.75" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACACAAAAAgAAACAAAAABAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Index\Node.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Query.KNearestNeighborQuery" Collapsed="true">
-    <Position X="26.75" Y="3.25" Width="2" />
+  <Class Name="R_Tree_Framework.Index.NodeEntry&lt;CoordinateType&gt;">
+    <Position X="19.75" Y="3.75" Width="2" />
     <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAACAAEAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\NodeEntry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.SpatialIndex">
+    <Position X="24.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\SpatialIndex.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzerObject">
+    <Position X="27.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Performance Analyzer\PerformanceAnalyzerObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Query.KNearestNeighborQuery">
+    <Position X="5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Query\KNearestNeighborQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Query.RangeQuery" Collapsed="true">
-    <Position X="29" Y="4.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Query.QueryObject">
+    <Position X="3" Y="2" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\QueryObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Query.RangeQuery">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Query\RangeQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Query.WindowQuery" Collapsed="true">
-    <Position X="31.25" Y="1.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Query.WindowQuery">
+    <Position X="2.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Query\WindowQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Utility.Address" Collapsed="true">
-    <Position X="35.75" Y="1.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Utility.Address">
+    <Position X="54.5" Y="3.75" Width="2.5" />
     <TypeIdentifier>
-      <FileName>Utility\Address.cs</FileName>
       <HashCode>AAGAEAAAgBAAAACACAAABAAAAAAAAAAAAAAABAABAAA=</HashCode>
+      <FileName>Utility\Address.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Utility.IndexUnit" Collapsed="true">
-    <Position X="34" Y="3.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Utility.IndexUnit">
+    <Position X="41.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\IndexUnit.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;" Collapsed="true">
-    <Position X="31.25" Y="4.75" Width="3" />
+  <Class Name="R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;">
+    <Position X="43.75" Y="3.75" Width="3" />
     <TypeIdentifier>
-      <FileName>Utility\MinimumBoundingBox.cs</FileName>
       <HashCode>AACAAAAAAAgAAgCICAAAIABAAAAAQAAAAAAAAABAAAA=</HashCode>
+      <FileName>Utility\MinimumBoundingBox.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Utility.Page" Collapsed="true">
-    <Position X="22.25" Y="6.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Utility.Page">
+    <Position X="47.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\Page.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Utility.Pair&lt;T1, T2&gt;" Collapsed="true">
-    <Position X="26.75" Y="1.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Utility.Pair&lt;T1, T2&gt;">
+    <Position X="49.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Utility\Pair.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAA=</HashCode>
+      <FileName>Utility\Pair.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="R_Tree_Framework.Utility.Record" Collapsed="true">
-    <Position X="33.5" Y="1.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Utility.Record">
+    <Position X="52" Y="3.75" Width="1.75" />
     <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAACAAAAAAAAAAAAAABCAAAAQAAAAAAA=</HashCode>
       <FileName>Utility\Record.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Utility.Sector" Collapsed="true">
-    <Position X="22.25" Y="7.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Utility.Sector">
+    <Position X="47.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Utility\Sector.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Sector.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="R_Tree_Framework.Utility.UtilityObject">
+    <Position X="48.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\UtilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

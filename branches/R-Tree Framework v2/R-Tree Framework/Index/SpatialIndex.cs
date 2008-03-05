@@ -4,7 +4,7 @@ using System.Text;
 
 namespace R_Tree_Framework.Index
 {
-    public interface SpatialIndex : Index
+    public abstract class SpatialIndex<CoordinateType> : R_Tree_Framework.Index.Index<CoordinateType> where CoordinateType : struct, IComparable
     {
     }
 }
