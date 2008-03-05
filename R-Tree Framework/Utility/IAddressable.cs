@@ -11,9 +11,9 @@ namespace R_Tree_Framework.Utility
     /// </summary>
     public interface IAddressable : RTreeFramework_Interface
     {
-        /*Address MemoryAddress
+        Address MemoryAddress
         {
             get;
-        }*/
+        }
     }
 }

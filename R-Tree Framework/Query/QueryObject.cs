@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using R_Tree_Framework.Framework;
 
-namespace R_Tree_Framework.Utility
+namespace R_Tree_Framework.Query
 {
-    public class Page : UtilityObject//, IAddressable, ISavable
+    public abstract class QueryObject : RTreeFrameworkObject
     {
     }
 }

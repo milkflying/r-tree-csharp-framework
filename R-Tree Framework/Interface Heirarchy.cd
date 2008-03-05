@@ -1,109 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Font Name="Segoe UI" Size="9" />
-  <Interface Name="R_Tree_Framework.Cache_Manager.CacheManager" Collapsed="true">
-    <Position X="3.5" Y="11.75" Width="1.75" />
+  <Interface Name="R_Tree_Framework.Cache_Manager.CacheManager">
+    <Position X="6.75" Y="3.75" Width="1.75" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Cache Manager\CacheManager.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="R_Tree_Framework.Work_Plan.DatabaseOperation" Collapsed="true">
-    <Position X="6" Y="11.75" Width="1.75" />
+  <Interface Name="R_Tree_Framework.Work_Plan.DatabaseOperation">
+    <Position X="14.25" Y="3.75" Width="1.75" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\DatabaseOperation.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="R_Tree_Framework.Work_Plan.Modification" Collapsed="true">
-    <Position X="6.25" Y="13.25" Width="1.5" />
+  <Interface Name="R_Tree_Framework.Work_Plan.Modification">
+    <Position X="14.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Modification.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Framework.RTreeFramework_Interface">
+    <Position X="9.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.Index" Collapsed="true">
-    <Position X="15.5" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Index\Index.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.Node" Collapsed="true">
-    <Position X="11" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Index\Node.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.NodeEntry" Collapsed="true">
-    <Position X="13.25" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Index\NodeEntry.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.SpatialIndex" Collapsed="true">
-    <Position X="15.5" Y="14.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Index\SpatialIndex.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzer" Collapsed="true">
-    <Position X="8.5" Y="11.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Performance Analyzer\PerformanceAnalyzer.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.ProximityQuery" Collapsed="true">
-    <Position X="20" Y="14.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Query\ProximityQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.Query" Collapsed="true">
-    <Position X="18.75" Y="11.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Query\Query.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.RegionQuery" Collapsed="true">
-    <Position X="17.75" Y="14.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Query\RegionQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.SpatialQuery" Collapsed="true">
-    <Position X="19" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Query\SpatialQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Utility.IAddressable" Collapsed="true">
-    <Position X="13.25" Y="11.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Utility\IAddressable.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Utility.ISavable" Collapsed="true">
-    <Position X="22.25" Y="11.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Utility\ISavable.cs</FileName>
-      <HashCode>AACAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Framework.RTreeFramework_Interface" Collapsed="true">
-    <Position X="12.75" Y="10.5" Width="2" />
-    <TypeIdentifier>
       <FileName>Framework\RTreeFrameworkInterface.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzer">
+    <Position X="11.75" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Performance Analyzer\PerformanceAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.ProximityQuery">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\ProximityQuery.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.Query">
+    <Position X="3.25" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\Query.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.RegionQuery">
+    <Position X="2.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\RegionQuery.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.SpatialQuery">
+    <Position X="3.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\SpatialQuery.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Utility.IAddressable">
+    <Position X="16.75" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\IAddressable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Utility.ISavable">
+    <Position X="9.25" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ISavable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

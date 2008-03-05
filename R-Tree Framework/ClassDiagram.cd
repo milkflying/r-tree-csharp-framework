@@ -1,394 +1,469 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Font Name="Segoe UI" Size="9" />
-  <Class Name="R_Tree_Framework.Cache_Manager.AncestralCache" Collapsed="true">
-    <Position X="5" Y="17.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Cache_Manager.AncestralCache">
+    <Position X="9.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Cache Manager\AncestralCache.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Cache_Manager.HierarchicalCache" Collapsed="true">
-    <Position X="5" Y="14.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Cache_Manager.CacheManagerObject">
+    <Position X="11.75" Y="2" Width="1.75" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache Manager\CacheManagerObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Cache_Manager.HierarchicalCache">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Cache Manager\HierarchicalCache.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Cache_Manager.LRUCache" Collapsed="true">
-    <Position X="11.75" Y="14.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Cache_Manager.LRUCache">
+    <Position X="14.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Cache Manager\LRUCache.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Deletion" Collapsed="true">
-    <Position X="5" Y="15.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Deletion">
+    <Position X="23.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Deletion.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Insertion" Collapsed="true">
-    <Position X="12.25" Y="15.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Insertion">
+    <Position X="25.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Insertion.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Search" Collapsed="true">
-    <Position X="7.25" Y="17.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Search">
+    <Position X="16.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Search.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.Update" Collapsed="true">
-    <Position X="17.75" Y="17.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.Update">
+    <Position X="18.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\Update.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Work_Plan.WorkPlan" Collapsed="true">
-    <Position X="7.25" Y="14.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Work_Plan.WorkPlan">
+    <Position X="21" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Work Plan\WorkPlan.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkObject" Collapsed="true">
-    <Position X="2.5" Y="13" Width="2" />
+  <Class Name="R_Tree_Framework.Work_Plan.WorkPlanObject">
+    <Position X="21" Y="2" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Work Plan\WorkPlanObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.CacheManagerException">
+    <Position X="38" Y="12.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\CacheManagerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.IndexException">
+    <Position X="48" Y="12.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\IndexException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.PerformanceAnalyzerException">
+    <Position X="57.5" Y="12.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\PerformanceAnalyzerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.QueryException">
+    <Position X="8.25" Y="12.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\QueryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.UtilityException">
+    <Position X="21.5" Y="12.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\UtilityException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Exceptions.WorkPlanException">
+    <Position X="34.75" Y="12.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\WorkPlanException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkException">
+    <Position X="33" Y="10.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\RTreeFrameworkException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkObject">
+    <Position X="29.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Framework\RTreeFrameworkObject.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="R_Tree_Framework.Index.InteriorNode" Collapsed="true">
-    <Position X="7.25" Y="15.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.Exceptions.InteriorNodeException">
+    <Position X="50.5" Y="16.5" Width="2.75" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Exceptions\InteriorNodeException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.Exceptions.LeafNodeException">
+    <Position X="54" Y="16.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Exceptions\LeafNodeException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.Exceptions.NodeEntryAlreadyAddedException">
+    <Position X="41.75" Y="16.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Exceptions\NodeEntryAlreadyAddedException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.Exceptions.NodeEntryAlreadyRemovedException">
+    <Position X="46" Y="16.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Exceptions\NodeEntryAlreadyRemovedException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.Exceptions.NodeException">
+    <Position X="48" Y="14.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Exceptions\NodeException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.Index">
+    <Position X="37.75" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAKAAAAAAoAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\Index.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.IndexObject">
+    <Position X="33" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Index\IndexObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Index.InteriorNode&lt;CoordinateType&gt;">
+    <Position X="27.75" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAIACAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\InteriorNode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Index.InteriorNodeEntry" Collapsed="true">
-    <Position X="14.5" Y="15.75" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.InteriorNodeEntry&lt;CoordinateType&gt;">
+    <Position X="34.25" Y="7" Width="2.75" />
     <TypeIdentifier>
+      <HashCode>AACAAAAAAAQAAgCEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\InteriorNodeEntry.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="R_Tree_Framework.Index.LeafNode" Collapsed="true">
-    <Position X="19" Y="15.75" Width="1.5" />
+    <Position X="61.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\LeafNode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="R_Tree_Framework.Index.LeafNodeEntry" Collapsed="true">
-    <Position X="9.5" Y="17.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.LeafNodeEntry&lt;CoordinateType&gt;">
+    <Position X="31" Y="7" Width="2.5" />
     <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAgCAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>Index\LeafNodeEntry.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Query.KNearestNeighborQuery" Collapsed="true">
-    <Position X="9.5" Y="15.75" Width="2" />
-    <TypeIdentifier>
-      <FileName>Query\KNearestNeighborQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Query.RangeQuery" Collapsed="true">
-    <Position X="11.75" Y="17.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Query\RangeQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Query.WindowQuery" Collapsed="true">
-    <Position X="14" Y="14.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Query\WindowQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Address" Collapsed="true">
-    <Position X="18.5" Y="14.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Address.cs</FileName>
-      <HashCode>AAGAEAAAgBAAAACACAAABAAAAAAAAAAAAAAABAABAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.IndexUnit" Collapsed="true">
-    <Position X="16.75" Y="15.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Utility\IndexUnit.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;" Collapsed="true">
-    <Position X="14" Y="17.25" Width="3" />
-    <TypeIdentifier>
-      <FileName>Utility\MinimumBoundingBox.cs</FileName>
-      <HashCode>AACAAAAAAAgAAgCICAAAIABAAAAAQAAAAAAAAABAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Page" Collapsed="true">
-    <Position X="5" Y="18.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Page.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Pair&lt;T1, T2&gt;" Collapsed="true">
-    <Position X="9.5" Y="14.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Pair.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="R_Tree_Framework.Utility.Record" Collapsed="true">
-    <Position X="16.25" Y="14.25" Width="1.5" />
+  <Class Name="R_Tree_Framework.Index.Node&lt;CoordinateType&gt;">
+    <Position X="28" Y="3.75" Width="1.75" />
     <TypeIdentifier>
-      <FileName>Utility\Record.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Sector" Collapsed="true">
-    <Position X="5" Y="20.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Sector.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Exceptions.CacheManagerException" Collapsed="true">
-    <Position X="5.5" Y="9.75" Width="2" />
-    <TypeIdentifier>
-      <FileName>Exceptions\CacheManagerException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Exceptions.IndexException" Collapsed="true">
-    <Position X="8.25" Y="9.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Exceptions\IndexException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Exceptions.PerformanceAnalyzerException" Collapsed="true">
-    <Position X="10.75" Y="9.75" Width="2.5" />
-    <TypeIdentifier>
-      <FileName>Exceptions\PerformanceAnalyzerException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Exceptions.QueryException" Collapsed="true">
-    <Position X="14" Y="9.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Exceptions\QueryException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Exceptions.UtilityException" Collapsed="true">
-    <Position X="25.75" Y="9.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Exceptions\UtilityException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Exceptions.WorkPlanException" Collapsed="true">
-    <Position X="3" Y="9.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Exceptions\WorkPlanException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Framework.RTreeFrameworkException" Collapsed="true">
-    <Position X="18.75" Y="8.25" Width="2" />
-    <TypeIdentifier>
-      <FileName>Framework\RTreeFrameworkException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressAlreadyInitializedWarning" Collapsed="true">
-    <Position X="30.75" Y="12.5" Width="2.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\AddressAlreadyInitializedWarning.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressException" Collapsed="true">
-    <Position X="33" Y="11.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\AddressException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressNotInitializedException" Collapsed="true">
-    <Position X="34" Y="12.5" Width="2.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\AddressNotInitializedException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.IncompatibleDimensionsException" Collapsed="true">
-    <Position X="16.5" Y="12.5" Width="2.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\IncompatibleDimensionsException.cs</FileName>
-      <HashCode>AAAAAABAQAAAAEAAAAAAAAIAAAAAAAAAAAAAEAAABAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidDimensionException" Collapsed="true">
-    <Position X="19.75" Y="12.5" Width="2.25" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\InvalidDimensionException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAEAAEABAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidMinimumBoundingBoxDataException" Collapsed="true">
-    <Position X="22.75" Y="12.5" Width="3.25" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\InvalidMinimumBoundingBoxDataException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidRectangleException&lt;CoordinateType&gt;" Collapsed="true">
-    <Position X="26.75" Y="12.5" Width="3.25" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\InvalidRectangleException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAQAAAAEBAAAJAQAAAQAAAAAAAACAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="R_Tree_Framework.Utility.Exceptions.MinimumBoundingBoxException" Collapsed="true">
-    <Position X="22" Y="11.25" Width="2.5" />
-    <TypeIdentifier>
-      <FileName>Utility\Exceptions\MinimumBoundingBoxException.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Interface Name="R_Tree_Framework.Cache_Manager.CacheManager" Collapsed="true">
-    <Position X="22" Y="15.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Cache Manager\CacheManager.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Work_Plan.DatabaseOperation" Collapsed="true">
-    <Position X="24.5" Y="15.75" Width="1.75" />
-    <TypeIdentifier>
-      <FileName>Work Plan\DatabaseOperation.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Work_Plan.Modification" Collapsed="true">
-    <Position X="24.75" Y="17.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Work Plan\Modification.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.Index" Collapsed="true">
-    <Position X="34" Y="17.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Index\Index.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.Node" Collapsed="true">
-    <Position X="29.5" Y="17.25" Width="1.5" />
-    <TypeIdentifier>
+      <HashCode>AACACAAAAAgAAACAAAAABAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Index\Node.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.NodeEntry" Collapsed="true">
-    <Position X="31.75" Y="17.25" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.NodeEntry&lt;CoordinateType&gt;">
+    <Position X="33" Y="3.75" Width="2" />
     <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAACAAEAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Index\NodeEntry.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Index.SpatialIndex" Collapsed="true">
-    <Position X="34" Y="18.75" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Index.SpatialIndex">
+    <Position X="38" Y="6.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\SpatialIndex.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzerObject">
+    <Position X="40.75" Y="2" Width="2" />
+    <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Performance Analyzer\PerformanceAnalyzerObject.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzer" Collapsed="true">
-    <Position X="27" Y="15.75" Width="1.75" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.KNearestNeighborQuery">
+    <Position X="7" Y="3.75" Width="2" />
     <TypeIdentifier>
-      <FileName>Performance Analyzer\PerformanceAnalyzer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\KNearestNeighborQuery.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.ProximityQuery" Collapsed="true">
-    <Position X="38.5" Y="18.75" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.QueryObject">
+    <Position X="5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Query\ProximityQuery.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\QueryObject.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.Query" Collapsed="true">
-    <Position X="37.25" Y="15.75" Width="1.75" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.RangeQuery">
+    <Position X="2.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Query\Query.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\RangeQuery.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.RegionQuery" Collapsed="true">
-    <Position X="36.25" Y="18.75" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Query.WindowQuery">
+    <Position X="4.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Query\RegionQuery.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\WindowQuery.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Query.SpatialQuery" Collapsed="true">
-    <Position X="37.5" Y="17.25" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Address">
+    <Position X="56.5" Y="3.75" Width="2.5" />
     <TypeIdentifier>
-      <FileName>Query\SpatialQuery.cs</FileName>
+      <HashCode>AAGAEAAAgBAAAACACAAABAAAAAAAAAAAAAAABAABAAA=</HashCode>
+      <FileName>Utility\Address.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.IndexUnit">
+    <Position X="43.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\IndexUnit.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="R_Tree_Framework.Utility.IAddressable" Collapsed="true">
-    <Position X="31.75" Y="15.75" Width="1.75" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;">
+    <Position X="45.75" Y="3.75" Width="3" />
     <TypeIdentifier>
-      <FileName>Utility\IAddressable.cs</FileName>
+      <HashCode>AACAAAAAAAgAAgCICAAAIABAAAAAQAAAAAAAAABAAAA=</HashCode>
+      <FileName>Utility\MinimumBoundingBox.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Page">
+    <Position X="49.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Page.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Pair&lt;T1, T2&gt;">
+    <Position X="51.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAA=</HashCode>
+      <FileName>Utility\Pair.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Record">
+    <Position X="54" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAACAAAAAAAAAAAAAABCAAAAQAAAAAAA=</HashCode>
+      <FileName>Utility\Record.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Sector">
+    <Position X="49.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Sector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.UtilityObject">
+    <Position X="50.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\UtilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressAlreadyInitializedWarning">
+    <Position X="11.5" Y="16.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Exceptions\AddressAlreadyInitializedWarning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressException">
+    <Position X="13" Y="14.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Exceptions\AddressException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.AddressNotInitializedException">
+    <Position X="14.75" Y="16.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Exceptions\AddressNotInitializedException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.IncompatibleDimensionsException">
+    <Position X="18" Y="16.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAQAAAAEAAAAAAAAIAAAAAAAAAAAAAEAAABAA=</HashCode>
+      <FileName>Utility\Exceptions\IncompatibleDimensionsException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidDimensionException">
+    <Position X="22.25" Y="16.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAEAAEABAAAA=</HashCode>
+      <FileName>Utility\Exceptions\InvalidDimensionException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidMinimumBoundingBoxDataException">
+    <Position X="26" Y="16.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Exceptions\InvalidMinimumBoundingBoxDataException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.InvalidRectangleException&lt;CoordinateType&gt;">
+    <Position X="30.75" Y="16.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAEBAAAJAQAAAQAAAAAAAACAAAAA=</HashCode>
+      <FileName>Utility\Exceptions\InvalidRectangleException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Utility.Exceptions.MinimumBoundingBoxException">
+    <Position X="24.25" Y="14.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Exceptions\MinimumBoundingBoxException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="R_Tree_Framework.Cache_Manager.CacheManager">
+    <Position X="5" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache Manager\CacheManager.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="R_Tree_Framework.Utility.ISavable" Collapsed="true">
-    <Position X="40.75" Y="15.75" Width="1.75" />
+  <Interface Name="R_Tree_Framework.Work_Plan.DatabaseOperation">
+    <Position X="12.5" Y="7" Width="1.75" />
     <TypeIdentifier>
-      <FileName>Utility\ISavable.cs</FileName>
-      <HashCode>AACAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Work Plan\DatabaseOperation.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="R_Tree_Framework.Framework.RTreeFramework_Interface" Collapsed="true">
-    <Position X="31.25" Y="14.5" Width="2" />
+  <Interface Name="R_Tree_Framework.Work_Plan.Modification">
+    <Position X="12.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Work Plan\Modification.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Framework.RTreeFramework_Interface">
+    <Position X="7.5" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Framework\RTreeFrameworkInterface.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="R_Tree_Framework.Performance_Analyzer.PerformanceAnalyzer">
+    <Position X="10" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Performance Analyzer\PerformanceAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.ProximityQuery">
+    <Position X="2.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\ProximityQuery.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.Query">
+    <Position X="1.5" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\Query.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.RegionQuery">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\RegionQuery.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Query.SpatialQuery">
+    <Position X="1.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\SpatialQuery.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Utility.IAddressable">
+    <Position X="15" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\IAddressable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="R_Tree_Framework.Utility.ISavable">
+    <Position X="7.5" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ISavable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

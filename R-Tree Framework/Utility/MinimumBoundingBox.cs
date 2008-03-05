@@ -12,12 +12,12 @@ namespace R_Tree_Framework.Utility
     /// of a spatial object.  For each dimension of the rectangle, a minimum value and a maximum value
     /// are stored.  Objects returned from this class that are modified will not affect the original
     /// object.  For example, changes made to the list returned from the 
-    /// <see cref=" R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;.MinimumValues"/> property will not alter the minimum values
+    /// <see cref="R_Tree_Framework.Utility.MinimumBoundingBox&lt;CoordinateType&gt;.MinimumValues"/> property will not alter the minimum values
     /// stored within the MinimumBoundingBox object.  Alterations to the bounding box are not
     /// allowed after construction.
     /// </summary>
     /// <typeparam name="CoordinateType"></typeparam>
-    public class MinimumBoundingBox<CoordinateType> : RTreeFrameworkObject, ISavable where CoordinateType : struct, IComparable
+    public class MinimumBoundingBox<CoordinateType> : UtilityObject, ISavable where CoordinateType : struct, IComparable
     {
         #region Instance Variables
 
@@ -195,6 +195,11 @@ namespace R_Tree_Framework.Utility
             }
             Marshal.FreeHGlobal(coordinateBuffer);
             Dimension = MinimumValues.Count;
+        }
+
+        public static unsafe Int32 GetSize(Int32 dimension)
+        {
+            return Marshal.SizeOf(typeof(CoordinateType)) * dimension * 2;
         }
 
         #endregion ISavable Methods

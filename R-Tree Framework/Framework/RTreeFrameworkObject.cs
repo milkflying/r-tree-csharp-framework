@@ -4,7 +4,7 @@ using System.Text;
 
 namespace R_Tree_Framework.Framework
 {
-    public class RTreeFrameworkObject
+    public abstract class RTreeFrameworkObject
     {
     }
 }
