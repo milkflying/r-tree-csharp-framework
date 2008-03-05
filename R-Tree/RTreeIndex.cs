@@ -5,7 +5,7 @@ using R_Tree_Framework.Index;
 
 namespace R_Tree
 {
-    public class RTreeIndex : SpatialIndex
+    public class RTreeIndex<CoordinateType> : SpatialIndex<CoordinateType>
     {
 
     }
