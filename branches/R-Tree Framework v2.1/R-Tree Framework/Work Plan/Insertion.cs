@@ -5,7 +5,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Work_Plan
 {
-    public class Insertion : WorkPlanObject, Modification
+    public class Insertion : Modification
     {
     }
 }
