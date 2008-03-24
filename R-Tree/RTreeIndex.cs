@@ -8,7 +8,7 @@ using R_Tree_Framework.Utility;
 
 namespace R_Tree
 {
-    public class RTreeIndex<CoordinateType> : SpatialIndex<CoordinateType> where CoordinateType : struct, IComparable
+    public class RTreeIndex : SpatialIndex
     {
         protected Int32 maxEntriesPerInteriorNode, maxEntriesPerLeafNode, minEntriesPerInteriorNode, minEntriesPerLeafNode;
 
@@ -36,8 +36,8 @@ namespace R_Tree
         public RTreeIndex(Int32 dimension, Int32 pageSize, Double minPercentOfMaxInteriorNodeEntries, Double minPercentOfMaxLeafNodeEntries)
             : base(dimension, pageSize)
         {
-            MaxEntriesPerInteriorNode = PageSize / InteriorNodeEntry<CoordinateType>.GetSize(Dimension);
-            MaxEntriesPerLeafNode = PageSize / LeafNodeEntry<CoordinateType>.GetSize(Dimension);
+            MaxEntriesPerInteriorNode = PageSize / InteriorNodeEntry.GetSize(Dimension);
+            MaxEntriesPerLeafNode = PageSize / LeafNodeEntry.GetSize(Dimension);
             MinEntriesPerInteriorNode = Convert.ToInt32(MaxEntriesPerInteriorNode * minPercentOfMaxInteriorNodeEntries + .5);
             MinEntriesPerLeafNode = Convert.ToInt32(MaxEntriesPerLeafNode * minPercentOfMaxLeafNodeEntries + .5);
         }
@@ -59,19 +59,19 @@ namespace R_Tree
             else
                 throw new QueryTypeNotSupportedException();
         }
-        protected virtual List<Int32> Search(RegionQuery query, Node<CoordinateType> rootOfTree)
+        protected virtual List<Int32> Search(RegionQuery query, Node rootOfTree)
         {
             List<Int32> results = new List<Int32>();
-            foreach(NodeEntry<CoordinateType> nodeEntry in rootOfTree.NodeEntries)
+            foreach(NodeEntry nodeEntry in rootOfTree.NodeEntries)
                 if(Overlaps(query, nodeEntry.MinimumBoundingBox))
-                    if(rootOfTree is LeafNode<CoordinateType>)
-                        results.Add((nodeEntry as LeafNodeEntry<CoordinateType>).RecordID);
+                    if(rootOfTree is LeafNode)
+                        results.Add((nodeEntry as LeafNodeEntry).RecordID);
                     else
-                        results.AddRange(Search(query, CacheManager.LookUpNode((nodeEntry as InteriorNodeEntry<CoordinateType>).ChildNode)));
+                        results.AddRange(Search(query, CacheManager.LookUpNode((nodeEntry as InteriorNodeEntry).ChildNode)));
             return results;
         }
 
-        protected virtual Boolean Overlaps(RegionQuery query, MinimumBoundingBox<CoordinateType> boundingBox)
+        protected virtual Boolean Overlaps(RegionQuery query, MinimumBoundingBox boundingBox)
         {
             if (query is WindowQuery)
                 return Overlaps(query as WindowQuery, boundingBox);
@@ -81,12 +81,12 @@ namespace R_Tree
                 throw new QueryTypeNotSupportedException();
         }
 
-        protected virtual Boolean Overlaps(WindowQuery query, MinimumBoundingBox<CoordinateType> boundingBox)
+        protected virtual Boolean Overlaps(WindowQuery query, MinimumBoundingBox boundingBox)
         {
             
         }
 
-        protected virtual Boolean Overlaps(RangeQuery query, MinimumBoundingBox<CoordinateType> boundingBox)
+        protected virtual Boolean Overlaps(RangeQuery query, MinimumBoundingBox boundingBox)
         {
         }
 

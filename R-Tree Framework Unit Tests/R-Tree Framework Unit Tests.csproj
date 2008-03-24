@@ -45,7 +45,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache Manager\AncestralCacheUnitTests.cs" />
+    <Compile Include="Cache Manager\CacheManagerUnitTests.cs" />
+    <Compile Include="Cache Manager\CacheManagerObjectUnitTests.cs" />
+    <Compile Include="Cache Manager\HierarchicalCacheUnitTests.cs" />
+    <Compile Include="Cache Manager\LRUCacheUnitTests.cs" />
+    <Compile Include="Framework\RTreeFrameworkExceptionUnitTests.cs" />
+    <Compile Include="Framework\RTreeFrameworkInterfaceUnitTests.cs" />
+    <Compile Include="Framework\RTreeFrameworkObjectUnitTests.cs" />
+    <Compile Include="Index\IndexUnitTests.cs" />
+    <Compile Include="Index\IndexObjectUnitTests.cs" />
+    <Compile Include="Index\InteriorNodeUnitTests.cs" />
+    <Compile Include="Index\InteriorNodeEntryUnitTests.cs" />
+    <Compile Include="Index\LeafNodeUnitTests.cs" />
+    <Compile Include="Index\LeafNodeEntryUnitTests.cs" />
+    <Compile Include="Index\NodeUnitTests.cs" />
+    <Compile Include="Index\NodeEntryUnitTests.cs" />
+    <Compile Include="Index\SpatialIndexUnitTests.cs" />
+    <Compile Include="Performance Analyzer\PerformanceAnalyzerUnitTests.cs" />
+    <Compile Include="Performance Analyzer\PerformanceAnalyzerObjectUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\KNearestNeighborQueryUnitTests.cs" />
+    <Compile Include="Query\QueryUnitTests.cs" />
+    <Compile Include="Query\QueryObjectUnitTests.cs" />
+    <Compile Include="Query\RangeQueryUnitTests.cs" />
+    <Compile Include="Query\RegionQueryUnitTests.cs" />
+    <Compile Include="Query\RelativeQueryUnitTests.cs" />
+    <Compile Include="Query\SpatialQueryUnitTests.cs" />
+    <Compile Include="Query\WindowQueryUnitTests.cs" />
+    <Compile Include="Utility\AddressUnitTests.cs" />
+    <Compile Include="Utility\IAddressableUnitTests.cs" />
+    <Compile Include="Utility\IndexUnitUnitTests.cs" />
+    <Compile Include="Utility\ISavableUnitTests.cs" />
+    <Compile Include="Utility\MinimumBoundingBoxUnitTests.cs" />
+    <Compile Include="Utility\PageUnitTests.cs" />
+    <Compile Include="Utility\PairUnitTests.cs" />
+    <Compile Include="Utility\RecordUnitTests.cs" />
+    <Compile Include="Utility\SectorUnitTests.cs" />
+    <Compile Include="Utility\UtilityObjectUnitTests.cs" />
+    <Compile Include="Work Plan\DatabaseOperationUnitTests.cs" />
+    <Compile Include="Work Plan\DeletionUnitTests.cs" />
+    <Compile Include="Work Plan\InsertionUnitTests.cs" />
+    <Compile Include="Work Plan\ModificationUnitTests.cs" />
+    <Compile Include="Work Plan\SearchUnitTests.cs" />
+    <Compile Include="Work Plan\UpdateUnitTests.cs" />
+    <Compile Include="Work Plan\WorkPlanUnitTests.cs" />
+    <Compile Include="Work Plan\WorkPlanObjectUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\R-Tree Framework\R-Tree Framework.csproj">
