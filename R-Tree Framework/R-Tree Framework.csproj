@@ -1,0 +1,176 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{600ECC17-DBBB-43FD-9723-438C66801881}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>R_Tree_Framework</RootNamespace>
+    <AssemblyName>R-Tree Framework</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\R-Tree Framework.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\R-Tree Framework.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache Manager\AncestralCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cache Manager\CacheManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cache Manager\CacheManagerObject.cs" />
+    <Compile Include="Cache Manager\HierarchicalCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cache Manager\LRUCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Exceptions\CacheManagerException.cs" />
+    <Compile Include="Exceptions\IndexException.cs" />
+    <Compile Include="Exceptions\PerformanceAnalyzerException.cs" />
+    <Compile Include="Exceptions\QueryException.cs" />
+    <Compile Include="Framework\RTreeFrameworkException.cs" />
+    <Compile Include="Exceptions\UtilityException.cs" />
+    <Compile Include="Exceptions\WorkPlanException.cs" />
+    <Compile Include="Framework\RTreeFrameworkInterface.cs" />
+    <Compile Include="Framework\RTreeFrameworkObject.cs" />
+    <Compile Include="Index\Exceptions\InteriorNodeException.cs" />
+    <Compile Include="Index\Exceptions\LeafNodeException.cs" />
+    <Compile Include="Index\Exceptions\NodeEntryAlreadyAddedException.cs" />
+    <Compile Include="Index\Exceptions\NodeEntryAlreadyRemovedException.cs" />
+    <Compile Include="Index\Exceptions\NodeException.cs" />
+    <Compile Include="Index\Exceptions\QueryTypeNotSupportedException.cs" />
+    <Compile Include="Index\Index.cs" />
+    <Compile Include="Index\IndexObject.cs" />
+    <Compile Include="Index\InteriorNode.cs" />
+    <Compile Include="Index\InteriorNodeEntry.cs" />
+    <Compile Include="Index\LeafNode.cs" />
+    <Compile Include="Index\LeafNodeEntry.cs" />
+    <Compile Include="Index\Node.cs" />
+    <Compile Include="Index\NodeEntry.cs" />
+    <Compile Include="Index\SpatialIndex.cs" />
+    <Compile Include="Performance Analyzer\PerformanceAnalyzer.cs" />
+    <Compile Include="Performance Analyzer\PerformanceAnalyzerObject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\KNearestNeighborQuery.cs" />
+    <Compile Include="Query\RelativeQuery.cs" />
+    <Compile Include="Query\Query.cs" />
+    <Compile Include="Query\QueryObject.cs" />
+    <Compile Include="Query\RangeQuery.cs" />
+    <Compile Include="Query\RegionQuery.cs" />
+    <Compile Include="Query\SpatialQuery.cs" />
+    <Compile Include="Query\WindowQuery.cs" />
+    <Compile Include="Utility\Address.cs" />
+    <Compile Include="Utility\Exceptions\InvalidAddressSeedException.cs" />
+    <Compile Include="Utility\IAddressable.cs" />
+    <Compile Include="Utility\Exceptions\AddressAlreadyInitializedWarning.cs" />
+    <Compile Include="Utility\Exceptions\AddressException.cs" />
+    <Compile Include="Utility\Exceptions\AddressNotInitializedException.cs" />
+    <Compile Include="Utility\Exceptions\IncompatibleDimensionsException.cs" />
+    <Compile Include="Utility\Exceptions\InvalidDimensionException.cs" />
+    <Compile Include="Utility\Exceptions\InvalidMinimumBoundingBoxDataException.cs" />
+    <Compile Include="Utility\Exceptions\InvalidRectangleException.cs" />
+    <Compile Include="Utility\Exceptions\MinimumBoundingBoxException.cs" />
+    <Compile Include="Utility\IndexUnit.cs" />
+    <Compile Include="Utility\MinimumBoundingBox.cs" />
+    <Compile Include="Utility\Pair.cs" />
+    <Compile Include="Utility\Record.cs" />
+    <Compile Include="Utility\Page.cs" />
+    <Compile Include="Utility\ISavable.cs" />
+    <Compile Include="Utility\Sector.cs" />
+    <Compile Include="Utility\UtilityObject.cs" />
+    <Compile Include="Work Plan\DatabaseOperation.cs" />
+    <Compile Include="Work Plan\Deletion.cs" />
+    <Compile Include="Work Plan\Insertion.cs" />
+    <Compile Include="Work Plan\Modification.cs" />
+    <Compile Include="Work Plan\Search.cs" />
+    <Compile Include="Work Plan\Update.cs" />
+    <Compile Include="Work Plan\WorkPlan.cs" />
+    <Compile Include="Work Plan\WorkPlanObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PriorityQueue\PriorityQueue.csproj">
+      <Project>{07BB3C7A-13E6-48C5-8791-66C31D17F332}</Project>
+      <Name>PriorityQueue</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Class Heirarchy.cd" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="To Code List.cd" />
+    <None Include="Exceptions Heirarchy.cd" />
+    <None Include="Interface Heirarchy.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

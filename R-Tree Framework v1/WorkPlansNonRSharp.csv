@@ -1,6 +1,0 @@
-Uniform,Small,R_Star_Tree,None,Medium,HardDrive,LRU,Medium
-Uniform,Small,Flash_R_Tree_Extended,Small,Medium,HardDrive,LRU,Medium
-Uniform,Small,Flash_R_Tree,Small,Medium,HardDrive,LRU,Medium
-Real,Small,R_Star_Tree,None,Medium,HardDrive,LRU,Medium
-Real,Small,Flash_R_Tree_Extended,Small,Medium,HardDrive,LRU,Medium
-Real,Small,Flash_R_Tree,Small,Medium,HardDrive,LRU,Medium
