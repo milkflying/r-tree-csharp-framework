@@ -5,7 +5,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Cache_Manager
 {
-    public class LRUCache : CacheManagerObject, CacheManager
+    public class LRUCache<CoordinateType> //: CacheManager<CoordinateType> where CoordinateType : struct, IComparable
     {
     }
 }

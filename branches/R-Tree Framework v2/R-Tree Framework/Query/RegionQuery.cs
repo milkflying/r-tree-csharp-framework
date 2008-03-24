@@ -4,7 +4,11 @@ using System.Text;
 
 namespace R_Tree_Framework.Query
 {
-    public interface RegionQuery : SpatialQuery
+    public abstract class RegionQuery<CoordinateType> : SpatialQuery<CoordinateType> where CoordinateType : struct, IComparable
     {
+        public RegionQuery(List<CoordinateType> queryPoint)
+            : base(queryPoint)
+        {
+        }
     }
 }

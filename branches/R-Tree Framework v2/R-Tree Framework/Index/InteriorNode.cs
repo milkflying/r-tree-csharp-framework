@@ -23,6 +23,10 @@ namespace R_Tree_Framework.Index
             nodeEntries.Remove(nodeEntry);
         }
 
+        public InteriorNode()
+            : base()
+        {
+        }
         public InteriorNode(Byte[] byteData, Int32 dimension) : base()
         {
             Reconstruct(byteData, 0, byteData.Length, dimension);
