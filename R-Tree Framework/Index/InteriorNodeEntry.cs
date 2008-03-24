@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace R_Tree_Framework.Index
 {
-    public class InteriorNodeEntry<CoordinateType> : NodeEntry<CoordinateType> where CoordinateType : struct, IComparable
+    public class InteriorNodeEntry : NodeEntry
     {
         protected Address childNode;
 
@@ -17,7 +17,7 @@ namespace R_Tree_Framework.Index
             protected set { childNode = value; }
         }
 
-        public InteriorNodeEntry(MinimumBoundingBox<CoordinateType> minimumBoundingBox, Address childNode)
+        public InteriorNodeEntry(MinimumBoundingBox minimumBoundingBox, Address childNode)
         {
             MinimumBoundingBox = minimumBoundingBox;
             ChildNode = childNode;
@@ -39,7 +39,7 @@ namespace R_Tree_Framework.Index
         {
             ChildNode = Address.ReconstructAddress(byteData, offset);
             offset += Marshal.SizeOf(ChildNode);
-            MinimumBoundingBox = new MinimumBoundingBox<CoordinateType>(byteData, offset, endAddress);
+            MinimumBoundingBox = new MinimumBoundingBox(byteData, offset, endAddress);
         }
 
         public override Byte[] GetBytes()
@@ -58,7 +58,7 @@ namespace R_Tree_Framework.Index
 
         public static Int32 GetSize(Int32 dimension)
         {
-            return MinimumBoundingBox<CoordinateType>.GetSize(dimension) + Address.NullAddress.GetSize();
+            return MinimumBoundingBox.GetSize(dimension) + Address.NullAddress.GetSize();
         }
     }
 }

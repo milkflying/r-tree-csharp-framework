@@ -7,13 +7,13 @@ using R_Tree_Framework.Query;
 
 namespace R_Tree_Framework.Index
 {
-    public abstract class Index<CoordinateType> : IndexObject where CoordinateType : struct, IComparable
+    public abstract class Index : IndexObject
     {
-        protected Node<CoordinateType> rootNode;
+        protected Node rootNode;
         protected Int32 dimension, pageSize;
-        private CacheManager<CoordinateType> cacheManager;
+        private CacheManager cacheManager;
 
-        protected CacheManager<CoordinateType> CacheManager
+        protected CacheManager CacheManager
         {
             get { return cacheManager; }
             set { cacheManager = value; }
@@ -29,7 +29,7 @@ namespace R_Tree_Framework.Index
             get { return dimension; }
             protected set { dimension = value; }
         }
-        protected Node<CoordinateType> RootNode
+        protected Node RootNode
         {
             get { return rootNode; }
             set { rootNode = value; }
@@ -40,7 +40,7 @@ namespace R_Tree_Framework.Index
         {
             Dimension = dimension;
             PageSize = pageSize;
-            RootNode = new LeafNode<CoordinateType>();
+            RootNode = new LeafNode();
         }
 
         public abstract List<Int32> Search(Query.Query query);
