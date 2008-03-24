@@ -85,9 +85,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="R_Tree_Framework.Index.Index&lt;CoordinateType&gt;">
-    <Position X="2.5" Y="3.75" Width="2.25" />
+    <Position X="2.75" Y="3.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAKAAAAAAoAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAEAAAAAAAAAAAAABAAAAAQAAAAAAAEAAAABA=</HashCode>
       <FileName>Index\Index.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -142,7 +142,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="R_Tree_Framework.Index.SpatialIndex&lt;CoordinateType&gt;">
-    <Position X="2.5" Y="6.5" Width="2.25" />
+    <Position X="2.5" Y="7.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Index\SpatialIndex.cs</FileName>
@@ -156,12 +156,11 @@
     </TypeIdentifier>
   </Class>
   <Class Name="R_Tree_Framework.Query.KNearestNeighborQuery">
-    <Position X="57.75" Y="3.75" Width="2" />
+    <Position X="60" Y="9" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Query\KNearestNeighborQuery.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="R_Tree_Framework.Query.QueryObject">
     <Position X="58" Y="2" Width="1.5" />
@@ -171,20 +170,18 @@
     </TypeIdentifier>
   </Class>
   <Class Name="R_Tree_Framework.Query.RangeQuery">
-    <Position X="60.5" Y="3.75" Width="1.5" />
+    <Position X="57.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Query\RangeQuery.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="R_Tree_Framework.Query.WindowQuery">
-    <Position X="55.5" Y="3.75" Width="1.5" />
+    <Position X="55.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Query\WindowQuery.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="R_Tree_Framework.Utility.Address">
     <Position X="30.5" Y="3.75" Width="2.5" />
@@ -242,6 +239,34 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\UtilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Query.Query">
+    <Position X="58" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\Query.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Query.RegionQuery">
+    <Position X="56.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\RegionQuery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Query.SpatialQuery">
+    <Position X="58" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\SpatialQuery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="R_Tree_Framework.Query.RelativeQuery">
+    <Position X="60.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query\RelativeQuery.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -23,6 +23,10 @@ namespace R_Tree_Framework.Index
             nodeEntries.Remove(nodeEntry);
         }
 
+        public LeafNode()
+            : base()
+        {
+        }
         public LeafNode(Byte[] byteData, Int32 dimension) : base()
         {
             Reconstruct(byteData, 0, byteData.Length, dimension);
