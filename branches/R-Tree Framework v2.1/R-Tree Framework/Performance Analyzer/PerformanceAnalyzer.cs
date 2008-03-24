@@ -5,7 +5,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Performance_Analyzer
 {
-    public interface PerformanceAnalyzer : RTreeFramework_Interface
+    public abstract class PerformanceAnalyzer : PerformanceAnalyzerObject
     {
     }
 }
