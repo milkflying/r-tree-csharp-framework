@@ -7,8 +7,8 @@ using R_Tree_Framework.Utility;
 
 namespace R_Tree_Framework.Cache_Manager
 {
-    public abstract class CacheManager<CoordinateType> : CacheManagerObject where CoordinateType : struct, IComparable
+    public abstract class CacheManager : CacheManagerObject
     {
-        public abstract Node<CoordinateType> LookUpNode(Address memoryAddress);
+        public abstract Node LookUpNode(Address memoryAddress);
     }
 }
