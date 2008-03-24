@@ -5,7 +5,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Query
 {
-    public class WindowQuery<CoordinateType> : RegionQuery<CoordinateType> where CoordinateType : struct, IComparable
+    public class WindowQuery : RegionQuery
     {
     }
 }

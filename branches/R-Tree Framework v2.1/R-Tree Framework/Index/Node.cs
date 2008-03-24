@@ -8,14 +8,14 @@ namespace R_Tree_Framework.Index
 {
     public enum NodeType : byte {InteriorNodeType = 0, LeafNodeType = 1}
 
-    public abstract class Node<CoordinateType> : IndexObject, IAddressable, ISavable where CoordinateType : struct, IComparable
+    public abstract class Node : IndexObject, IAddressable, ISavable
     {
-        protected List<NodeEntry<CoordinateType>> nodeEntries;
+        protected List<NodeEntry> nodeEntries;
         protected Address memoryAddress;
 
-        public virtual List<NodeEntry<CoordinateType>> NodeEntries
+        public virtual List<NodeEntry> NodeEntries
         {
-            get { return new List<NodeEntry<CoordinateType>>(nodeEntries); }
+            get { return new List<NodeEntry>(nodeEntries); }
             protected set { nodeEntries = value; }
         }
         public virtual Address MemoryAddress
@@ -30,7 +30,7 @@ namespace R_Tree_Framework.Index
 
         public Node()
         {
-            NodeEntries = new List<NodeEntry<CoordinateType>>();
+            NodeEntries = new List<NodeEntry>();
             MemoryAddress = Address.NextAddress;
         }
         public abstract Byte[] GetBytes();
@@ -45,7 +45,7 @@ namespace R_Tree_Framework.Index
             index += MemoryAddress.GetSize();
             BitConverter.GetBytes(NodeCount).CopyTo(data, index);
             index += Marshal.SizeOf(NodeCount.GetType());
-            foreach (NodeEntry<CoordinateType> nodeEntry in NodeEntries)
+            foreach (NodeEntry nodeEntry in NodeEntries)
             {
                 nodeEntry.GetBytes().CopyTo(data, index);
                 index += nodeEntry.GetSize();

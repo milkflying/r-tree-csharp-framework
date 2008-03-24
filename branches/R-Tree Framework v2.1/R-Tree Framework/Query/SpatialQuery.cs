@@ -5,11 +5,11 @@ using R_Tree_Framework.Utility;
 
 namespace R_Tree_Framework.Query
 {
-    public abstract class SpatialQuery<CoordinateType> : Query where CoordinateType : struct, IComparable
+    public abstract class SpatialQuery : Query
     {
-        protected List<CoordinateType> queryPoint;
+        protected List<Single> queryPoint;
 
-        public virtual List<CoordinateType> QueryPoint
+        public virtual List<Single> QueryPoint
         {
             get { return queryPoint; }
             protected set { queryPoint = value; }
@@ -19,9 +19,10 @@ namespace R_Tree_Framework.Query
             get { return QueryPoint.Count; }
         }
 
-        public SpatialQuery(List<CoordinateType> queryPoint)
+        public SpatialQuery(List<Single> queryPoint)
+            :base()
         {
-            QueryPoint = new List<CoordinateType>(queryPoint);
+            QueryPoint = new List<Single>(queryPoint);
         }
     }
 }

@@ -8,15 +8,15 @@ using R_Tree_Framework.Utility;
 
 namespace R_Tree_Framework.Index
 {
-    public class InteriorNode<CoordinateType> : Node<CoordinateType> where CoordinateType : struct, IComparable
+    public class InteriorNode : Node
     {
-        public virtual void AddNodeEntry(InteriorNodeEntry<CoordinateType> nodeEntry)
+        public virtual void AddNodeEntry(InteriorNodeEntry nodeEntry)
         {
             if (nodeEntries.Contains(nodeEntry))
                 throw new NodeEntryAlreadyAddedException();
             nodeEntries.Add(nodeEntry);
         }
-        public virtual void RemoveNodeEntry(InteriorNodeEntry<CoordinateType> nodeEntry)
+        public virtual void RemoveNodeEntry(InteriorNodeEntry nodeEntry)
         {
             if (!nodeEntries.Contains(nodeEntry))
                 throw new NodeEntryAlreadyRemovedException();
@@ -44,10 +44,10 @@ namespace R_Tree_Framework.Index
         {
             MemoryAddress = Address.ReconstructAddress(byteData, offset);
             offset += MemoryAddress.GetSize();
-            Int32 count = BitConverter.ToInt32(byteData, offset), nodeEntrySize = InteriorNodeEntry<CoordinateType>.GetSize(dimension);
+            Int32 count = BitConverter.ToInt32(byteData, offset), nodeEntrySize = InteriorNodeEntry.GetSize(dimension);
             offset += Marshal.SizeOf(count);
             for (int i = 0, e = offset + nodeEntrySize; i < count; i++, offset += nodeEntrySize, e += nodeEntrySize)
-                AddNodeEntry(new InteriorNodeEntry<CoordinateType>(byteData, offset, e));
+                AddNodeEntry(new InteriorNodeEntry(byteData, offset, e));
         }
 
         public override byte[] GetBytes()

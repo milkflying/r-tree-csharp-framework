@@ -72,7 +72,7 @@ namespace R_Tree_Framework.Utility
         /// <param name="maximumValues">The maximum value for each dimension.</param>
         /// <exception cref="InvalidDimensionException">Thrown when the number of dimensions is less than 1.</exception>
         /// <exception cref="IncompatibleDimensionsException">Thrown when the number of dimensions specified by the list of minimum values does not match the number of dimensions specified by the list of maximum values.</exception>
-        /// <exception cref="InvalidRectangleException&lt;CoordinateType&gt;">Thrown when the minimum value of a dimension is greater than the maximum value of a dimension.</exception>
+        /// <exception cref="InvalidRectangleException">Thrown when the minimum value of a dimension is greater than the maximum value of a dimension.</exception>
         public MinimumBoundingBox(List<Single> minimumValues, List<Single> maximumValues)
         {
             if (minimumValues.Count < 1)
@@ -84,11 +84,11 @@ namespace R_Tree_Framework.Utility
             MaximumValues = maximumValues;
             for (Int32 dimensionCounter = 0; dimensionCounter < Dimension; dimensionCounter++)
                 if (minimumValues[dimensionCounter].CompareTo(maximumValues[dimensionCounter]) < 1)
-                    throw new InvalidRectangleException<CoordinateType>(dimensionCounter, minimumValues[dimensionCounter], maximumValues[dimensionCounter]);
+                    throw new InvalidRectangleException(dimensionCounter, minimumValues[dimensionCounter], maximumValues[dimensionCounter]);
         }
         /// <summary>
         /// This constructor provides a means of reconstructing a MinimumBoundingBox
-        /// object that has been saved using the <see cref="MinimumBoundingBox&lt;CoordinateType&gt;.GetBytes"/>
+        /// object that has been saved using the <see cref="MinimumBoundingBox.GetBytes"/>
         /// method from the <see cref="ISavable"/> interface.  This constructor begins reading bytes from
         /// the beginning of the buffer and stops at the end of the buffer.
         /// </summary>
@@ -99,7 +99,7 @@ namespace R_Tree_Framework.Utility
         }
         /// <summary>
         /// This constructor provides a means of reconstructing a MinimumBoundingBox
-        /// object that has been saved using the <see cref="MinimumBoundingBox&lt;CoordinateType&gt;.GetBytes"/>
+        /// object that has been saved using the <see cref="MinimumBoundingBox.GetBytes"/>
         /// method from the <see cref="ISavable"/> interface.  This constructor begins reading bytes at the
         /// specified offset value and stops at the end of the buffer.
         /// </summary>
@@ -111,7 +111,7 @@ namespace R_Tree_Framework.Utility
         }
         /// <summary>
         /// This constructor provides a means of reconstructing a MinimumBoundingBox
-        /// object that has been saved using the <see cref="MinimumBoundingBox&lt;CoordinateType&gt;.GetBytes"/>
+        /// object that has been saved using the <see cref="MinimumBoundingBox.GetBytes"/>
         /// method from the <see cref="ISavable"/> interface.  This constructor begins reading bytes at the
         /// specified offset value and stops when it reaches the end address.  The byte indexed by the end
         /// address is not considered part of the MinimumBoundingBox saved data.

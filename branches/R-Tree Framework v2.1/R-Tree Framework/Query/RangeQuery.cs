@@ -5,21 +5,20 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Query
 {
-    public class RangeQuery<CoordinateType> : RegionQuery<CoordinateType> where CoordinateType : struct, IComparable
+    public class RangeQuery : RegionQuery
     {
-        protected CoordinateType range;
+        protected Single range;
 
-        public virtual CoordinateType Range
+        public virtual Single Range
         {
             get { return range; }
             protected set { range = value; }
         }
 
-        public RangeQuery(List<CoordinateType> queryPoint, CoordinateType range)
+        public RangeQuery(List<Single> queryPoint, Single range)
             : base (queryPoint)
         {
             Range = range;
-            range = range + range;
         }
     }
 }

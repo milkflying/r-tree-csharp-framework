@@ -5,11 +5,11 @@ using R_Tree_Framework.Utility;
 
 namespace R_Tree_Framework.Index
 {
-    public abstract class NodeEntry<CoordinateType> : IndexObject where CoordinateType : struct, IComparable
+    public abstract class NodeEntry : IndexObject
     {
-        protected MinimumBoundingBox<CoordinateType> minimumBoundingBox;
+        protected MinimumBoundingBox minimumBoundingBox;
 
-        public virtual MinimumBoundingBox<CoordinateType> MinimumBoundingBox
+        public virtual MinimumBoundingBox MinimumBoundingBox
         {
             get { return minimumBoundingBox; }
             protected set { minimumBoundingBox = value; }
