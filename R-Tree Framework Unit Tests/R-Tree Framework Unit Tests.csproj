@@ -74,9 +74,7 @@
     <Compile Include="Query\SpatialQueryUnitTests.cs" />
     <Compile Include="Query\WindowQueryUnitTests.cs" />
     <Compile Include="Utility\AddressUnitTests.cs" />
-    <Compile Include="Utility\IAddressableUnitTests.cs" />
     <Compile Include="Utility\IndexUnitUnitTests.cs" />
-    <Compile Include="Utility\ISavableUnitTests.cs" />
     <Compile Include="Utility\MinimumBoundingBoxUnitTests.cs" />
     <Compile Include="Utility\PageUnitTests.cs" />
     <Compile Include="Utility\PairUnitTests.cs" />

@@ -20,8 +20,8 @@ namespace R_Tree_Framework.Utility
     {
         #region Instance Variables
 
-        protected Int32 dimension;
-        protected List<Single> minimumValues, maximumValues;
+        protected Int32 _dimension;
+        protected List<Single> _minimumValues, _maximumValues;
 
         #endregion Instance Variables
         #region Properties
@@ -31,31 +31,31 @@ namespace R_Tree_Framework.Utility
         /// </summary>
         public virtual Int32 Dimension
         {
-            get { return dimension; }
-            protected set { dimension = value; }
+            get { return _dimension; }
+            protected set { _dimension = value; }
         }
         /// <summary>
         /// A Pair of lists containing the minimum and maximum value in each dimension in which the minimum bounding box exists.
         /// </summary>
         public virtual Pair<List<Single>, List<Single>> Extremes
         {
-            get { return new Pair<List<Single>, List<Single>>(MinimumValues, MaximumValues); }
+            get { return new Pair<List<Single>, List<Single>>(new List<Single>(_minimumValues), new List<Single>(_maximumValues)); }
         }
         /// <summary>
         /// A List of the maximum values for each dimension in which the minimum bounding box exists.
         /// </summary>
         public virtual List<Single> MaximumValues
         {
-            get { return new List<Single>(maximumValues); }
-            protected set { maximumValues = value; }
+            get { return new List<Single>(_maximumValues); }
+            protected set { _maximumValues = value; }
         }
         /// <summary>
         /// A List of the minimum values for each dimension in which the minimum bounding box exists.
         /// </summary>
         public virtual List<Single> MinimumValues
         {
-            get { return new List<Single>(minimumValues); }
-            protected set { minimumValues = value; }
+            get { return new List<Single>(_minimumValues); }
+            protected set { _minimumValues = value; }
         }
 
         #endregion Properties
