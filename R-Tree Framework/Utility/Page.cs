@@ -5,7 +5,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Utility
 {
-    public class Page : UtilityObject, IAddressable, ISavable
+    /*public class Page : UtilityObject, IAddressable, ISavable
     {
         protected Int32 _pageSize;
         protected Byte[] _data;
@@ -31,5 +31,5 @@ namespace R_Tree_Framework.Utility
         public virtual Byte[] GetData(Int32 index, Int32 size)
         {
         }
-    }
+    }*/
 }
