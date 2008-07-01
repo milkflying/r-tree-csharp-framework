@@ -67,7 +67,7 @@ namespace R_Tree_Framework.Utility
         /// <param name="seed">The starting address value</param>
         public static void InitializeAddress(Int32 seed)
         {
-            if (seed > 0)
+            if (seed >= 0)
             {
                 InternalNextAddress = seed;
                 if (Initialized)

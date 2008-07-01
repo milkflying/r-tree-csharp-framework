@@ -6,7 +6,10 @@ using System.Runtime.Serialization;
 
 namespace R_Tree_Framework.Utility.Exceptions
 {
-    public class AddressException : UtilityException
+    /// <summary>
+    /// This class is the base class for all Address Exceptions that are generated.
+    /// </summary>
+    public abstract class AddressException : UtilityException
     {
         public AddressException()
             : base()

@@ -106,7 +106,7 @@ namespace R_Tree_Framework.Utility
             MinimumValues = minimumValues;
             MaximumValues = maximumValues;
             for (Int32 dimensionCounter = 0; dimensionCounter < Dimension; dimensionCounter++)
-                if (minimumValues[dimensionCounter].CompareTo(maximumValues[dimensionCounter]) < 1)
+                if (maximumValues[dimensionCounter].CompareTo(minimumValues[dimensionCounter]) < 0)
                     throw new InvalidRectangleException(dimensionCounter, minimumValues[dimensionCounter], maximumValues[dimensionCounter]);
         }
         /// <summary>
@@ -202,11 +202,16 @@ namespace R_Tree_Framework.Utility
             unsafe { coordinateSize = sizeof(Single); }
             if (!((endAddress - offset) > 0 && (endAddress - offset) % (coordinateSize * 2) == 0))
                 throw new InvalidMinimumBoundingBoxDataException();
-            for (; offset < endAddress; offset += coordinateSize)
+            for (Int32 dimension = 1; offset < endAddress; dimension++)
             {
-                InternalMinimumValues.Add(BitConverter.ToSingle(byteData, offset));
+                Single minimumValue = BitConverter.ToSingle(byteData, offset), maximumValue;
                 offset += coordinateSize;
-                InternalMaximumValues.Add(BitConverter.ToSingle(byteData, offset));
+                maximumValue = BitConverter.ToSingle(byteData, offset);
+                offset += coordinateSize;
+                if (maximumValue.CompareTo(minimumValue) < 0)
+                    throw new InvalidRectangleException(dimension, minimumValue, maximumValue);
+                InternalMinimumValues.Add(minimumValue);
+                InternalMaximumValues.Add(maximumValue);
             }
             Dimension = InternalMinimumValues.Count;
         }
