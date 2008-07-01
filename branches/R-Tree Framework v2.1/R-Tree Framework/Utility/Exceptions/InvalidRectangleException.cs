@@ -5,6 +5,10 @@ using System.Runtime.Serialization;
 
 namespace R_Tree_Framework.Utility.Exceptions
 {
+    /// <summary>
+    /// This exception is thrown when a minimum value in a dimension of a MinimumBoundingBox
+    /// is greater than the maximum value for that dimension.
+    /// </summary>
     public class InvalidRectangleException : MinimumBoundingBoxException
     {
         protected Int32 dimension;

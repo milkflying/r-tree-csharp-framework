@@ -109,6 +109,8 @@
     <Compile Include="Query\WindowQuery.cs" />
     <Compile Include="Utility\Address.cs" />
     <Compile Include="Utility\Exceptions\InvalidAddressSeedException.cs" />
+    <Compile Include="Utility\Exceptions\PageException.cs" />
+    <Compile Include="Utility\Exceptions\PageSizeTooSmallException.cs" />
     <Compile Include="Utility\IAddressable.cs" />
     <Compile Include="Utility\Exceptions\AddressAlreadyInitializedWarning.cs" />
     <Compile Include="Utility\Exceptions\AddressException.cs" />
@@ -142,11 +144,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Class Heirarchy.cd" />
-    <None Include="ClassDiagram.cd" />
-    <None Include="To Code List.cd" />
-    <None Include="Exceptions Heirarchy.cd" />
-    <None Include="Interface Heirarchy.cd" />
+    <None Include="Class Diagrams\Class Heirarchy.cd" />
+    <None Include="Class Diagrams\ClassDiagram.cd" />
+    <None Include="Class Diagrams\To Code List.cd" />
+    <None Include="Class Diagrams\Exceptions Heirarchy.cd" />
+    <None Include="Class Diagrams\Interface Heirarchy.cd" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
