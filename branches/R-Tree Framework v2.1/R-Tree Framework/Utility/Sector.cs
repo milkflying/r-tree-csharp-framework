@@ -4,7 +4,7 @@ using System.Text;
 
 namespace R_Tree_Framework.Utility
 {
-    public class Sector : Page
+    /*public class Sector : Page
     {
-    }
+    }*/
 }

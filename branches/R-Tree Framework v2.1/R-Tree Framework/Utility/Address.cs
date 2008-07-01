@@ -48,6 +48,15 @@ namespace R_Tree_Framework.Utility
             get { return _initialized; }
             set { _initialized = value; }
         }
+        /// <summary>
+        /// This property provides internal access to the next address in its
+        /// underlying data type.
+        /// </summary>
+        protected static Int32 InternalNextAddress
+        {
+            get { return _nextAddress; }
+            set { _nextAddress = value; }
+        }
 
         #endregion Properties
         #region Methods
@@ -60,7 +69,7 @@ namespace R_Tree_Framework.Utility
         {
             if (seed > 0)
             {
-                nextAddress = seed;
+                InternalNextAddress = seed;
                 if (Initialized)
                     throw new AddressAlreadyInitializedWarning();
                 Initialized = true;

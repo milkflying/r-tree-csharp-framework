@@ -4,8 +4,8 @@ using System.Text;
 
 namespace R_Tree_Framework.Query
 {
-    public abstract class RelativeQuery : SpatialQuery
+    /*public abstract class RelativeQuery : SpatialQuery
     {
 
-    }
+    }*/
 }

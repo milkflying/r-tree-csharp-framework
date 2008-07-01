@@ -5,7 +5,7 @@ using R_Tree_Framework.Framework;
 
 namespace R_Tree_Framework.Query
 {
-    public class KNearestNeighborQuery : RelativeQuery
+    /*public class KNearestNeighborQuery : RelativeQuery
     {
-    }
+    }*/
 }

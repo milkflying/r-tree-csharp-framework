@@ -36,6 +36,7 @@ namespace R_Tree_Framework.Utility
         }
         /// <summary>
         /// A Pair of lists containing the minimum and maximum value in each dimension in which the minimum bounding box exists.
+        /// This returns copies of the Lists and not the actual List objects of the class.
         /// </summary>
         public virtual Pair<List<Single>, List<Single>> Extremes
         {
@@ -43,6 +44,7 @@ namespace R_Tree_Framework.Utility
         }
         /// <summary>
         /// A List of the maximum values for each dimension in which the minimum bounding box exists.
+        /// This returns a copy of the List and not the actual List object of the class.
         /// </summary>
         public virtual List<Single> MaximumValues
         {
@@ -51,11 +53,32 @@ namespace R_Tree_Framework.Utility
         }
         /// <summary>
         /// A List of the minimum values for each dimension in which the minimum bounding box exists.
+        /// This returns a copy of the List and not the actual List object of the class.
         /// </summary>
         public virtual List<Single> MinimumValues
         {
             get { return new List<Single>(_minimumValues); }
             protected set { _minimumValues = value; }
+        }
+        /// <summary>
+        /// A List of the maximum values for each dimension in which the minimum bounding box exists.
+        /// This method is for internal class and subclass use and provides direct access to the
+        /// underlying List.
+        /// </summary>
+        protected virtual List<Single> InternalMaximumValues
+        {
+            get { return _maximumValues; }
+            set { _maximumValues = value; }
+        }
+        /// <summary>
+        /// A List of the minimum values for each dimension in which the minimum bounding box exists.
+        /// This method is for internal class and subclass use and provides direct access to the
+        /// underlying List.
+        /// </summary>
+        public virtual List<Single> InternalMinimumValues
+        {
+            get { return _minimumValues; }
+            set { _minimumValues = value; }
         }
 
         #endregion Properties
@@ -141,7 +164,8 @@ namespace R_Tree_Framework.Utility
         /// <returns>An array of Bytes representing the Minimum and Maximum coordinates</returns>
         public virtual Byte[] GetBytes()
         {
-            Int32 coordinateSize = Marshal.SizeOf(Single);
+            Int32 coordinateSize;
+            unsafe { coordinateSize = sizeof(Single); }
             Byte[] saveData = new Byte[GetSize()];
             for (Int32 i = 0, saveDataLocation = 0; i < Dimension; i++, saveDataLocation += coordinateSize)
             {
@@ -160,7 +184,7 @@ namespace R_Tree_Framework.Utility
         /// <returns>The size in bytes of the object.</returns>
         public virtual Int32 GetSize()
         {
-            return Marshal.SizeOf(Single) * Dimension * 2;
+            unsafe { return sizeof(Single)  * Dimension * 2;}
         }
         /// <summary>
         /// This method reconstructs a MinimumBoundingBox object based on saved
@@ -174,21 +198,26 @@ namespace R_Tree_Framework.Utility
             MinimumValues = new List<Single>();
             MaximumValues = new List<Single>();
 
-            Int32 coordinateSize = Marshal.SizeOf(Single);
+            Int32 coordinateSize;
+            unsafe { coordinateSize = sizeof(Single); }
             if (!((endAddress - offset) > 0 && (endAddress - offset) % (coordinateSize * 2) == 0))
                 throw new InvalidMinimumBoundingBoxDataException();
             for (; offset < endAddress; offset += coordinateSize)
             {
-                minimumValues.Add(BitConverter.ToSingle(byteData, offset));
+                InternalMinimumValues.Add(BitConverter.ToSingle(byteData, offset));
                 offset += coordinateSize;
-                maximumValues.Add(BitConverter.ToSingle(byteData, offset));
+                InternalMaximumValues.Add(BitConverter.ToSingle(byteData, offset));
             }
-            Dimension = minimumValues.Count;
+            Dimension = InternalMinimumValues.Count;
         }
-
+        /// <summary>
+        /// Returns the size in bytes of a MinimumBoundingBox of the specified dimension
+        /// </summary>
+        /// <param name="dimension">The number of dimensions of a MinimumBoundingBox</param>
+        /// <returns>The size of the MinimumBoundingBox in bytes.</returns>
         public static Int32 GetSize(Int32 dimension)
         {
-            return Marshal.SizeOf(Single) * dimension * 2;
+            unsafe { return sizeof(Single) * dimension * 2; }
         }
 
         #endregion ISavable Methods

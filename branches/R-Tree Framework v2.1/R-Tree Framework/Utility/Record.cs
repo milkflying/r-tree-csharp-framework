@@ -48,7 +48,7 @@ namespace R_Tree_Framework.Utility
             Data = new Byte[0];
         }
         /// <summary>
-        /// Constructs a record with teh sepcified ID and raw data
+        /// Constructs a record with the sepcified ID and raw data
         /// </summary>
         /// <param name="recordID">The ID of the record</param>
         /// <param name="data">The raw data the record object represents</param>
